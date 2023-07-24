@@ -61,7 +61,7 @@ function defineSenderWhatsapp () {
                           );
 
 }
-
+include_once(ROOT.'/sistema/database/progress.php');
 include_once(ROOT.'/sistema/database/mysql.php');
 include_once(ROOT.'/sistema/database/api.php');
 // helio 26042023

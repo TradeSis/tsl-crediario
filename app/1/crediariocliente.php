@@ -10,7 +10,7 @@ fwrite($arquivo,$identificacao."-ENTRADA->".json_encode($jsonEntrada)."\n");
 $conteudoEntrada = json_encode($jsonEntrada);
 
     $progr = new chamaprogress();
-    $retorno = $progr->executarprogress("crediario/1/crediariocliente",$conteudoEntrada);
+    $retorno = $progr->executarprogress("1/crediariocliente",$conteudoEntrada);
     fwrite($arquivo,$identificacao."-RETORNO->".$retorno."\n");
 
     $jsonSaida = json_decode($retorno,true);

@@ -86,9 +86,9 @@ $contratos = $historico["contratos"];
                                 <td class="text-center"><?php echo $contrato['numeroContrato'] ?></td>
                                 <td class="text-center"><?php echo date('d/m/Y', strtotime($contrato['dtemissao'])) ?></td>
                                 <td class="text-center"><?php echo date('d/m/Y', strtotime($contrato['dtProxVencimento'])) ?></td>
-                                <td class="text-center"><?php echo number_format(floatval(str_replace(',', '.', $contrato['valorTotal'])), 2, ',', '.') ?></td>
-                                <td class="text-center"><?php echo number_format(floatval(str_replace(',', '.', $contrato['valorEntrada'])), 2, ',', '.') ?></td>
-                                <td class="text-center"><?php echo number_format(floatval(str_replace(',', '.', $contrato['valorAberto'])), 2, ',', '.') ?></td>
+                                <td class="text-center"><?php echo $contrato['valorTotal'] ?></td>
+                                <td class="text-center"><?php echo $contrato['valorEntrada'] ?></td>
+                                <td class="text-center"><?php echo $contrato['valorAberto'] ?></td>
                                 <td class="text-center"><?php echo $contrato['situacao'] ?></td>
                                 <td class="text-center">
                                     <a class="btn btn-primary btn-sm" href="contratos.php?numeroContrato=<?php echo $contrato['numeroContrato'] ?>" role="button">Consultar</a>

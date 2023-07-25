@@ -23,9 +23,6 @@ $cliente = $historico["cliente"][0];
 $contratos = $historico["contratos"];
 
 
-echo json_encode($contratos);
-echo json_encode($_SESSION);
-echo 'PHP version: ' . phpversion();
 ?>
 
 <body class="bg-transparent">

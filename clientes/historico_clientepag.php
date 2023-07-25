@@ -92,8 +92,7 @@ $contratos = $historico["contratos"];
                                     <?php
                                     if ($contrato['dtProxVencimento'] !== null) {
                                         echo date('d/m/Y', strtotime($contrato['dtProxVencimento']));
-                                    }
-                                    ?>
+                                    } ?>
                                 </td>
                                 <td class="text-center">
                                     <?php echo $contrato['valorTotal'] ?>

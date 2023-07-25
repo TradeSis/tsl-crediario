@@ -112,11 +112,11 @@ $produtos = $contrato["produtos"];
                                             <td class="text-center">
                                                 <?php echo $parcela['situacao'] ?>
                                             </td>
-                                            <?php if ($parcela['dtPagamento'] !== null) { ?>
-                                                <td class="text-center">
-                                                    <?php echo date('d/m/Y', strtotime($parcela['dtPagamento'])) ?>
-                                                </td>
-                                            <?php } ?>
+                                            <td class="text-center">
+                                                <?php if ($parcela['dtPagamento'] !== null) {
+                                                    echo date('d/m/Y', strtotime($parcela['dtPagamento']));
+                                                } ?>
+                                            </td>
                                             <td class="text-center">
                                                 <?php echo $parcela['vlrPago'] ?>
                                             </td>

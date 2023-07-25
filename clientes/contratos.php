@@ -52,11 +52,11 @@ $produtos = $contrato["produtos"];
                             value="<?php echo $contrato['codigoCliente'] ?> - <?php echo $contrato['nomeCliente'] ?>"
                             readonly>
                         <label>Loja</label>
-                        <input type="text" class="form-control" value="FILIAL" readonly>
+                        <input type="text" class="form-control" value="FILIAL <?php //echo $contrato['loja'] ?>" readonly>
                     </div>
                     <div class="col">
                         <label>Data Inicial</label>
-                        <input type="text" class="form-control" value="<?php echo $contrato['dtemissao'] ?>" readonly>
+                        <input type="text" class="form-control" value="<?php echo date('d/m/Y', strtotime($contrato['dtemissao'])) ?>" readonly>
                         <label>Situação</label>
                         <input type="text" class="form-control" value="<?php echo $contrato['situacao'] ?>" readonly>
                         <label>Modalidade</label>

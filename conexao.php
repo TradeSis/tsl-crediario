@@ -20,7 +20,7 @@ function defineConexaoProgress()
   $dlc                = "/usr/dlc";
   $tmp            = "/ws/works/";
   $pf                = "/admcom/bases/wsp2k.pf";
-  $propath        = "/var/www/html/tslebes/crediario/app/,/admcom/progr/,";
+  $propath        = "/var/www/html/tslebes/crediario/,/admcom/progr/,";
   $proginicial = "/var/www/html/tslebes/sistema/database/progress.p";
 
   return        array(   "progresscfg" => $progresscfg, 

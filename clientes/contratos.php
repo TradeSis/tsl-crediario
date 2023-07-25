@@ -150,13 +150,13 @@ $produtos = $contrato["produtos"];
                                     <?php echo $produto['nomeProduto'] ?>
                                 </td>
                                 <td class="text-center">
-                                    <?php echo number_format($produto['precoVenda'], 2, ',', '.') ?>
+                                    <?php echo number_format(floatval($produto['precoVenda']), 2, ',', '.') ?>
                                 </td>
                                 <td class="text-center">
                                     <?php echo $produto['quantidade'] ?>
                                 </td>
                                 <td class="text-center">
-                                    <?php echo number_format($produto['valorTotal'], 2, ',', '.') ?>
+                                    <?php echo number_format(floatval($produto['valorTotal']), 2, ',', '.') ?>
                                 </td>
                             </tr>
                         <?php } ?>

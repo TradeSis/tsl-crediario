@@ -89,12 +89,12 @@ $produtos = $contrato["produtos"];
                                     <?php foreach ($parcelas as $parcela) { ?>
                                         <tr>
                                             <td class="text-center"><?php echo $parcela['numeroContrato'] ?></td>
-                                            <td class="text-center"><?php echo number_format($parcela['parcela'], 2, ',', '.') ?></td>
+                                            <td class="text-center"><?php echo $parcela['parcela'] ?></td>
                                             <td class="text-center"><?php echo date('d/m/Y', strtotime($parcela['dtVencimento'])) ?></td>
-                                            <td class="text-center"><?php echo number_format($parcela['vlrParcela'], 2, ',', '.') ?></td>
+                                            <td class="text-center"><?php echo $parcela['vlrParcela'] ?></td>
                                             <td class="text-center"><?php echo $parcela['situacao'] ?></td>
                                             <td class="text-center"><?php echo date('d/m/Y', strtotime($parcela['dtPagamento'])) ?></td>
-                                            <td class="text-center"><?php echo number_format($parcela['vlrPago'], 2, ',', '.') ?></td>
+                                            <td class="text-center"><?php echo $parcela['vlrPago'] ?></td>
                                         </tr>
                                     <?php } ?>
 

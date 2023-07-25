@@ -16,6 +16,10 @@ $contrato = buscaContratos($numeroContrato);
 $contrato = $contrato[0];
 $parcelas = $contrato["parcelas"];
 $produtos = $contrato["produtos"];
+
+echo json_encode($contrato);
+echo json_encode($parcelas);
+echo json_encode($produtos);
 ?>
 
 <body class="bg-transparent">

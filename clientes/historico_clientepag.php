@@ -25,7 +25,8 @@ $contratos = $historico["contratos"];
                 <div class="row">
                     <div class="col-sm-10">
                         <h3 class="col">Cod.
-                            <?php echo $cliente['codigoCliente'] ?> - <?php echo $cliente['nomeCliente'] ?>
+                            <?php echo $cliente['codigoCliente'] ?> -
+                            <?php echo $cliente['nomeCliente'] ?>
                         </h3>
                     </div>
                     <div class="col-sm" style="text-align:right">
@@ -40,7 +41,9 @@ $contratos = $historico["contratos"];
                 <div class="row">
                     <div class="col">
                         <label>Código Cliente</label>
-                        <input type="text" class="form-control" value=" <?php echo $cliente['codigoCliente'] ?> - <?php echo $cliente['nomeCliente'] ?>" readonly>
+                        <input type="text" class="form-control"
+                            value=" <?php echo $cliente['codigoCliente'] ?> - <?php echo $cliente['nomeCliente'] ?>"
+                            readonly>
 
                     </div>
                     <div class="col">
@@ -51,7 +54,8 @@ $contratos = $historico["contratos"];
                 <hr>
                 <ul class="nav nav-tabs">
                     <li class="nav-item">
-                        <a class="nav-link active" href="historico_cliente.php?codigoCliente=<?php echo $cliente['codigoCliente'] ?>">Abertos</a>
+                        <a class="nav-link active"
+                            href="historico_cliente.php?codigoCliente=<?php echo $cliente['codigoCliente'] ?>">Abertos</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link active" style="color:blue" href="#">Pagos</a>
@@ -75,16 +79,37 @@ $contratos = $historico["contratos"];
                         </thead>
                         <?php foreach ($contratos as $contrato) { ?>
                             <tr>
-                                <td class="text-center"><?php echo $contrato['codigoCliente'] ?></td>
-                                <td class="text-center"><?php echo $contrato['numeroContrato'] ?></td>
-                                <td class="text-center"><?php echo date('d/m/Y', strtotime($contrato['dtemissao'])) ?></td>
-                                <td class="text-center"><?php echo date('d/m/Y', strtotime($contrato['dtProxVencimento'])) ?></td>
-                                <td class="text-center"><?php echo number_format($contrato['valorTotal'], 2, ',', '.') ?></td>
-                                <td class="text-center"><?php echo number_format($contrato['valorEntrada'], 2, ',', '.') ?></td>
-                                <td class="text-center"><?php echo number_format($contrato['valorAberto'], 2, ',', '.') ?></td>
-                                <td class="text-center"><?php echo $contrato['situacao'] ?></td>
                                 <td class="text-center">
-                                    <a class="btn btn-primary btn-sm" href="contratos.php?numeroContrato=<?php echo $contrato['numeroContrato'] ?>" role="button">Consultar</a>
+                                    <?php echo $contrato['codigoCliente'] ?>
+                                </td>
+                                <td class="text-center">
+                                    <?php echo $contrato['numeroContrato'] ?>
+                                </td>
+                                <td class="text-center">
+                                    <?php echo date('d/m/Y', strtotime($contrato['dtemissao'])) ?>
+                                </td>
+                                <td class="text-center">
+                                    <?php
+                                    if ($contrato['dtProxVencimento'] !== null) {
+                                        echo date('d/m/Y', strtotime($contrato['dtProxVencimento']));
+                                    } ?>
+                                </td>
+                                <td class="text-center">
+                                    <?php echo $contrato['valorTotal'] ?>
+                                </td>
+                                <td class="text-center">
+                                    <?php echo $contrato['valorEntrada'] ?>
+                                </td>
+                                <td class="text-center">
+                                    <?php echo $contrato['valorAberto'] ?>
+                                </td>
+                                <td class="text-center">
+                                    <?php echo $contrato['situacao'] ?>
+                                </td>
+                                <td class="text-center">
+                                    <a class="btn btn-primary btn-sm"
+                                        href="contratos.php?numeroContrato=<?php echo $contrato['numeroContrato'] ?>"
+                                        role="button">Consultar</a>
                                 </td>
                             </tr>
                         <?php } ?>

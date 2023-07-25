@@ -5,16 +5,6 @@
 //echo "parametro=".$parametro."\n";
 
 if ($metodo=="GET"){
-
-  /*if ($funcao=="crediario"&&$parametro=="cliente") {
-    $funcao = "crediario/cliente";
-    $parametro = null;
-  }
-  if ($funcao=="crediario"&&$parametro=="contrato") {
-    $funcao = "crediario/contrato";
-    $parametro = null;
-  }
-*/
     switch ($funcao) {
       case "cliente":
         include 'crediariocliente.php';

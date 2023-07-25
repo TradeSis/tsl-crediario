@@ -24,12 +24,14 @@ $produtos = $contrato["produtos"];
             <div class="card-header border-1">
                 <div class="row">
                     <div class="col-sm-10">
-                        <h3 class="col">Contrato <?php echo $contrato['numeroContrato'] ?>
+                        <h3 class="col">Contrato
+                            <?php echo $contrato['numeroContrato'] ?>
                         </h3>
                     </div>
                     <div class="col-sm" style="text-align:right">
                         <?php if (isset($_GET['numeroContrato'])) { ?>
-                            <a href="historico_cliente.php?codigoCliente=<?php echo $contrato['codigoCliente'] ?>" role="button" class="btn btn-primary btn-sm">Voltar</a>
+                            <a href="historico_cliente.php?codigoCliente=<?php echo $contrato['codigoCliente'] ?>"
+                                role="button" class="btn btn-primary btn-sm">Voltar</a>
                         <?php } else { ?>
                             <a href="#" onclick="history.back()" role="button" class="btn btn-primary btn-sm">Voltar</a>
                         <?php } ?>
@@ -43,15 +45,18 @@ $produtos = $contrato["produtos"];
                 <div class="row">
                     <div class="col">
                         <label>Contrato</label>
-                        <input type="text" class="form-control" value="<?php echo $contrato['numeroContrato'] ?>" readonly>
+                        <input type="text" class="form-control" value="<?php echo $contrato['numeroContrato'] ?>"
+                            readonly>
                         <label>Cliente</label>
-                        <input type="text" class="form-control" value="<?php echo $contrato['codigoCliente'] ?> - <?php echo $contrato['nomeCliente'] ?>" readonly>
+                        <input type="text" class="form-control"
+                            value="<?php echo $contrato['codigoCliente'] ?> - <?php echo $contrato['nomeCliente'] ?>"
+                            readonly>
                         <label>Loja</label>
-                        <input type="text" class="form-control" value="FILIAL" readonly>
+                        <input type="text" class="form-control" value="FILIAL <?php //echo $contrato['loja'] ?>" readonly>
                     </div>
                     <div class="col">
                         <label>Data Inicial</label>
-                        <input type="text" class="form-control" value="<?php echo $contrato['dtemissao'] ?>" readonly>
+                        <input type="text" class="form-control" value="<?php echo date('d/m/Y', strtotime($contrato['dtemissao'])) ?>" readonly>
                         <label>Situação</label>
                         <input type="text" class="form-control" value="<?php echo $contrato['situacao'] ?>" readonly>
                         <label>Modalidade</label>
@@ -63,18 +68,22 @@ $produtos = $contrato["produtos"];
                     <div class="row">
                         <div class="col-4 mb-3">
                             <label>Total</label>
-                            <input type="text" class="form-control" value="<?php echo $contrato['valorTotal'] ?>" readonly>
+                            <input type="text" class="form-control" value="<?php echo $contrato['valorTotal'] ?>"
+                                readonly>
                             <label>Aberto</label>
-                            <input type="text" class="form-control" value="<?php echo $contrato['valorAberto'] ?>" readonly>
+                            <input type="text" class="form-control" value="<?php echo $contrato['valorAberto'] ?>"
+                                readonly>
                             <label>Vencido</label>
-                            <input type="text" class="form-control" value="<?php echo $contrato['valorVencido'] ?>" readonly>
+                            <input type="text" class="form-control" value="<?php echo $contrato['valorVencido'] ?>"
+                                readonly>
                             <label>Entrada</label>
-                            <input type="text" class="form-control" value="<?php echo $contrato['valorEntrada'] ?>" readonly>
+                            <input type="text" class="form-control" value="<?php echo $contrato['valorEntrada'] ?>"
+                                readonly>
 
                         </div>
                         <div class="col-8">
-                        <div class="table table-responsive">
-                             <table class="table table-sm table-hover table-bordered">
+                            <div class="table table-responsive">
+                                <table class="table table-sm table-hover table-bordered">
                                     <thead>
                                         <tr>
                                             <th class="text-center">Contrato</th>
@@ -88,13 +97,29 @@ $produtos = $contrato["produtos"];
                                     </thead>
                                     <?php foreach ($parcelas as $parcela) { ?>
                                         <tr>
-                                            <td class="text-center"><?php echo $parcela['numeroContrato'] ?></td>
-                                            <td class="text-center"><?php echo number_format($parcela['parcela'], 2, ',', '.') ?></td>
-                                            <td class="text-center"><?php echo date('d/m/Y', strtotime($parcela['dtVencimento'])) ?></td>
-                                            <td class="text-center"><?php echo number_format($parcela['vlrParcela'], 2, ',', '.') ?></td>
-                                            <td class="text-center"><?php echo $parcela['situacao'] ?></td>
-                                            <td class="text-center"><?php echo date('d/m/Y', strtotime($parcela['dtPagamento'])) ?></td>
-                                            <td class="text-center"><?php echo number_format($parcela['vlrPago'], 2, ',', '.') ?></td>
+                                            <td class="text-center">
+                                                <?php echo $parcela['numeroContrato'] ?>
+                                            </td>
+                                            <td class="text-center">
+                                                <?php echo $parcela['parcela'] ?>
+                                            </td>
+                                            <td class="text-center">
+                                                <?php echo date('d/m/Y', strtotime($parcela['dtVencimento'])) ?>
+                                            </td>
+                                            <td class="text-center">
+                                                <?php echo $parcela['vlrParcela'] ?>
+                                            </td>
+                                            <td class="text-center">
+                                                <?php echo $parcela['situacao'] ?>
+                                            </td>
+                                            <td class="text-center">
+                                                <?php if ($parcela['dtPagamento'] !== null) {
+                                                    echo date('d/m/Y', strtotime($parcela['dtPagamento']));
+                                                } ?>
+                                            </td>
+                                            <td class="text-center">
+                                                <?php echo $parcela['vlrPago'] ?>
+                                            </td>
                                         </tr>
                                     <?php } ?>
 
@@ -118,11 +143,21 @@ $produtos = $contrato["produtos"];
                         </thead>
                         <?php foreach ($produtos as $produto) { ?>
                             <tr>
-                                <td class="text-center"><?php echo $produto['codigoProduto'] ?></td>
-                                <td class="text-center"><?php echo $produto['nomeProduto'] ?></td>
-                                <td class="text-center"><?php echo number_format($produto['precoVenda'], 2, ',', '.') ?></td>
-                                <td class="text-center"><?php echo $produto['quantidade'] ?></td>
-                                <td class="text-center"><?php echo number_format($produto['valorTotal'], 2, ',', '.') ?></td>
+                                <td class="text-center">
+                                    <?php echo $produto['codigoProduto'] ?>
+                                </td>
+                                <td class="text-center">
+                                    <?php echo $produto['nomeProduto'] ?>
+                                </td>
+                                <td class="text-center">
+                                    <?php echo number_format($produto['precoVenda'], 2, ',', '.') ?>
+                                </td>
+                                <td class="text-center">
+                                    <?php echo $produto['quantidade'] ?>
+                                </td>
+                                <td class="text-center">
+                                    <?php echo number_format($produto['valorTotal'], 2, ',', '.') ?>
+                                </td>
                             </tr>
                         <?php } ?>
 

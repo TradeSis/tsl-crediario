@@ -15,8 +15,11 @@ if (isset($_GET['operacao'])) {
 
     if ($operacao == "buscar") {
         $filial = $_POST['codigoFilial'];
-        echo json_encode($filial);
-        $submissoes = chamaAPI('http://10.145.0.233', "/bsweb/erp/neurotech/neuproposta.php?SAIDA=JSON&POR=VENDEDOR&FILIAL=$filial", null, 'GET');
+        $filial = str_replace(array(' ', "'", '"'), '', $filial);
+
+        $apiUrl = "http://10.145.0.233/bsweb/erp/neurotech/neuproposta.php?SAIDA=JSON&POR=VENDEDOR&FILIAL=$filial";
+
+        $submissoes = chamaAPI('http://10.145.0.233', $apiUrl, null, 'GET');
 
         if (isset($submissoes["rows"])) {
             $submissoes = $submissoes["rows"]; // TRATAMENTO DO RETORNO

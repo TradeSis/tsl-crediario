@@ -9,23 +9,31 @@ function buscaFiliais()
     $filiais = chamaAPI('http://10.145.0.233', '/bsweb/erp/zoom/estab.php?POR=MEUIP', null, 'GET');
     return $filiais;
 }
+function buscaSubmissoes($codigoFilial = null) {
+    $submissoes = array();
+    $filialParam = '';
+
+    if ($codigoFilial !== null) {
+        $filialParam = "FILIAL=$codigoFilial";
+    }
+
+    $submissoes = chamaAPI('http://10.145.0.233', "/bsweb/erp/neurotech/neuproposta.php?SAIDA=JSON&POR=VENDEDOR&$filialParam", null, 'GET');
+    return $submissoes;
+}
 
 if (isset($_GET['operacao'])) {
 
     $operacao = $_GET['operacao'];
 
     if ($operacao == "buscar") {
-        $apiEntrada = array(
-			'codigoFilial' => $_POST['codigoFilial']
-		);
+        $filial = $_POST['codigoFilial'];
+        $submissoes = chamaAPI('http://10.145.0.233', "/bsweb/erp/neurotech/neuproposta.php?SAIDA=JSON&POR=VENDEDOR&FILIAL=$filial", null, 'GET');
 
-        $submissoes = chamaAPI('http://10.145.0.233', '/bsweb/erp/neurotech/neuproposta.php?SAIDA=JSON&POR=VENDEDOR&FILIAL=', json_encode($apiEntrada), 'GET');
-
-		if (isset($submissoes["rows"])) {
+        if (isset($submissoes["rows"])) {
             $submissoes = $submissoes["rows"]; // TRATAMENTO DO RETORNO
         }
-		return $submissoes;
-	}
+        return $submissoes;
+    }
 
 }
 

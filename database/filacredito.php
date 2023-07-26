@@ -22,7 +22,6 @@ function buscaSubmissoes($codigoFilial = null) {
 }
 
 if (isset($_GET['operacao'])) {
-
     $operacao = $_GET['operacao'];
 
     if ($operacao == "buscar") {
@@ -32,10 +31,11 @@ if (isset($_GET['operacao'])) {
         if (isset($submissoes["rows"])) {
             $submissoes = $submissoes["rows"]; // TRATAMENTO DO RETORNO
         }
+        echo json_encode($submissoes); 
         return $submissoes;
     }
-
 }
+
 
 
 ?>

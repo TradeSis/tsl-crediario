@@ -4,7 +4,6 @@ include_once '../head.php';
 include_once '../database/filacredito.php';
 
 $filiais = buscaFiliais();
-$sub = buscaSubmissoes();
 
 ?>
 
@@ -99,7 +98,7 @@ $sub = buscaSubmissoes();
         function buscar(codigoFilial) {
             $.ajax({
                 type: 'POST',
-                dataType: 'json', 
+                dataType: 'json',
                 url: '../database/filacredito.php?operacao=buscar',
                 beforeSend: function () {
                     $("#dados").html("Carregando...");
@@ -107,7 +106,7 @@ $sub = buscaSubmissoes();
                 data: {
                     codigoFilial: codigoFilial
                 },
-                success: function (response) { 
+                success: function (response) {
                     var linha = "";
                     for (var i = 0; i < response.length; i++) {
                         var object = response[i];
@@ -135,7 +134,9 @@ $sub = buscaSubmissoes();
         }
 
         $("#FiltroFilial").change(function () {
-            buscar($("#FiltroFilial").val());
+            var selectedFilial = $("#FiltroFilial").val();
+            alert("Selected Filial: " + selectedFilial); 
+            buscar(selectedFilial); 
         });
 
         document.addEventListener("keypress", function (e) {
@@ -144,177 +145,177 @@ $sub = buscaSubmissoes();
             }
         });
         <?php /*
-   //**************exporta excel 
-   function exportToExcel() {
-       $.ajax({
-           type: 'POST',
-           dataType: 'json',
-           url: '../database/filacredito.php?operacao=buscar',
-           data: {
-               codigoFilial: $("#FiltroFilial").val()
-           },
-           success: function (json) {
-               var excelContent =
-                   "<html xmlns:x='urn:schemas-microsoft-com:office:excel'>" +
-                   "<head>" +
-                   "<meta charset='UTF-8'>" +
-                   "</head>" +
-                   "<body>" +
-                   "<table>";
+//**************exporta excel 
+function exportToExcel() {
+  $.ajax({
+      type: 'POST',
+      dataType: 'json',
+      url: '../database/filacredito.php?operacao=buscar',
+      data: {
+          codigoFilial: $("#FiltroFilial").val()
+      },
+      success: function (json) {
+          var excelContent =
+              "<html xmlns:x='urn:schemas-microsoft-com:office:excel'>" +
+              "<head>" +
+              "<meta charset='UTF-8'>" +
+              "</head>" +
+              "<body>" +
+              "<table>";
 
-               excelContent += "<tr><th>Loja</th><th>Data</th><th>Hora</th><th>Cpf</th><th>Codigo</th><th>Cliente</th><th>Lj_Cad</th><th>Sit</th><th>Vcto_limite</th><th>limite</th><th>TC</th><th>Operacao</th><th>Resultado</th></tr>";
+          excelContent += "<tr><th>Loja</th><th>Data</th><th>Hora</th><th>Cpf</th><th>Codigo</th><th>Cliente</th><th>Lj_Cad</th><th>Sit</th><th>Vcto_limite</th><th>limite</th><th>TC</th><th>Operacao</th><th>Resultado</th></tr>";
 
-               for (var i = 0; i < json.length; i++) {
-                   var object = json[i];
-                   excelContent += "<tr><td>" + object.etbcod + "</td>" +
-                       "<td>" + object.dtinclu + "</td>" +
-                       "<td>" + object.hrinclu + "</td>" +
-                       "<td>" + object.cpfcnpj + "</td>" +
-                       "<td>" + object.clicod + "</td>" +
-                       "<td>" + object.nome_pessoa + "</td>" +
-                       "<td>" + object.etbcad + "</td>" +
-                       "<td>" + object.sit_credito + "</td>" +
-                       "<td>" + object.vctolimite + "</td>" +
-                       "<td>" + object.vlrlimite + "</td>" +
-                       "<td>" + object.tipoconsulta + "</td>" +
-                       "<td>" + object.neu_cdoperacao + "</td>" +
-                       "<td>" + object.neu_resultado + "</td></tr>";
-               }
+          for (var i = 0; i < json.length; i++) {
+              var object = json[i];
+              excelContent += "<tr><td>" + object.etbcod + "</td>" +
+                  "<td>" + object.dtinclu + "</td>" +
+                  "<td>" + object.hrinclu + "</td>" +
+                  "<td>" + object.cpfcnpj + "</td>" +
+                  "<td>" + object.clicod + "</td>" +
+                  "<td>" + object.nome_pessoa + "</td>" +
+                  "<td>" + object.etbcad + "</td>" +
+                  "<td>" + object.sit_credito + "</td>" +
+                  "<td>" + object.vctolimite + "</td>" +
+                  "<td>" + object.vlrlimite + "</td>" +
+                  "<td>" + object.tipoconsulta + "</td>" +
+                  "<td>" + object.neu_cdoperacao + "</td>" +
+                  "<td>" + object.neu_resultado + "</td></tr>";
+          }
 
-               excelContent += "</table></body></html>";
+          excelContent += "</table></body></html>";
 
-               var excelBlob = new Blob([excelContent], { type: 'application/vnd.ms-excel' });
-               var excelUrl = URL.createObjectURL(excelBlob);
-               var link = document.createElement("a");
-               link.setAttribute("href", excelUrl);
-               link.setAttribute("download", "demandas.xls");
-               document.body.appendChild(link);
+          var excelBlob = new Blob([excelContent], { type: 'application/vnd.ms-excel' });
+          var excelUrl = URL.createObjectURL(excelBlob);
+          var link = document.createElement("a");
+          link.setAttribute("href", excelUrl);
+          link.setAttribute("download", "demandas.xls");
+          document.body.appendChild(link);
 
-               link.click();
+          link.click();
 
-               document.body.removeChild(link);
-           },
-           error: function (e) {
-               alert('Erro: ' + JSON.stringify(e));
-           }
-       });
-   }
+          document.body.removeChild(link);
+      },
+      error: function (e) {
+          alert('Erro: ' + JSON.stringify(e));
+      }
+  });
+}
 
-   //**************exporta csv
-   function exportToCSV() {
-       $.ajax({
-           type: 'POST',
-           dataType: 'json',
-           url: '../database/filacredito.php?operacao=buscar',
-           data: {
-               codigoFilial: $("#FiltroFilial").val()
-           },
-           success: function (json) {
-               var csvContent = "data:text/csv;charset=utf-8,\uFEFF";
-               csvContent += "Loja,Data,Hora,Cpf,Codigo,Cliente,Lj_Cad,Sit,Vcto_limite,limite,TC,Operacao,Resultado\n";
+//**************exporta csv
+function exportToCSV() {
+  $.ajax({
+      type: 'POST',
+      dataType: 'json',
+      url: '../database/filacredito.php?operacao=buscar',
+      data: {
+          codigoFilial: $("#FiltroFilial").val()
+      },
+      success: function (json) {
+          var csvContent = "data:text/csv;charset=utf-8,\uFEFF";
+          csvContent += "Loja,Data,Hora,Cpf,Codigo,Cliente,Lj_Cad,Sit,Vcto_limite,limite,TC,Operacao,Resultado\n";
 
-               for (var i = 0; i < json.length; i++) {
-                   var object = json[i];
-                   csvContent += object.etbcod + "," +
-                       object.dtinclu + "," +
-                       object.hrinclu + "," +
-                       object.cpfcnpj + "," +
-                       object.clicod + "," +
-                       object.nome_pessoa + "," +
-                       object.etbcad + "," +
-                       object.sit_credito + "," +
-                       object.vctolimite + "," +
-                       object.vlrlimite + "," +
-                       object.tipoconsulta + "," +
-                       object.neu_cdoperacao + "," +
-                       object.neu_resultado + "\n";
-               }
+          for (var i = 0; i < json.length; i++) {
+              var object = json[i];
+              csvContent += object.etbcod + "," +
+                  object.dtinclu + "," +
+                  object.hrinclu + "," +
+                  object.cpfcnpj + "," +
+                  object.clicod + "," +
+                  object.nome_pessoa + "," +
+                  object.etbcad + "," +
+                  object.sit_credito + "," +
+                  object.vctolimite + "," +
+                  object.vlrlimite + "," +
+                  object.tipoconsulta + "," +
+                  object.neu_cdoperacao + "," +
+                  object.neu_resultado + "\n";
+          }
 
-               var encodedUri = encodeURI(csvContent);
-               var link = document.createElement("a");
-               link.setAttribute("href", encodedUri);
-               link.setAttribute("download", "demandas.csv");
-               document.body.appendChild(link);
+          var encodedUri = encodeURI(csvContent);
+          var link = document.createElement("a");
+          link.setAttribute("href", encodedUri);
+          link.setAttribute("download", "demandas.csv");
+          document.body.appendChild(link);
 
-               link.click();
+          link.click();
 
-               document.body.removeChild(link);
-           },
-           error: function (e) {
-               alert('Erro: ' + JSON.stringify(e));
-           }
-       });
-   }
+          document.body.removeChild(link);
+      },
+      error: function (e) {
+          alert('Erro: ' + JSON.stringify(e));
+      }
+  });
+}
 
-   //**************exporta PDF
-   function exportToPDF() {
-       $.ajax({
-           type: 'POST',
-           dataType: 'json',
-           url: '../database/filacredito.php?operacao=buscar',
-           data: {
-               codigoFilial: $("#FiltroFilial").val()
-           },
-           success: function (json) {
-               var tableContent =
-                   "<table>" +
-                   "<tr><th>Loja</th><th>Data</th><th>Hora</th><th>Cpf</th><th>Codigo</th><th>Cliente</th><th>Lj_Cad</th><th>Sit</th><th>Vcto_limite</th><th>limite</th><th>TC</th><th>Operacao</th><th>Resultado</th></tr>";
+//**************exporta PDF
+function exportToPDF() {
+  $.ajax({
+      type: 'POST',
+      dataType: 'json',
+      url: '../database/filacredito.php?operacao=buscar',
+      data: {
+          codigoFilial: $("#FiltroFilial").val()
+      },
+      success: function (json) {
+          var tableContent =
+              "<table>" +
+              "<tr><th>Loja</th><th>Data</th><th>Hora</th><th>Cpf</th><th>Codigo</th><th>Cliente</th><th>Lj_Cad</th><th>Sit</th><th>Vcto_limite</th><th>limite</th><th>TC</th><th>Operacao</th><th>Resultado</th></tr>";
 
-               for (var i = 0; i < json.length; i++) {
-                   var object = json[i];
-                   tableContent += "<tr><td>" + object.etbcod + "</td>" +
-                       "<td>" + object.dtinclu + "</td>" +
-                       "<td>" + object.hrinclu + "</td>" +
-                       "<td>" + object.cpfcnpj + "</td>" +
-                       "<td>" + object.clicod + "</td>" +
-                       "<td>" + object.nome_pessoa + "</td>" +
-                       "<td>" + object.etbcad + "</td>" +
-                       "<td>" + object.sit_credito + "</td>" +
-                       "<td>" + object.vctolimite + "</td>" +
-                       "<td>" + object.vlrlimite + "</td>" +
-                       "<td>" + object.tipoconsulta + "</td>" +
-                       "<td>" + object.neu_cdoperacao + "</td>" +
-                       "<td>" + object.neu_resultado + "</td></tr>";
-               }
+          for (var i = 0; i < json.length; i++) {
+              var object = json[i];
+              tableContent += "<tr><td>" + object.etbcod + "</td>" +
+                  "<td>" + object.dtinclu + "</td>" +
+                  "<td>" + object.hrinclu + "</td>" +
+                  "<td>" + object.cpfcnpj + "</td>" +
+                  "<td>" + object.clicod + "</td>" +
+                  "<td>" + object.nome_pessoa + "</td>" +
+                  "<td>" + object.etbcad + "</td>" +
+                  "<td>" + object.sit_credito + "</td>" +
+                  "<td>" + object.vctolimite + "</td>" +
+                  "<td>" + object.vlrlimite + "</td>" +
+                  "<td>" + object.tipoconsulta + "</td>" +
+                  "<td>" + object.neu_cdoperacao + "</td>" +
+                  "<td>" + object.neu_resultado + "</td></tr>";
+          }
 
-               tableContent += "</table>";
+          tableContent += "</table>";
 
-               var printWindow = window.open('', '', 'width=800,height=600');
-               printWindow.document.open();
-               printWindow.document.write('<html><head><title>Demandas</title></head><body>');
-               printWindow.document.write(tableContent);
-               printWindow.document.write('</body></html>');
-               printWindow.document.close();
+          var printWindow = window.open('', '', 'width=800,height=600');
+          printWindow.document.open();
+          printWindow.document.write('<html><head><title>Demandas</title></head><body>');
+          printWindow.document.write(tableContent);
+          printWindow.document.write('</body></html>');
+          printWindow.document.close();
 
-               printWindow.onload = function () {
-                   printWindow.print();
-                   printWindow.onafterprint = function () {
-                       printWindow.close();
-                   };
-               };
+          printWindow.onload = function () {
+              printWindow.print();
+              printWindow.onafterprint = function () {
+                  printWindow.close();
+              };
+          };
 
-               printWindow.onload();
-           },
-           error: function (e) {
-               alert('Erro: ' + JSON.stringify(e));
-           }
-       });
-   }
-
-
+          printWindow.onload();
+      },
+      error: function (e) {
+          alert('Erro: ' + JSON.stringify(e));
+      }
+  });
+}
 
 
 
-   $("#export").click(function () {
-       var selectedOption = $("#exportoptions").val();
-       if (selectedOption === "excel") {
-           exportToExcel();
-       } else if (selectedOption === "pdf") {
-           exportToPDF();
-       } else if (selectedOption === "csv") {
-           exportToCSV();
-       }
-   }); */?>
+
+
+$("#export").click(function () {
+  var selectedOption = $("#exportoptions").val();
+  if (selectedOption === "excel") {
+      exportToExcel();
+  } else if (selectedOption === "pdf") {
+      exportToPDF();
+  } else if (selectedOption === "csv") {
+      exportToCSV();
+  }
+}); */?>
 
 
 

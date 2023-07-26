@@ -17,11 +17,16 @@ if (isset($_GET['operacao'])) {
         $filial = $_POST['codigoFilial'];
         $submissoes = chamaAPI('http://10.145.0.233', "/bsweb/erp/neurotech/neuproposta.php?SAIDA=JSON&POR=VENDEDOR&FILIAL=$filial", null, 'GET');
 
+        print_r($submissoes);
+
+        var_dump($submissoes);
+        
+        echo json_encode($submissoes);
+
+
         if (isset($submissoes["rows"])) {
             $submissoes = $submissoes["rows"]; // TRATAMENTO DO RETORNO
         }
-        echo json_encode($submissoes);
-        echo json_encode(chamaAPI('http://10.145.0.233', "/bsweb/erp/neurotech/neuproposta.php?SAIDA=JSON&POR=VENDEDOR&FILIAL=$filial", null, 'GET'));
         echo json_encode($submissoes);
         return $submissoes;
     }

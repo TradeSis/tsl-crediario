@@ -93,7 +93,7 @@ $filiais = buscaFiliais();
 
 
     <script>
-        buscar($("#FiltroFilial").val());
+       $("#dados").html("Selecione Filial");
 
         function buscar(codigoFilial) {
             $.ajax({
@@ -107,6 +107,7 @@ $filiais = buscaFiliais();
                     codigoFilial: codigoFilial
                 },
                 success: function (response) {
+                    console.log("Response from API:", response);
                     var linha = "";
                     for (var i = 0; i < response.length; i++) {
                         var object = response[i];
@@ -134,11 +135,14 @@ $filiais = buscaFiliais();
         }
 
         $("#FiltroFilial").change(function () {
-            var selectedFilial = $("#FiltroFilial").val();
-            alert("Selected Filial: " + selectedFilial);
-            buscar(selectedFilial); 
+            buscar($("#FiltroFilial").val());
         });
 
+        document.addEventListener("keypress", function (e) {
+            if (e.key === "Enter") {
+                buscar($("#FiltroFilial").val());
+            }
+        });
         
         <?php /*
 //**************exporta excel 

@@ -5,9 +5,7 @@ include_once '../database/filacredito.php';
 
 $filiais = buscaFiliais();
 $sub = buscaSubmissoes();
-$sub = $sub["rows"];
 
-echo json_encode($sub);
 ?>
 
 
@@ -96,7 +94,6 @@ echo json_encode($sub);
 
 
     <script>
-        $("#dados").html("Selecione a Filial");
 
         function buscar(codigoFilial) {
             $.ajax({
@@ -135,6 +132,7 @@ echo json_encode($sub);
                 }
             });
         }
+        $("#dados").html("Selecione a Filial");
 
         $("#FiltroFilial").change(function () {
             buscar($("#FiltroFilial").val());

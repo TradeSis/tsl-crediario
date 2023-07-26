@@ -107,7 +107,6 @@ $filiais = buscaFiliais();
                     codigoFilial: codigoFilial
                 },
                 success: function (response) {
-                    console.log("Response from API:", response);
                     var linha = "";
                     for (var i = 0; i < response.length; i++) {
                         var object = response[i];

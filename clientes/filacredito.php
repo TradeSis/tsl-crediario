@@ -96,28 +96,7 @@ echo json_encode($sub);
 
 
     <script>
-        $("#dados").html("Selecione a Filial...");
-
-        $("#FiltroFilial").change(function () {
-            var codigoFilial = $(this).val();
-
-            if (codigoFilial) {
-                buscar(codigoFilial);
-            } else {
-                $("#dados").html("Selecione a Filial...");
-            }
-        });
-
-        document.addEventListener("keypress", function (e) {
-            if (e.key === "Enter") {
-                var codigoFilial = $("#FiltroFilial").val();
-                if (codigoFilial) {
-                    buscar(codigoFilial);
-                } else {
-                    $("#dados").html("Selecione a Filial...");
-                }
-            }
-        });
+        $("#dados").html("Selecione a Filial");
 
         function buscar(codigoFilial) {
             $.ajax({
@@ -156,6 +135,10 @@ echo json_encode($sub);
                 }
             });
         }
+
+        $("#FiltroFilial").change(function () {
+            buscar($("#FiltroFilial").val());
+        });
 
       
         <?php /*

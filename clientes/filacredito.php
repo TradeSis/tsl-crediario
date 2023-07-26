@@ -5,6 +5,7 @@ include_once '../database/filacredito.php';
 
 $filiais = buscaFiliais();
 $sub = buscaSubmissoes();
+$sub = $sub["rows"];
 
 echo json_encode($sub);
 ?>
@@ -148,7 +149,7 @@ echo json_encode($sub);
                 buscar($("#FiltroFilial").val());
             }
         });
-
+        <?php /*
         //**************exporta excel 
         function exportToExcel() {
             $.ajax({
@@ -319,7 +320,7 @@ echo json_encode($sub);
             } else if (selectedOption === "csv") {
                 exportToCSV();
             }
-        });
+        }); */ ?>
 
 
 

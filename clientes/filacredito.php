@@ -4,6 +4,9 @@ include_once '../head.php';
 include_once '../database/filacredito.php';
 
 $filiais = buscaFiliais();
+$sub = buscaSubmissoes();
+
+echo json_encode($sub);
 ?>
 
 

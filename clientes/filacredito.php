@@ -22,7 +22,7 @@ $filiais = buscaFiliais();
                             autocomplete="off">
                             <option value="<?php echo null ?>"><?php echo "Selecione a Filial" ?></option>
                             <?php foreach ($filiais as $filial) { ?>
-                                <option value="<?php echo $filial['id'] ?>"><?php echo $filial['value'] ?>
+                                <option value="<?php echo $filial['value'] ?>"><?php echo $filial['value'] ?>
                                 </option>
                             <?php } ?>
                         </select>
@@ -136,7 +136,7 @@ $filiais = buscaFiliais();
         $("#FiltroFilial").change(function () {
             var selectedFilial = $("#FiltroFilial").val();
             alert("Selected Filial: " + selectedFilial);
-            buscar("DREBES-FIL " + selectedFilial); 
+            buscar(selectedFilial); 
         });
 
         

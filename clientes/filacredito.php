@@ -5,6 +5,8 @@ include_once '../database/filacredito.php';
 
 $filiais = buscaFiliais();
 
+$response = [];
+
 function getUniqueDates($response)
 {
     $uniqueDates = array();
@@ -83,13 +85,11 @@ function getUniqueDates($response)
                             <th class="text-center"></th>
                             <th class="text-center">
                                 <form action="" method="post">
-                                    <select class="form-control" id="dataFilter">
+                                    <select class="form-control" name="dataFilter" id="dataFilter">
                                         <option value="">All Dates</option>
                                         <?php
-                                        // Get unique dates from the response array
                                         $uniqueDates = getUniqueDates($response);
                                         foreach ($uniqueDates as $date) {
-                                            // Set selected attribute if the date matches the current filter
                                             $selected = ($_POST['dataFilter'] == $date) ? 'selected' : '';
                                             echo "<option value='$date' $selected>$date</option>";
                                         }

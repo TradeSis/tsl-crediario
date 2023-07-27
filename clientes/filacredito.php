@@ -5,6 +5,18 @@ include_once '../database/filacredito.php';
 
 $filiais = buscaFiliais();
 
+function getUniqueDates($response)
+{
+    $uniqueDates = array();
+    foreach ($response as $object) {
+        $date = $object['dtinclu'];
+        if (!in_array($date, $uniqueDates)) {
+            $uniqueDates[] = $date;
+        }
+    }
+    return $uniqueDates;
+}
+;
 ?>
 
 
@@ -69,7 +81,22 @@ $filiais = buscaFiliais();
                         </tr>
                         <tr>
                             <th class="text-center"></th>
-                            <th class="text-center"></th>
+                            <th class="text-center">
+                                <form action="" method="post">
+                                    <select class="form-control" id="dataFilter">
+                                        <option value="">All Dates</option>
+                                        <?php
+                                        // Get unique dates from the response array
+                                        $uniqueDates = getUniqueDates($response);
+                                        foreach ($uniqueDates as $date) {
+                                            // Set selected attribute if the date matches the current filter
+                                            $selected = ($_POST['dataFilter'] == $date) ? 'selected' : '';
+                                            echo "<option value='$date' $selected>$date</option>";
+                                        }
+                                        ?>
+                                    </select>
+                                </form>
+                            </th>
                             <th class="text-center"></th>
                             <th class="text-center"></th>
                             <th class="text-center"></th>
@@ -95,7 +122,7 @@ $filiais = buscaFiliais();
     <script>
         buscar($("#FiltroFilial").val());
 
-        function buscar(codigoFilial) {
+        function buscar(codigoFilial, dataFilter) {
             $.ajax({
                 type: 'POST',
                 dataType: 'json',
@@ -104,7 +131,8 @@ $filiais = buscaFiliais();
                     $("#dados").html("Carregando...");
                 },
                 data: {
-                    codigoFilial: codigoFilial
+                    codigoFilial: codigoFilial,
+                    dataFilter: dataFilter 
                 },
                 success: function (response) {
                     var linha = "";

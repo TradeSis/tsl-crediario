@@ -22,7 +22,7 @@ $filiais = buscaFiliais();
                             autocomplete="off">
                             <option value="<?php echo null ?>"><?php echo "Selecione a Filial" ?></option>
                             <?php foreach ($filiais as $filial) { ?>
-                                <option value="<?php echo $filial['value'] ?>"><?php echo $filial['value'] ?>
+                                <option value="<?php echo $filial['id'] ?>"><?php echo $filial['value'] ?>
                                 </option>
                             <?php } ?>
                         </select>

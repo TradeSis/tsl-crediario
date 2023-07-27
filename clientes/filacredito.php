@@ -26,8 +26,6 @@ $filiais = buscaFiliais();
                                 </option>
                             <?php } ?>
                         </select>
-                        <button type="submit" formaction="../database/filacredito.php?operacao=buscar"
-                            class="btn btn-danger" style="margin-right:10px;float: left;">teste</button>
                     </form>
                 </div>
             </div>
@@ -95,7 +93,7 @@ $filiais = buscaFiliais();
 
 
     <script>
-        $("#dados").html("Selecione Filial");
+        buscar($("#FiltroFilial").val());
 
         function buscar(codigoFilial) {
             $.ajax({

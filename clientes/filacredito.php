@@ -183,6 +183,27 @@ $response = [];
             }
         });
         function SelectOptions(data) {
+            let uniqueData = {
+                dtinclu: new Set(),
+                cpfcnpj: new Set(),
+                clicod: new Set(),
+                nome_pessoa: new Set(),
+                etbcad: new Set(),
+                sit_credito: new Set(),
+                tipoconsulta: new Set()
+            };
+
+            for (let i = 0; i < data.length; i++) {
+                let obj = data[i];
+                uniqueData.dtinclu.add(obj.dtinclu);
+                uniqueData.cpfcnpj.add(obj.cpfcnpj);
+                uniqueData.clicod.add(obj.clicod);
+                uniqueData.nome_pessoa.add(obj.nome_pessoa);
+                uniqueData.etbcad.add(obj.etbcad);
+                uniqueData.sit_credito.add(obj.sit_credito);
+                uniqueData.tipoconsulta.add(obj.tipoconsulta);
+            }
+
             let dtincluOptions = '<option value="">Datas</option>';
             let cpfcnpjOptions = '<option value="">Cpf/Cnpj</option>';
             let clicodOptions = '<option value="">Codigo</option>';
@@ -191,16 +212,33 @@ $response = [];
             let sit_creditoOptions = '<option value="">Sit</option>';
             let tipoconsultaOptions = '<option value="">Tipo</option>';
 
-            for (let i = 0; i < data.length; i++) {
-                let obj = data[i];
-                dtincluOptions += '<option value="' + obj.dtinclu + '">' + obj.dtinclu + '</option>';
-                cpfcnpjOptions += '<option value="' + obj.cpfcnpj + '">' + obj.cpfcnpj + '</option>';
-                clicodOptions += '<option value="' + obj.clicod + '">' + obj.clicod + '</option>';
-                nome_pessoaOptions += '<option value="' + obj.nome_pessoa + '">' + obj.nome_pessoa + '</option>';
-                etbcadOptions += '<option value="' + obj.etbcad + '">' + obj.etbcad + '</option>';
-                sit_creditoOptions += '<option value="' + obj.sit_credito + '">' + obj.sit_credito + '</option>';
-                tipoconsultaOptions += '<option value="' + obj.tipoconsulta + '">' + obj.tipoconsulta + '</option>';
-            }
+            uniqueData.dtinclu.forEach(value => {
+                dtincluOptions += '<option value="' + value + '">' + value + '</option>';
+            });
+
+            uniqueData.cpfcnpj.forEach(value => {
+                cpfcnpjOptions += '<option value="' + value + '">' + value + '</option>';
+            });
+
+            uniqueData.clicod.forEach(value => {
+                clicodOptions += '<option value="' + value + '">' + value + '</option>';
+            });
+
+            uniqueData.nome_pessoa.forEach(value => {
+                nome_pessoaOptions += '<option value="' + value + '">' + value + '</option>';
+            });
+
+            uniqueData.etbcad.forEach(value => {
+                etbcadOptions += '<option value="' + value + '">' + value + '</option>';
+            });
+
+            uniqueData.sit_credito.forEach(value => {
+                sit_creditoOptions += '<option value="' + value + '">' + value + '</option>';
+            });
+
+            uniqueData.tipoconsulta.forEach(value => {
+                tipoconsultaOptions += '<option value="' + value + '">' + value + '</option>';
+            });
 
             $("#dataFilter").html(dtincluOptions);
             $("#cpfcnpjFilter").html(cpfcnpjOptions);
@@ -210,6 +248,7 @@ $response = [];
             $("#sitFilter").html(sit_creditoOptions);
             $("#tipoFilter").html(tipoconsultaOptions);
         }
+
 
         //**************exporta excel 
         function exportToExcel() {

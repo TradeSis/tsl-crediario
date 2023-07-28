@@ -79,14 +79,44 @@ $response = [];
                                 </form>
                             </th>
                             <th class="text-center"></th>
+                            <th class="text-center">
+                                <form action="" method="post">
+                                    <select class="form-control" name="cpfcnpjFilter" id="cpfcnpjFilter">
+                                    </select>
+                                </form>
+                            </th>
+                            <th class="text-center">
+                                <form action="" method="post">
+                                    <select class="form-control" name="clicodFilter" id="clicodFilter">
+                                    </select>
+                                </form>
+                            </th>
+                            <th class="text-center">
+                                <form action="" method="post">
+                                    <select class="form-control" name="nomeFilter" id="nomeFilter">
+                                    </select>
+                                </form>
+                            </th>
+                            <th class="text-center">
+                                <form action="" method="post">
+                                    <select class="form-control" name="etbFilter" id="etbFilter">
+                                    </select>
+                                </form>
+                            </th>
+                            <th class="text-center">
+                                <form action="" method="post">
+                                    <select class="form-control" name="sitFilter" id="sitFilter">
+                                    </select>
+                                </form>
+                            </th>
                             <th class="text-center"></th>
                             <th class="text-center"></th>
-                            <th class="text-center"></th>
-                            <th class="text-center"></th>
-                            <th class="text-center"></th>
-                            <th class="text-center"></th>
-                            <th class="text-center"></th>
-                            <th class="text-center"></th>
+                            <th class="text-center">
+                                <form action="" method="post">
+                                    <select class="form-control" name="tipoFilter" id="tipoFilter">
+                                    </select>
+                                </form>
+                            </th>
                             <th class="text-center"></th>
                             <th class="text-center"></th>
                         </tr>
@@ -138,7 +168,7 @@ $response = [];
                     }
 
                     $("#dados").html(linha);
-                    populateSelectOptions(response);
+                    SelectOptions(response);
                 }
             });
         }
@@ -152,14 +182,33 @@ $response = [];
                 buscar($("#FiltroFilial").val());
             }
         });
-        function populateSelectOptions(data) {
-            let selectOptions = '<option value="">All Dates</option>';
+        function SelectOptions(data) {
+            let dtincluOptions = '<option value="">Datas</option>';
+            let cpfcnpjOptions = '<option value="">Cpf/Cnpj</option>';
+            let clicodOptions = '<option value="">Codigo</option>';
+            let nome_pessoaOptions = '<option value="">Cliente</option>';
+            let etbcadOptions = '<option value="">Loja</option>';
+            let sit_creditoOptions = '<option value="">Sit</option>';
+            let tipoconsultaOptions = '<option value="">Tipo</option>';
 
             for (let i = 0; i < data.length; i++) {
-                let dateValue = data[i].dtinclu;
-                selectOptions += '<option value="' + dateValue + '">' + dateValue + '</option>';
+                let obj = data[i];
+                dtincluOptions += '<option value="' + obj.dtinclu + '">' + obj.dtinclu + '</option>';
+                cpfcnpjOptions += '<option value="' + obj.cpfcnpj + '">' + obj.cpfcnpj + '</option>';
+                clicodOptions += '<option value="' + obj.clicod + '">' + obj.clicod + '</option>';
+                nome_pessoaOptions += '<option value="' + obj.nome_pessoa + '">' + obj.nome_pessoa + '</option>';
+                etbcadOptions += '<option value="' + obj.etbcad + '">' + obj.etbcad + '</option>';
+                sit_creditoOptions += '<option value="' + obj.sit_credito + '">' + obj.sit_credito + '</option>';
+                tipoconsultaOptions += '<option value="' + obj.tipoconsulta + '">' + obj.tipoconsulta + '</option>';
             }
-            $("#dataFilter").html(selectOptions);
+
+            $("#dataFilter").html(dtincluOptions);
+            $("#cpfcnpjFilter").html(cpfcnpjOptions);
+            $("#clicodFilter").html(clicodOptions);
+            $("#nomeFilter").html(nome_pessoaOptions);
+            $("#etbFilter").html(etbcadOptions);
+            $("#sitFilter").html(sit_creditoOptions);
+            $("#tipoFilter").html(tipoconsultaOptions);
         }
 
         //**************exporta excel 

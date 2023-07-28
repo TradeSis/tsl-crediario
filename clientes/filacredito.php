@@ -7,18 +7,7 @@ $filiais = buscaFiliais();
 
 $response = [];
 
-function getUniqueDates($response)
-{
-    $uniqueDates = array();
-    foreach ($response as $object) {
-        $date = $object['dtinclu'];
-        if (!in_array($date, $uniqueDates)) {
-            $uniqueDates[] = $date;
-        }
-    }
-    return $uniqueDates;
-}
-;
+
 ?>
 
 
@@ -86,14 +75,6 @@ function getUniqueDates($response)
                             <th class="text-center">
                                 <form action="" method="post">
                                     <select class="form-control" name="dataFilter" id="dataFilter">
-                                        <option value="">All Dates</option>
-                                        <?php
-                                        $uniqueDates = getUniqueDates($response);
-                                        foreach ($uniqueDates as $date) {
-                                            $selected = ($_POST['dataFilter'] == $date) ? 'selected' : '';
-                                            echo "<option value='$date' $selected>$date</option>";
-                                        }
-                                        ?>
                                     </select>
                                 </form>
                             </th>
@@ -132,7 +113,7 @@ function getUniqueDates($response)
                 },
                 data: {
                     codigoFilial: codigoFilial,
-                    dataFilter: dataFilter 
+                    dataFilter: dataFilter
                 },
                 success: function (response) {
                     var linha = "";
@@ -157,6 +138,7 @@ function getUniqueDates($response)
                     }
 
                     $("#dados").html(linha);
+                    populateSelectOptions(response);
                 }
             });
         }
@@ -170,6 +152,15 @@ function getUniqueDates($response)
                 buscar($("#FiltroFilial").val());
             }
         });
+        function populateSelectOptions(data) {
+            let selectOptions = '<option value="">All Dates</option>';
+
+            for (let i = 0; i < data.length; i++) {
+                let dateValue = data[i].dtinclu;
+                selectOptions += '<option value="' + dateValue + '">' + dateValue + '</option>';
+            }
+            $("#dataFilter").html(selectOptions);
+        }
 
         //**************exporta excel 
         function exportToExcel() {

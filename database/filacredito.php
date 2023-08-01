@@ -13,7 +13,7 @@ function buscaFiliais()
 if (isset($_GET['operacao'])) {
     $operacao = $_GET['operacao'];
 
-    if ($operacao == "buscar") {
+    /*if ($operacao == "buscar") {
         if (isset($_POST['codigoFilial'])) {
             $filial = $_POST['codigoFilial'];
             $apiUrl = '/bsweb/erp/neurotech/neuproposta.php?SAIDA=JSON&POR=VENDEDOR&FILIAL=' . $filial;
@@ -28,9 +28,9 @@ if (isset($_GET['operacao'])) {
         }
         echo json_encode($submissoes);
         return $submissoes;
-    }
+    } */
 
-    if ($operacao == "buscarNOVO") {
+    if ($operacao == "buscar") {
 
         $codigoFilial = $_POST['codigoFilial'];
         $dtinclu = $_POST['dtinclu'];

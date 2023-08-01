@@ -5,9 +5,6 @@ include_once '../database/filacredito.php';
 
 $filiais = buscaFiliais();
 
-$response = [];
-
-
 ?>
 
 

@@ -116,10 +116,11 @@ for each estab where (if vetbcod <> 0 then estab.etbcod = vetbcod else true)
             ttneuproposta.tipoconsulta    = neuproposta.tipoconsulta.
             ttneuproposta.neu_cdoperacao    = neuproposta.neu_cdoperacao.
             ttneuproposta.neu_resultado    = neuproposta.neu_resultado.
+            
+            hsaida  = dataset conteudoSaida:handle.
     end.
 end.
 
-hsaida  = dataset conteudoSaida:handle.
 
 /*lokJson = hsaida:WRITE-JSON("LONGCHAR", vlcSaida, TRUE).
 put unformatted string(vlcSaida).

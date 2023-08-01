@@ -131,7 +131,11 @@ $response = [];
 
 
     <script>
-        $("#dados").html("Selecione a Filial");
+        if ($("#FiltroFilial").val() === null) {
+            $("#dados").html("Selecione a Filial");
+        } else {
+            buscar($("#FiltroDtinclu").val(), $("#FiltroCpfcnpj").val(), $("#FiltroNome_pessoa").val(), $("#FiltroFilial").val(), $("#FiltroClicod").val(), $("#FiltroEtbcad").val(), $("#FiltroTipoconsulta").val(), $("#FiltroSit_credito").val());
+        }
 
         function buscar(codigoFilial, dtinclu) {
             $.ajax({

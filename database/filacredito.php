@@ -69,21 +69,18 @@ if (isset($_GET['operacao'])) {
         /*$IP = explode(".", $_SERVER['REMOTE_ADDR']);
         $IP = $IP[2]; */
 
-        $parametros = array(
-			'IP' => $_SERVER['REMOTE_ADDR'],
-			'codigoFilial' => $codigoFilial,
-			'dtinclu' => $dtinclu,
-			'cpfcnpj' => $cpfcnpj,
-			'clicod' => $clicod,
-			'nome_pessoa' => $nome_pessoa,
-			'etbcad' => $etbcad,
-			'sit_credito' => $sit_credito,
-			'tipoconsulta' => $tipoconsulta
-		);
-
-        $apiEntrada = array(
-			'Entrada' => array($parametros)
-		);
+        $apiEntrada = 
+		array("dadosEntrada" => array(
+			array('IP' => $_SERVER['REMOTE_ADDR'],
+                  'codigoFilial' => $codigoFilial,
+                  'dtinclu' => $dtinclu,
+                  'cpfcnpj' => $cpfcnpj,
+                  'clicod' => $clicod,
+                  'nome_pessoa' => $nome_pessoa,
+                  'etbcad' => $etbcad,
+                  'sit_credito' => $sit_credito,
+                  'tipoconsulta' => $tipoconsulta)
+		));
 
 		$submissoes = chamaAPI(null, '/crediario/filacredito', json_encode($apiEntrada), 'GET');
 

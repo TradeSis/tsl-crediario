@@ -20,6 +20,11 @@ if ($metodo=="GET"){
       case "seguros":
         include 'seguros.php';
       break;
+
+      case "filacredito":
+        include 'filacredito.php';
+      break;
+
       default:
         $jsonSaida = json_decode(json_encode(
         array("status" => "400",

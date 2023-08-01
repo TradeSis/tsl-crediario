@@ -74,38 +74,38 @@ $response = [];
                             <th class="text-center"></th>
                             <th class="text-center">
                                 <form action="" method="post">
-                                    <select class="form-control" name="dataFilter" id="dataFilter">
+                                    <select class="form-control" name="dtinclu" id="FiltroDtinclu">
                                     </select>
                                 </form>
                             </th>
                             <th class="text-center"></th>
                             <th class="text-center">
                                 <form action="" method="post">
-                                    <select class="form-control" name="cpfcnpjFilter" id="cpfcnpjFilter">
+                                    <select class="form-control" name="cpfcnpj" id="FiltroCpfcnpj">
                                     </select>
                                 </form>
                             </th>
                             <th class="text-center">
                                 <form action="" method="post">
-                                    <select class="form-control" name="clicodFilter" id="clicodFilter">
+                                    <select class="form-control" name="clicod" id="FiltroClicod">
                                     </select>
                                 </form>
                             </th>
                             <th class="text-center">
                                 <form action="" method="post">
-                                    <select class="form-control" name="nomeFilter" id="nomeFilter">
+                                    <select class="form-control" name="nome_pessoa" id="FiltroNome_pessoa">
                                     </select>
                                 </form>
                             </th>
                             <th class="text-center">
                                 <form action="" method="post">
-                                    <select class="form-control" name="etbFilter" id="etbFilter">
+                                    <select class="form-control" name="etbcad" id="FiltroEtbcad">
                                     </select>
                                 </form>
                             </th>
                             <th class="text-center">
                                 <form action="" method="post">
-                                    <select class="form-control" name="sitFilter" id="sitFilter">
+                                    <select class="form-control" name="sit_credito" id="FiltroSit_credito">
                                     </select>
                                 </form>
                             </th>
@@ -113,7 +113,7 @@ $response = [];
                             <th class="text-center"></th>
                             <th class="text-center">
                                 <form action="" method="post">
-                                    <select class="form-control" name="tipoFilter" id="tipoFilter">
+                                    <select class="form-control" name="tipoconsulta" id="FiltroTipoconsulta">
                                     </select>
                                 </form>
                             </th>
@@ -131,9 +131,9 @@ $response = [];
 
 
     <script>
-        buscar($("#FiltroFilial").val());
+        $("#dados").html("Selecione a Filial");
 
-        function buscar(codigoFilial, dataFilter) {
+        function buscar(codigoFilial, dtinclu) {
             $.ajax({
                 type: 'POST',
                 dataType: 'json',
@@ -143,7 +143,13 @@ $response = [];
                 },
                 data: {
                     codigoFilial: codigoFilial,
-                    dataFilter: dataFilter
+                    dtinclu: dtinclu,
+                    cpfcnpj: cpfcnpj,
+                    clicod: clicod,
+                    nome_pessoa: nome_pessoa,
+                    etbcad: etbcad,
+                    sit_credito: sit_credito,
+                    tipoconsulta: tipoconsulta
                 },
                 success: function (response) {
                     var linha = "";
@@ -174,12 +180,40 @@ $response = [];
         }
 
         $("#FiltroFilial").change(function () {
-            buscar($("#FiltroFilial").val());
+            buscar($("#FiltroDtinclu").val(), $("#FiltroCpfcnpj").val(), $("#FiltroNome_pessoa").val(), $("#FiltroFilial").val(), $("#FiltroClicod").val(), $("#FiltroEtbcad").val(), $("#FiltroTipoconsulta").val(), $("#FiltroSit_credito").val());
+        });
+
+        $("#FiltroDtinclu").change(function () {
+            buscar($("#FiltroDtinclu").val(), $("#FiltroCpfcnpj").val(), $("#FiltroNome_pessoa").val(), $("#FiltroFilial").val(), $("#FiltroClicod").val(), $("#FiltroEtbcad").val(), $("#FiltroTipoconsulta").val(), $("#FiltroSit_credito").val());
+        });
+
+        $("#FiltroCpfcnpj").change(function () {
+            buscar($("#FiltroDtinclu").val(), $("#FiltroCpfcnpj").val(), $("#FiltroNome_pessoa").val(), $("#FiltroFilial").val(), $("#FiltroClicod").val(), $("#FiltroEtbcad").val(), $("#FiltroTipoconsulta").val(), $("#FiltroSit_credito").val());
+        });
+
+        $("#FiltroClicod").change(function () {
+            buscar($("#FiltroDtinclu").val(), $("#FiltroCpfcnpj").val(), $("#FiltroNome_pessoa").val(), $("#FiltroFilial").val(), $("#FiltroClicod").val(), $("#FiltroEtbcad").val(), $("#FiltroTipoconsulta").val(), $("#FiltroSit_credito").val());
+        });
+
+        $("#FiltroNome_pessoa").change(function () {
+            buscar($("#FiltroDtinclu").val(), $("#FiltroCpfcnpj").val(), $("#FiltroNome_pessoa").val(), $("#FiltroFilial").val(), $("#FiltroClicod").val(), $("#FiltroEtbcad").val(), $("#FiltroTipoconsulta").val(), $("#FiltroSit_credito").val());
+        });
+
+        $("#FiltroEtbcad").change(function () {
+            buscar($("#FiltroDtinclu").val(), $("#FiltroCpfcnpj").val(), $("#FiltroNome_pessoa").val(), $("#FiltroFilial").val(), $("#FiltroClicod").val(), $("#FiltroEtbcad").val(), $("#FiltroTipoconsulta").val(), $("#FiltroSit_credito").val());
+        });
+
+        $("#FiltroTipoconsulta").click(function () {
+            buscar($("#FiltroDtinclu").val(), $("#FiltroCpfcnpj").val(), $("#FiltroNome_pessoa").val(), $("#FiltroFilial").val(), $("#FiltroClicod").val(), $("#FiltroEtbcad").val(), $("#FiltroTipoconsulta").val(), $("#FiltroSit_credito").val());
+        });
+
+        $("#FiltroSit_credito").click(function () {
+            buscar($("#FiltroDtinclu").val(), $("#FiltroCpfcnpj").val(), $("#FiltroNome_pessoa").val(), $("#FiltroFilial").val(), $("#FiltroClicod").val(), $("#FiltroEtbcad").val(), $("#FiltroTipoconsulta").val(), $("#FiltroSit_credito").val());
         });
 
         document.addEventListener("keypress", function (e) {
             if (e.key === "Enter") {
-                buscar($("#FiltroFilial").val());
+                buscar($("#FiltroDtinclu").val(), $("#FiltroCpfcnpj").val(), $("#FiltroNome_pessoa").val(), $("#FiltroFilial").val(), $("#FiltroClicod").val(), $("#FiltroEtbcad").val(), $("#FiltroTipoconsulta").val(), $("#FiltroSit_credito").val());
             }
         });
         function SelectOptions(data) {
@@ -240,13 +274,13 @@ $response = [];
                 tipoconsultaOptions += '<option value="' + value + '">' + value + '</option>';
             });
 
-            $("#dataFilter").html(dtincluOptions);
-            $("#cpfcnpjFilter").html(cpfcnpjOptions);
-            $("#clicodFilter").html(clicodOptions);
-            $("#nomeFilter").html(nome_pessoaOptions);
-            $("#etbFilter").html(etbcadOptions);
-            $("#sitFilter").html(sit_creditoOptions);
-            $("#tipoFilter").html(tipoconsultaOptions);
+            $("#dtinclu").html(dtincluOptions);
+            $("#cpfcnpj").html(cpfcnpjOptions);
+            $("#clicod").html(clicodOptions);
+            $("#nome_pessoa").html(nome_pessoaOptions);
+            $("#etbcad").html(etbcadOptions);
+            $("#sit_credito").html(sit_creditoOptions);
+            $("#tipoconsulta").html(tipoconsultaOptions);
         }
 
 
@@ -257,7 +291,14 @@ $response = [];
                 dataType: 'json',
                 url: '../database/filacredito.php?operacao=buscar',
                 data: {
-                    codigoFilial: $("#FiltroFilial").val()
+                    codigoFilial: $("#FiltroFilial").val(),
+                    dtinclu: $("#FiltroDtinclu").val(),
+                    cpfcnpj: $("#FiltroCpfcnpj").val(),
+                    clicod: $("#FiltroClicod").val(),
+                    nome_pessoa: $("#FiltroNome_pessoa").val(),
+                    etbcad: $("#FiltroEtbcad").val(),
+                    sit_credito: $("#FiltroSit_credito").val(),
+                    tipoconsulta: $("#FiltroTipoconsulta").val()
                 },
                 success: function (json) {
                     var excelContent =
@@ -313,7 +354,14 @@ $response = [];
                 dataType: 'json',
                 url: '../database/filacredito.php?operacao=buscar',
                 data: {
-                    codigoFilial: $("#FiltroFilial").val()
+                    codigoFilial: $("#FiltroFilial").val(),
+                    dtinclu: $("#FiltroDtinclu").val(),
+                    cpfcnpj: $("#FiltroCpfcnpj").val(),
+                    clicod: $("#FiltroClicod").val(),
+                    nome_pessoa: $("#FiltroNome_pessoa").val(),
+                    etbcad: $("#FiltroEtbcad").val(),
+                    sit_credito: $("#FiltroSit_credito").val(),
+                    tipoconsulta: $("#FiltroTipoconsulta").val()
                 },
                 success: function (json) {
                     var csvContent = "data:text/csv;charset=utf-8,\uFEFF";
@@ -359,7 +407,14 @@ $response = [];
                 dataType: 'json',
                 url: '../database/filacredito.php?operacao=buscar',
                 data: {
-                    codigoFilial: $("#FiltroFilial").val()
+                    codigoFilial: $("#FiltroFilial").val(),
+                    dtinclu: $("#FiltroDtinclu").val(),
+                    cpfcnpj: $("#FiltroCpfcnpj").val(),
+                    clicod: $("#FiltroClicod").val(),
+                    nome_pessoa: $("#FiltroNome_pessoa").val(),
+                    etbcad: $("#FiltroEtbcad").val(),
+                    sit_credito: $("#FiltroSit_credito").val(),
+                    tipoconsulta: $("#FiltroTipoconsulta").val()
                 },
                 success: function (json) {
                     var tableContent =

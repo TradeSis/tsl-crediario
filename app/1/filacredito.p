@@ -23,16 +23,16 @@ def temp-table ttentrada serialize-name "dadosEntrada"
 def temp-table ttneuproposta  no-undo serialize-name "neuproposta"
     field etbcod   as int
     field dtinclu     as date format "99/99/9999"
-    field hrinclu     as time
-    field cpfcnpj  as int
+    field hrinclu     as int
+    field cpfcnpj  as dec decimals 0
     field clicod   as int
     field nome_pessoa   as char
     field etbcad     as int
     field sit_credito     as char
-    field vctolimite     as format "99/99/9999"
+    field vctolimite     as date format "99/99/9999"
     field vlrlimite     as int
     field tipoconsulta     as char
-    field neu_cdoperacao     as int
+    field neu_cdoperacao     as char
     field neu_resultado     as char.
 
 def temp-table ttsaida  no-undo serialize-name "conteudoSaida"
@@ -41,7 +41,7 @@ def temp-table ttsaida  no-undo serialize-name "conteudoSaida"
 
 
 hEntrada = temp-table ttentrada:HANDLE.
-hentrada:READ-JSON("longchar",lcjsonentrada, "EMPTY").
+hentrada:READ-JSON("longchar",vlcentrada, "EMPTY").
 
 
 find first ttentrada no-error.
@@ -72,7 +72,7 @@ vip = ttentrada.IP.
 vetbcod  = 0.
 vetbcod  = ttentrada.codigoFilial.
 
-par-data = today - 7.
+par-data = today - 7000.
 
 find first estab where estab.etbcod = vetbcod no-lock no-error.
 vetbcod = if avail estab then estab.etbcod else 0.
@@ -119,7 +119,7 @@ for each estab where (if vetbcod <> 0 then estab.etbcod = vetbcod else true)
     end.
 end.
 
-hsaida  = dataset conteudoSaida:handle.
+hsaida  = temp-table ttneuproposta:handle.
 
 /*lokJson = hsaida:WRITE-JSON("LONGCHAR", vlcSaida, TRUE).
 put unformatted string(vlcSaida).

@@ -33,37 +33,13 @@ if (isset($_GET['operacao'])) {
     if ($operacao == "buscar") {
 
         $codigoFilial = $_POST['codigoFilial'];
-        $dtinclu = $_POST['dtinclu'];
-        $cpfcnpj = $_POST['cpfcnpj'];
-        $clicod = $_POST['clicod'];
         $nome_pessoa = $_POST['nome_pessoa'];
-        $etbcad = $_POST['etbcad'];
-        $sit_credito = $_POST['sit_credito'];
-        $tipoconsulta = $_POST['tipoconsulta'];
 
         if ($codigoFilial == "") {
             $codigoFilial = null;
         }
-        if ($dtinclu == "") {
-            $dtinclu = null;
-        }
-        if ($cpfcnpj == "") {
-            $cpfcnpj = null;
-        }
-        if ($clicod == "") {
-            $clicod = null;
-        }
         if ($nome_pessoa == "") {
             $nome_pessoa = null;
-        }
-        if ($etbcad == "") {
-            $etbcad = null;
-        }
-        if ($sit_credito == "") {
-            $sit_credito = null;
-        }
-        if ($tipoconsulta == "") {
-            $tipoconsulta = null;
         }
 
         /*$IP = explode(".", $_SERVER['REMOTE_ADDR']);
@@ -71,15 +47,8 @@ if (isset($_GET['operacao'])) {
 
         $apiEntrada = 
 		array("dadosEntrada" => array(
-			array('IP' => $_SERVER['REMOTE_ADDR'],
-                  'codigoFilial' => $codigoFilial,
-                  'dtinclu' => $dtinclu,
-                  'cpfcnpj' => $cpfcnpj,
-                  'clicod' => $clicod,
-                  'nome_pessoa' => $nome_pessoa,
-                  'etbcad' => $etbcad,
-                  'sit_credito' => $sit_credito,
-                  'tipoconsulta' => $tipoconsulta)
+			array('codigoFilial' => $codigoFilial,
+                  'nome_pessoa' => $nome_pessoa)
 		));
 
 		$submissoes = chamaAPI(null, '/crediario/filacredito', json_encode($apiEntrada), 'GET');

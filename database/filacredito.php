@@ -55,7 +55,6 @@ if (isset($_GET['operacao'])) {
 
         if (isset($submissoes["neuproposta"])) {
             $submissoes = $submissoes["neuproposta"]; // TRATAMENTO DO RETORNO
-            $submissoes = $submissoes[0]; // TRATAMENTO DO RETORNO
         }
         echo json_encode($submissoes);
         return $submissoes;

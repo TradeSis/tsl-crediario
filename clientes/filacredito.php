@@ -5,7 +5,7 @@ include_once '../database/filacredito.php';
 
 
 $vfilial = explode(".", $_SERVER['REMOTE_ADDR']);
-//$vfilial = explode(".", "10.145.1.60");
+//$vfilial = explode(".", "10.145.0.60");
 $vfilial = $vfilial[2];
 
 $filiais = buscaFiliais();
@@ -93,7 +93,8 @@ $filiais = buscaFiliais();
     <script>
         buscar($("#FiltroFilial").val(), $("#FiltroNome_pessoa").val());
 
-        function buscar(codigoFilial) {
+        function buscar(codigoFilial, nome_pessoa) {
+            alert("Sending data - codigoFilial: " + codigoFilial + ", nome_pessoa: " + nome_pessoa);
             $.ajax({
                 type: 'POST',
                 dataType: 'json',
@@ -106,11 +107,9 @@ $filiais = buscaFiliais();
                     nome_pessoa: nome_pessoa
                 },
                 success: function (response) {
-                    alert(response);
                     var linha = "";
                     for (var i = 0; i < response.length; i++) {
                         var object = response[i];
-                        alert(object);
                         linha += "<tr>";
                         linha += "<td>" + object.etbcod + "</td>";
                         linha += "<td>" + object.dtinclu + "</td>";
@@ -128,6 +127,9 @@ $filiais = buscaFiliais();
                         linha += "</tr>";
                     }
                     $("#dados").html(linha);
+                },
+                error: function (error) {
+                    alert("An error occurred: " + error.statusText);
                 }
             });
         }

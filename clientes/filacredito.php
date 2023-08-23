@@ -94,7 +94,6 @@ $filiais = buscaFiliais();
         buscar($("#FiltroFilial").val(), $("#FiltroNome_pessoa").val());
 
         function buscar(codigoFilial, nome_pessoa) {
-            alert("Sending data - codigoFilial: " + codigoFilial + ", nome_pessoa: " + nome_pessoa);
             $.ajax({
                 type: 'POST',
                 dataType: 'json',
@@ -107,6 +106,7 @@ $filiais = buscaFiliais();
                     nome_pessoa: nome_pessoa
                 },
                 success: function (response) {
+                    alert("Sending data - codigoFilial: " + codigoFilial + ", nome_pessoa: " + nome_pessoa);
                     var linha = "";
                     for (var i = 0; i < response.length; i++) {
                         var object = response[i];

@@ -106,6 +106,7 @@ $filiais = buscaFiliais();
                     nome_pessoa: nome_pessoa
                 },
                 success: function (response) {
+                    alert(response);
                     var linha = "";
                     for (var i = 0; i < response.length; i++) {
                         var object = response[i];

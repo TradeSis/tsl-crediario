@@ -53,10 +53,10 @@ if (isset($_GET['operacao'])) {
 
 		$submissoes = chamaAPI(null, '/crediario/filacredito', json_encode($apiEntrada), 'GET');
 
-        echo json_encode($submissoes);
         if (isset($submissoes["neuproposta"])) {
             $submissoes = $submissoes["neuproposta"]; // TRATAMENTO DO RETORNO
         }
+        echo json_encode($submissoes);
         return $submissoes;
 
     }

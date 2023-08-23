@@ -96,7 +96,7 @@ $filiais = buscaFiliais();
         function buscar(codigoFilial, nome_pessoa) {
             $.ajax({
                 type: 'POST',
-                dataType: 'json',
+                dataType: 'html',
                 url: '../database/filacredito.php?operacao=buscar',
                 beforeSend: function () {
                     $("#dados").html("Carregando...");
@@ -110,6 +110,7 @@ $filiais = buscaFiliais();
                     var linha = "";
                     for (var $i = 0; $i < json.length; $i++) {
                         var object = json[$i];
+                        
                         linha += "<tr>";
                         linha += "<td>" + object.etbcod + "</td>";
                         linha += "<td>" + object.dtinclu + "</td>";

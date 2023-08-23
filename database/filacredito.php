@@ -55,9 +55,7 @@ if (isset($_GET['operacao'])) {
 
         if (isset($submissoes["neuproposta"])) {
             $submissoes = $submissoes["neuproposta"]; 
-            $submissoes = json_decode($submissoes); 
         }
-        echo json_encode($submissoes);
         return $submissoes;
 
     }

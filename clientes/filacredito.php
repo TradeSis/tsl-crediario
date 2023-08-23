@@ -105,11 +105,11 @@ $filiais = buscaFiliais();
                     codigoFilial: codigoFilial,
                     nome_pessoa: nome_pessoa
                 },
-                success: function (response) {
-                    alert(response);
+                success: function (msg) {
+                    var json = JSON.parse(msg);
                     var linha = "";
-                    for (var i = 0; i < response.length; i++) {
-                        var object = response[i];
+                    for (var $i = 0; $i < json.length; $i++) {
+                        var object = json[$i];
                         linha += "<tr>";
                         linha += "<td>" + object.etbcod + "</td>";
                         linha += "<td>" + object.dtinclu + "</td>";

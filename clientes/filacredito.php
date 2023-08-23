@@ -12,14 +12,12 @@ $filiais = buscaFiliais();
 
 ?>
 
-
 <body class="bg-transparent">
     <div class="container-fluid text-center mt-4">
         <div class="row">
             <div class="col-sm-2">
                 <p class="tituloTabela">Fila Credito</p>
             </div>
-
             <div class="col-sm-2" style="margin-top:-10px;">
                 <div class="input-group">
                     <form action="" method="post">
@@ -34,8 +32,8 @@ $filiais = buscaFiliais();
                             </select>
                         <?php } else { ?>
                             <input type="text" class="form-control" value="DREBES-FIL <?php echo $vfilial ?>" readonly>
-                            <input type="number" class="form-control" value="<?php echo $vfilial ?>"
-                                name="codigoFilial" id="FiltroFilial" hidden>
+                            <input type="number" class="form-control" value="<?php echo $vfilial ?>" name="codigoFilial"
+                                id="FiltroFilial" hidden>
                         <?php } ?>
                     </form>
                 </div>
@@ -63,12 +61,7 @@ $filiais = buscaFiliais();
             <div class="col-sm-1" style="margin-left:-30px;">
                 <button class="btn btn-warning" id="export" name="export" type="submit">Gerar</button>
             </div>
-
-
-
         </div>
-
-
 
         <div class="card mt-2">
             <div class="table table-sm table-hover table-striped table-wrapper-scroll-y my-custom-scrollbar diviFrame">
@@ -97,8 +90,6 @@ $filiais = buscaFiliais();
         </div>
     </div>
 
-
-
     <script>
         buscar($("#FiltroFilial").val(), $("#FiltroNome_pessoa").val());
 
@@ -113,13 +104,13 @@ $filiais = buscaFiliais();
                 data: {
                     codigoFilial: codigoFilial,
                     nome_pessoa: nome_pessoa
-
                 },
                 success: function (response) {
+                    alert(response);
                     var linha = "";
                     for (var i = 0; i < response.length; i++) {
                         var object = response[i];
-
+                        alert(object);
                         linha += "<tr>";
                         linha += "<td>" + object.etbcod + "</td>";
                         linha += "<td>" + object.dtinclu + "</td>";
@@ -136,9 +127,7 @@ $filiais = buscaFiliais();
                         linha += "<td>" + object.neu_resultado + "</td>";
                         linha += "</tr>";
                     }
-
                     $("#dados").html(linha);
-                    SelectOptions(response);
                 }
             });
         }
@@ -150,12 +139,12 @@ $filiais = buscaFiliais();
             buscar($("#FiltroFilial").val(), $("#FiltroNome_pessoa").val());
         });
 
-
         document.addEventListener("keypress", function (e) {
             if (e.key === "Enter") {
-                buscar($("#FiltroNome_pessoa").val());
+                buscar($("#FiltroFilial").val(), $("#FiltroNome_pessoa").val());
             }
         });
+
 
         //**************exporta excel 
         function exportToExcel() {

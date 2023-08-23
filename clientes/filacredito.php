@@ -106,7 +106,6 @@ $filiais = buscaFiliais();
                     nome_pessoa: nome_pessoa
                 },
                 success: function (response) {
-                    alert("Sending data - codigoFilial: " + codigoFilial + ", nome_pessoa: " + nome_pessoa);
                     var linha = "";
                     for (var i = 0; i < response.length; i++) {
                         var object = response[i];
@@ -127,9 +126,6 @@ $filiais = buscaFiliais();
                         linha += "</tr>";
                     }
                     $("#dados").html(linha);
-                },
-                error: function (error) {
-                    alert("An error occurred: " + error.statusText);
                 }
             });
         }

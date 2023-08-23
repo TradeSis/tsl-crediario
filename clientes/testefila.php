@@ -11,7 +11,6 @@ include_once('../head.php');
                     <div class="card-body px-lg-4 py-lg-6">
                         <form role="form" action="../database/filacredito.php?operacao=buscar" method="post">
                             <div class="form-group mb-3">
-
                                 <div class="input-group input-group-alternative">
                                     <input class="form-control" placeholder="codigoFilial" type="text" name="codigoFilial"
                                         autocomplete="off" autofocus="on">
@@ -31,9 +30,6 @@ include_once('../head.php');
             </div>
         </div>
     </div>
-
-
-
 </body>
 
 </html>

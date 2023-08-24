@@ -14,6 +14,9 @@ function buscaFiliais($codigoFilial=null)
             )
         );
     $filiais = chamaAPI(null, '/crediario/estab', json_encode($apiEntrada), 'GET');
+    if (isset($filiais["conteudoSaida"])) {
+        $filiais = $filiais["conteudoSaida"]; // TRATAMENTO DO RETORNO
+	}
     return $filiais;
 }
 

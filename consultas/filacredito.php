@@ -3,8 +3,15 @@
 include_once '../head.php';
 include_once '../database/filacredito.php';
 
-
-$filiais = buscaFiliais();
+$vfilial = explode(".", $_SERVER['REMOTE_ADDR']);
+if ($vfilial[0] == 172 or $vfilial[0] == 192) {
+    if ($vfilial[1] == 17 or $vfilial[1] == 23 or $vfilial[1] == 168) {
+        $codigoFilial == $vfilial[2];
+        $filiais = buscaFiliais($codigoFilial);
+    }
+} else {
+    $filiais = buscaFiliais();
+}
 
 ?>
 
@@ -17,19 +24,19 @@ $filiais = buscaFiliais();
             <div class="col-sm-2" style="margin-top:-10px;">
                 <div class="input-group">
                     <form action="" method="post">
-                        <?php if ($vfilial == 0) { ?>
-                            <select class="form-control text-center" name="codigoFilial" id="FiltroFilial"
-                                autocomplete="off">
-                                <option value="<?php echo null ?>"><?php echo "Selecione a Filial" ?></option>
-                                <?php foreach ($filiais as $filial) { ?>
-                                    <option value="<?php echo $filial['id'] ?>"><?php echo $filial['value'] ?>
-                                    </option>
-                                <?php } ?>
-                            </select>
-                        <?php } else { ?>
-                            <input type="text" class="form-control" value="DREBES-FIL <?php echo $vfilial ?>" readonly>
-                            <input type="number" class="form-control" value="<?php echo $vfilial ?>" name="codigoFilial"
+                        <?php if (isset($filiais['id'])) { ?>
+                            <input type="text" class="form-control" value="<?php echo $filial['value'] ?>" readonly>
+                            <input type="number" class="form-control" value="<?php echo $filial['id'] ?>" name="codigoFilial"
                                 id="FiltroFilial" hidden>
+                            <?php } else { ?>
+                                <select class="form-control text-center" name="codigoFilial" id="FiltroFilial"
+                                    autocomplete="off">
+                                    <option value="<?php echo null ?>"><?php echo "Selecione a Filial" ?></option>
+                                    <?php foreach ($filiais as $filial) { ?>
+                                        <option value="<?php echo $filial['id'] ?>"><?php echo $filial['value'] ?>
+                                        </option>
+                                    <?php } ?>
+                                </select>
                         <?php } ?>
                     </form>
                 </div>

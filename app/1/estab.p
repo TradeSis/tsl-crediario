@@ -10,12 +10,16 @@ def var hentrada as handle.
 def var hsaida   as handle.
 
 def temp-table ttentrada serialize-name "dadosEntrada"
-    field numeroFilial  as int .
+    field codigoFilial  as int .
 
 def temp-table ttsaida  no-undo serialize-name "conteudoSaida"
     field tstatus        as int serialize-name "status"
     field descricaoStatus      as char.
 
+def temp-table ttestab no-undo serialize-name "conteudoSaida"
+    field etbcod as int  serialize-name "id"
+    field etbnom as char serialize-name "value"
+index estab etbcod.
 
 hEntrada = temp-table ttentrada:HANDLE.
 hentrada:READ-JSON("longchar",vlcentrada, "EMPTY").
@@ -35,80 +39,13 @@ then do:
     return.
 end.
 
-def var vip    as char.
-def var vetbcod as int.
-    
-def var vip1 as int.
-def var vip2 as int.
-    
-
-vetbcod = ttentrada.numeroFilial.
-
-find estab where estab.etbcod = vetbcod no-lock no-error.
-if not avail estab
-then vetbcod = 0.
-
-
-def var par-data as date.
-par-data = today - 10.
-def temp-table ttestab no-undo
-        field etbcod as int
-index estab etbcod.
-
-/* testa IP */
-
-if vetbcod <> 0
-then do:
+for each estab where (if ttentrada.codigoFilial = ? 
+                      then true 
+                      else estab.etbcod = ttentrada.codigoFilial)
+                     no-lock.
         create ttestab.
-        ttestab.etbcod = vetbcod.
-end.
-else do:
-    find first ttestab no-error.
-    if not  avail ttestab
-    then do:
-        for each agfilcre where agfilcre.tipo = "NEUROTECH" no-lock.
-                        find first ttestab where
-                ttestab.etbcod = agfilcre.etbcod no-error.
-        if not avail ttestab
-        then do:
-                create ttestab.
-                ttestab.etbcod = agfilcre.etbcod.
-        end.
-
-        end.
-
-
-    end.
-    find first ttestab no-error.
-    if not  avail ttestab
-    then do:
-        for each estab no-lock.
-                        find first ttestab where
-                ttestab.etbcod = estab.etbcod no-error.
-        if not avail ttestab
-        then do:
-                create ttestab.
-                ttestab.etbcod = estab.etbcod.
-        end.
-
-        end.
-
-
-    end.
-
-end.
-
-def var vtotal as int.
-
-
-vtotal = 0.
-for each ttestab  no-lock.
-vtotal = vtotal + 1.
-end.
-
-
-for each ttestab no-lock.
-find estab where estab.etbcod = ttestab.etbcod no-lock.
+        ttestab.etbcod = estab.etbcod.
+        ttestab.etbnom = estab.etbnom.
 
 end.
 

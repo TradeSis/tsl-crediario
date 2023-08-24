@@ -3,8 +3,10 @@
 include_once '../head.php';
 include_once '../database/filacredito.php';
 
-$vfilial = explode(".", "172.17.188.60");
-//$vfilial = explode(".", $_SERVER['REMOTE_ADDR']);
+$IP = $_SERVER['REMOTE_ADDR'];
+$IP = "172.17.188.14";
+
+$vfilial = explode(".", $IP);
 if ($vfilial[0] == 172 || $vfilial[0] == 192) {
     if ($vfilial[1] == 17 || $vfilial[1] == 23 || $vfilial[1] == 168) {
         $codigoFilial = $vfilial[2];

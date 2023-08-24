@@ -35,15 +35,12 @@ then do:
     return.
 end.
 
-def var vparam as char.
 def var vip    as char.
 def var vetbcod as int.
     
 def var vip1 as int.
 def var vip2 as int.
     
-import unformatted vparam.
-input close.
 
 
 vip = ttentrada.numeroFilial.

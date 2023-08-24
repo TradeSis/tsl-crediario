@@ -10,7 +10,7 @@ def var hentrada as handle.
 def var hsaida   as handle.
 
 def temp-table ttentrada serialize-name "dadosEntrada"
-    field numeroFilial  as char .
+    field numeroFilial  as int .
 
 def temp-table ttsaida  no-undo serialize-name "conteudoSaida"
     field tstatus        as int serialize-name "status"

@@ -42,7 +42,6 @@ def var vetbcod as int.
 def var vip1 as int.
 def var vip2 as int.
     
-input from value(par-arquivoentrada) no-echo.
 import unformatted vparam.
 input close.
 

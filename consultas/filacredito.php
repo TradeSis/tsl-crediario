@@ -11,11 +11,11 @@ if ($vfilial[0] == 172 || $vfilial[0] == 192) {
     if ($vfilial[1] == 17 || $vfilial[1] == 23 || $vfilial[1] == 168) {
         $codigoFilial = $vfilial[2];
         $filiais = buscaFiliais($codigoFilial);
+        $filiais = $filiais[0];
     }
 } else {
     $filiais = buscaFiliais();
 }
-
 ?>
 
 <body class="bg-transparent">

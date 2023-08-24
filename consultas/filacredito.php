@@ -4,7 +4,6 @@ include_once '../head.php';
 include_once '../database/filacredito.php';
 
 $IP = $_SERVER['REMOTE_ADDR'];
-$IP = "172.17.188.14";
 
 $vfilial = explode(".", $IP);
 if ($vfilial[0] == 172 || $vfilial[0] == 192) {

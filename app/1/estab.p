@@ -44,10 +44,9 @@ def var vip2 as int.
 
 vetbcod = ttentrada.numeroFilial.
 
-    find estab where estab.etbcod = vetbcod no-lock no-error.
-    if not avail estab
-    then vetbcod = 0.
-end.
+find estab where estab.etbcod = vetbcod no-lock no-error.
+if not avail estab
+then vetbcod = 0.
 
 
 def var par-data as date.

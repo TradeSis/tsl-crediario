@@ -111,17 +111,21 @@ $filiais = buscaFiliais();
                     for (var $i = 0; $i < json.length; $i++) {
                         var object = json[$i];
 
+                        var dtinclu = new Date(object.dtinclu);
+                        var dtincluForm = dtinclu.toLocaleDateString("pt-BR");
+                        var vctolimite = new Date(object.vctolimite);
+                        var vctolimiteForm = vctolimite.toLocaleDateString("pt-BR");
 
                         linha += "<tr>";
                         linha += "<td>" + object.etbcod + "</td>";
-                        linha += "<td>" + object.dtinclu + "</td>";
+                        linha += "<td>" + dtincluForm + "</td>";
                         linha += "<td>" + object.hrinclu + "</td>";
                         linha += "<td>" + object.cpfcnpj + "</td>";
                         linha += "<td>" + object.clicod + "</td>";
                         linha += "<td>" + object.nome_pessoa + "</td>";
                         linha += "<td>" + object.etbcad + "</td>";
                         linha += "<td>" + object.sit_credito + "</td>";
-                        linha += "<td>" + object.vctolimite + "</td>";
+                        linha += "<td>" + vctolimiteForm + "</td>";
                         linha += "<td>" + object.vlrlimite + "</td>";
                         linha += "<td>" + object.tipoconsulta + "</td>";
                         linha += "<td>" + object.neu_cdoperacao + "</td>";

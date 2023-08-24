@@ -25,7 +25,13 @@ if ($vfilial[0] == 172 or $vfilial[0] == 192) {
     function buscaFiliais()
     {
         $filiais = array();
-        $filiais = chamaAPI(null, '/crediario/estab', null, 'GET');
+        $apiEntrada =
+        array(
+            "dadosEntrada" => array(
+                array('numeroFilial' => null)
+            )
+        );
+        $filiais = chamaAPI(null, '/crediario/estab', json_encode($apiEntrada), 'GET');
         return $filiais;
     }
 }

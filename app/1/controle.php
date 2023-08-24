@@ -25,6 +25,10 @@ if ($metodo=="GET"){
         include 'filacredito.php';
       break;
 
+      case "estab":
+        include 'estab.php';
+      break;
+
       default:
         $jsonSaida = json_decode(json_encode(
         array("status" => "400",

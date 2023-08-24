@@ -3,10 +3,14 @@
 
 include_once('../conexao.php');
 
-function buscaFiliais()
+function buscaFiliais($numeroFilial)
 {
     $filiais = array();
-    $filiais = chamaAPI('http://10.145.0.233', '/bsweb/erp/zoom/estab.php?POR=MEUIP', null, 'GET');
+    $apiEntrada = 
+    array("dadosEntrada" => array(
+        array('numeroFilial' => $numeroFilial)
+    ));
+    $filiais = chamaAPI(null, '/crediario/estab', json_encode($apiEntrada), 'GET');
     return $filiais;
 }
 

@@ -105,8 +105,8 @@ $filiais = buscaFiliais();
                     codigoFilial: codigoFilial,
                     nome_pessoa: nome_pessoa
                 },
-                success: function (msg) {
-                    var json = JSON.parse(msg);
+                success: function (response) {
+                    var json = JSON.parse(response);
                     var linha = "";
                     for (var $i = 0; $i < json.length; $i++) {
                         var object = json[$i];
@@ -132,7 +132,7 @@ $filiais = buscaFiliais();
             });
         }
 
-        $("#FiltroFilial").click(function () {
+        $("#FiltroFilial").change(function () {
             buscar($("#FiltroFilial").val(), $("#FiltroNome_pessoa").val());
         });
         $("#buscar").click(function () {

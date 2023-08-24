@@ -10,7 +10,7 @@ def var hentrada as handle.
 def var hsaida   as handle.
 
 def temp-table ttentrada serialize-name "dadosEntrada"
-    field numeroFilial  as int .
+    field numeroFilial  as char .
 
 def temp-table ttsaida  no-undo serialize-name "conteudoSaida"
     field tstatus        as int serialize-name "status"
@@ -42,28 +42,12 @@ def var vip1 as int.
 def var vip2 as int.
     
 
+vetbcod = ttentrada.numeroFilial.
 
-vip = ttentrada.numeroFilial.
-
-vetbcod = 0.
-
-if num-entries(vip,".") = 4 
-then do:
-        vip1 = int(entry(1,vip,".")).
-        vip2 = int(entry(2,vip,".")).
-        if vip1 = 172 or vip1 = 192
-        then do:
-                if vip2 = 17 or vip2 = 23 or vip2 = 168
-                then do:
-                        vetbcod = int(entry(3,vip,".")).
-                        find estab where estab.etbcod = vetbcod no-lock no-error.
-                        if not avail estab
-                        then vetbcod = 0.
-                end.
-        end.
+    find estab where estab.etbcod = vetbcod no-lock no-error.
+    if not avail estab
+    then vetbcod = 0.
 end.
-
-
 
 
 def var par-data as date.

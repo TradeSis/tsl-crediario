@@ -4,11 +4,7 @@ include_once '../head.php';
 include_once '../database/filacredito.php';
 
 
-$vfilial = explode(".", $_SERVER['REMOTE_ADDR']);
-//$vfilial = explode(".", "10.145.0.60");
-$vfilial = $vfilial[2];
-
-$filiais = buscaFiliais($_SERVER['REMOTE_ADDR']);
+$filiais = buscaFiliais();
 
 ?>
 

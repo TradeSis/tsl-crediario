@@ -3,30 +3,55 @@
 include_once '../head.php';
 include_once '../database/filacredito.php';
 
-$filiais = buscaFiliais();
+$IP = $_SERVER['REMOTE_ADDR'];
 
+$vfilial = explode(".", $IP);
+if ($vfilial[0] == 172 || $vfilial[0] == 192) {
+    if ($vfilial[1] == 17 || $vfilial[1] == 23 || $vfilial[1] == 168) {
+        $codigoFilial = $vfilial[2];
+        $filiais = buscaFiliais($codigoFilial);
+        $filiais = $filiais[0];
+    }
+} else {
+    $filiais = buscaFiliais();
+}
 ?>
-
 
 <body class="bg-transparent">
     <div class="container-fluid text-center mt-4">
         <div class="row">
-            <div class="col-sm-3">
+            <div class="col-sm-2">
                 <p class="tituloTabela">Fila Credito</p>
             </div>
-
-            <div class="col-sm-4" style="margin-top:-10px;">
+            <div class="col-sm-2" style="margin-top:-10px;">
                 <div class="input-group">
                     <form action="" method="post">
-                        <select class="form-control text-center" name="codigoFilial" id="FiltroFilial"
-                            autocomplete="off">
-                            <option value="<?php echo null ?>"><?php echo "Selecione a Filial" ?></option>
-                            <?php foreach ($filiais as $filial) { ?>
-                                <option value="<?php echo $filial['id'] ?>"><?php echo $filial['value'] ?>
-                                </option>
-                            <?php } ?>
-                        </select>
+                        <?php if (isset($filiais['id'])) { ?>
+                            <input type="text" class="form-control" value="<?php echo $filiais['value'] ?>" readonly>
+                            <input type="number" class="form-control" value="<?php echo $filiais['id'] ?>" name="codigoFilial"
+                                id="FiltroFilial" hidden>
+                            <?php } else { ?>
+                                <select class="form-control text-center" name="codigoFilial" id="FiltroFilial"
+                                    autocomplete="off">
+                                    <option value="<?php echo null ?>"><?php echo "Selecione a Filial" ?></option>
+                                    <?php foreach ($filiais as $filial) { ?>
+                                        <option value="<?php echo $filial['id'] ?>"><?php echo $filial['value'] ?>
+                                        </option>
+                                    <?php } ?>
+                                </select>
+                        <?php } ?>
                     </form>
+                </div>
+            </div>
+            <div class="col-sm-4" style="margin-top:-10px;">
+                <div class="input-group">
+                    <input type="text" class="form-control" id="FiltroNome_pessoa" placeholder="Buscar cliente...">
+                    <span class="input-group-btn">
+                        <button class="btn btn-primary" id="buscar" type="button" style="margin-top:10px;">
+                            <span style="font-size: 20px;font-family: 'Material Symbols Outlined'!important;"
+                                class="material-symbols-outlined">search</span>
+                        </button>
+                    </span>
                 </div>
             </div>
             <div class="col-sm-1" style="margin-top:-10px;">
@@ -41,12 +66,7 @@ $filiais = buscaFiliais();
             <div class="col-sm-1" style="margin-left:-30px;">
                 <button class="btn btn-warning" id="export" name="export" type="submit">Gerar</button>
             </div>
-
-
-
         </div>
-
-
 
         <div class="card mt-2">
             <div class="table table-sm table-hover table-striped table-wrapper-scroll-y my-custom-scrollbar diviFrame">
@@ -67,56 +87,6 @@ $filiais = buscaFiliais();
                             <th class="text-center">Operacao</th>
                             <th class="text-center">Resultado</th>
                         </tr>
-                        <tr>
-                            <th class="text-center"></th>
-                            <th class="text-center">
-                                <form action="" method="post">
-                                    <select class="form-control" name="dtinclu" id="FiltroDtinclu">
-                                    </select>
-                                </form>
-                            </th>
-                            <th class="text-center"></th>
-                            <th class="text-center">
-                                <form action="" method="post">
-                                    <select class="form-control" name="cpfcnpj" id="FiltroCpfcnpj">
-                                    </select>
-                                </form>
-                            </th>
-                            <th class="text-center">
-                                <form action="" method="post">
-                                    <select class="form-control" name="clicod" id="FiltroClicod">
-                                    </select>
-                                </form>
-                            </th>
-                            <th class="text-center">
-                                <form action="" method="post">
-                                    <select class="form-control" name="nome_pessoa" id="FiltroNome_pessoa">
-                                    </select>
-                                </form>
-                            </th>
-                            <th class="text-center">
-                                <form action="" method="post">
-                                    <select class="form-control" name="etbcad" id="FiltroEtbcad">
-                                    </select>
-                                </form>
-                            </th>
-                            <th class="text-center">
-                                <form action="" method="post">
-                                    <select class="form-control" name="sit_credito" id="FiltroSit_credito">
-                                    </select>
-                                </form>
-                            </th>
-                            <th class="text-center"></th>
-                            <th class="text-center"></th>
-                            <th class="text-center">
-                                <form action="" method="post">
-                                    <select class="form-control" name="tipoconsulta" id="FiltroTipoconsulta">
-                                    </select>
-                                </form>
-                            </th>
-                            <th class="text-center"></th>
-                            <th class="text-center"></th>
-                        </tr>
                     </thead>
                     <tbody id='dados' class="fonteCorpo">
                     </tbody>
@@ -125,160 +95,65 @@ $filiais = buscaFiliais();
         </div>
     </div>
 
-
-
     <script>
-        buscar($("#FiltroDtinclu").val(), $("#FiltroCpfcnpj").val(), $("#FiltroNome_pessoa").val(), $("#FiltroFilial").val(), $("#FiltroClicod").val(), $("#FiltroEtbcad").val(), $("#FiltroTipoconsulta").val(), $("#FiltroSit_credito").val());
+        buscar($("#FiltroFilial").val(), $("#FiltroNome_pessoa").val());
 
-        function buscar(codigoFilial, dtinclu) {
+        function buscar(codigoFilial, nome_pessoa) {
             $.ajax({
                 type: 'POST',
-                dataType: 'json',
+                dataType: 'html',
                 url: '../database/filacredito.php?operacao=buscar',
                 beforeSend: function () {
                     $("#dados").html("Carregando...");
                 },
                 data: {
                     codigoFilial: codigoFilial,
-                    dtinclu: dtinclu,
-                    cpfcnpj: cpfcnpj,
-                    clicod: clicod,
-                    nome_pessoa: nome_pessoa,
-                    etbcad: etbcad,
-                    sit_credito: sit_credito,
-                    tipoconsulta: tipoconsulta
+                    nome_pessoa: nome_pessoa
                 },
                 success: function (response) {
+                    var json = JSON.parse(response);
                     var linha = "";
-                    for (var i = 0; i < response.length; i++) {
-                        var object = response[i];
+                    for (var $i = 0; $i < json.length; $i++) {
+                        var object = json[$i];
+
+                        var dtinclu = new Date(object.dtinclu);
+                        var dtincluForm = dtinclu.toLocaleDateString("pt-BR");
+                        var vctolimite = new Date(object.vctolimite);
+                        var vctolimiteForm = vctolimite.toLocaleDateString("pt-BR");
 
                         linha += "<tr>";
                         linha += "<td>" + object.etbcod + "</td>";
-                        linha += "<td>" + object.dtinclu + "</td>";
+                        linha += "<td>" + dtincluForm + "</td>";
                         linha += "<td>" + object.hrinclu + "</td>";
                         linha += "<td>" + object.cpfcnpj + "</td>";
                         linha += "<td>" + object.clicod + "</td>";
                         linha += "<td>" + object.nome_pessoa + "</td>";
                         linha += "<td>" + object.etbcad + "</td>";
                         linha += "<td>" + object.sit_credito + "</td>";
-                        linha += "<td>" + object.vctolimite + "</td>";
+                        linha += "<td>" + vctolimiteForm + "</td>";
                         linha += "<td>" + object.vlrlimite + "</td>";
                         linha += "<td>" + object.tipoconsulta + "</td>";
                         linha += "<td>" + object.neu_cdoperacao + "</td>";
                         linha += "<td>" + object.neu_resultado + "</td>";
                         linha += "</tr>";
                     }
-
                     $("#dados").html(linha);
-                    SelectOptions(response);
                 }
             });
         }
 
         $("#FiltroFilial").change(function () {
-            buscar($("#FiltroDtinclu").val(), $("#FiltroCpfcnpj").val(), $("#FiltroNome_pessoa").val(), $("#FiltroFilial").val(), $("#FiltroClicod").val(), $("#FiltroEtbcad").val(), $("#FiltroTipoconsulta").val(), $("#FiltroSit_credito").val());
+            buscar($("#FiltroFilial").val(), $("#FiltroNome_pessoa").val());
         });
-
-        $("#FiltroDtinclu").change(function () {
-            buscar($("#FiltroDtinclu").val(), $("#FiltroCpfcnpj").val(), $("#FiltroNome_pessoa").val(), $("#FiltroFilial").val(), $("#FiltroClicod").val(), $("#FiltroEtbcad").val(), $("#FiltroTipoconsulta").val(), $("#FiltroSit_credito").val());
-        });
-
-        $("#FiltroCpfcnpj").change(function () {
-            buscar($("#FiltroDtinclu").val(), $("#FiltroCpfcnpj").val(), $("#FiltroNome_pessoa").val(), $("#FiltroFilial").val(), $("#FiltroClicod").val(), $("#FiltroEtbcad").val(), $("#FiltroTipoconsulta").val(), $("#FiltroSit_credito").val());
-        });
-
-        $("#FiltroClicod").change(function () {
-            buscar($("#FiltroDtinclu").val(), $("#FiltroCpfcnpj").val(), $("#FiltroNome_pessoa").val(), $("#FiltroFilial").val(), $("#FiltroClicod").val(), $("#FiltroEtbcad").val(), $("#FiltroTipoconsulta").val(), $("#FiltroSit_credito").val());
-        });
-
-        $("#FiltroNome_pessoa").change(function () {
-            buscar($("#FiltroDtinclu").val(), $("#FiltroCpfcnpj").val(), $("#FiltroNome_pessoa").val(), $("#FiltroFilial").val(), $("#FiltroClicod").val(), $("#FiltroEtbcad").val(), $("#FiltroTipoconsulta").val(), $("#FiltroSit_credito").val());
-        });
-
-        $("#FiltroEtbcad").change(function () {
-            buscar($("#FiltroDtinclu").val(), $("#FiltroCpfcnpj").val(), $("#FiltroNome_pessoa").val(), $("#FiltroFilial").val(), $("#FiltroClicod").val(), $("#FiltroEtbcad").val(), $("#FiltroTipoconsulta").val(), $("#FiltroSit_credito").val());
-        });
-
-        $("#FiltroTipoconsulta").click(function () {
-            buscar($("#FiltroDtinclu").val(), $("#FiltroCpfcnpj").val(), $("#FiltroNome_pessoa").val(), $("#FiltroFilial").val(), $("#FiltroClicod").val(), $("#FiltroEtbcad").val(), $("#FiltroTipoconsulta").val(), $("#FiltroSit_credito").val());
-        });
-
-        $("#FiltroSit_credito").click(function () {
-            buscar($("#FiltroDtinclu").val(), $("#FiltroCpfcnpj").val(), $("#FiltroNome_pessoa").val(), $("#FiltroFilial").val(), $("#FiltroClicod").val(), $("#FiltroEtbcad").val(), $("#FiltroTipoconsulta").val(), $("#FiltroSit_credito").val());
+        $("#buscar").click(function () {
+            buscar($("#FiltroFilial").val(), $("#FiltroNome_pessoa").val());
         });
 
         document.addEventListener("keypress", function (e) {
             if (e.key === "Enter") {
-                buscar($("#FiltroDtinclu").val(), $("#FiltroCpfcnpj").val(), $("#FiltroNome_pessoa").val(), $("#FiltroFilial").val(), $("#FiltroClicod").val(), $("#FiltroEtbcad").val(), $("#FiltroTipoconsulta").val(), $("#FiltroSit_credito").val());
+                buscar($("#FiltroFilial").val(), $("#FiltroNome_pessoa").val());
             }
         });
-        function SelectOptions(data) {
-            let uniqueData = {
-                dtinclu: new Set(),
-                cpfcnpj: new Set(),
-                clicod: new Set(),
-                nome_pessoa: new Set(),
-                etbcad: new Set(),
-                sit_credito: new Set(),
-                tipoconsulta: new Set()
-            };
-
-            for (let i = 0; i < data.length; i++) {
-                let obj = data[i];
-                uniqueData.dtinclu.add(obj.dtinclu);
-                uniqueData.cpfcnpj.add(obj.cpfcnpj);
-                uniqueData.clicod.add(obj.clicod);
-                uniqueData.nome_pessoa.add(obj.nome_pessoa);
-                uniqueData.etbcad.add(obj.etbcad);
-                uniqueData.sit_credito.add(obj.sit_credito);
-                uniqueData.tipoconsulta.add(obj.tipoconsulta);
-            }
-
-            let dtincluOptions = '<option value="">Datas</option>';
-            let cpfcnpjOptions = '<option value="">Cpf/Cnpj</option>';
-            let clicodOptions = '<option value="">Codigo</option>';
-            let nome_pessoaOptions = '<option value="">Cliente</option>';
-            let etbcadOptions = '<option value="">Loja</option>';
-            let sit_creditoOptions = '<option value="">Sit</option>';
-            let tipoconsultaOptions = '<option value="">Tipo</option>';
-
-            uniqueData.dtinclu.forEach(value => {
-                dtincluOptions += '<option value="' + value + '">' + value + '</option>';
-            });
-
-            uniqueData.cpfcnpj.forEach(value => {
-                cpfcnpjOptions += '<option value="' + value + '">' + value + '</option>';
-            });
-
-            uniqueData.clicod.forEach(value => {
-                clicodOptions += '<option value="' + value + '">' + value + '</option>';
-            });
-
-            uniqueData.nome_pessoa.forEach(value => {
-                nome_pessoaOptions += '<option value="' + value + '">' + value + '</option>';
-            });
-
-            uniqueData.etbcad.forEach(value => {
-                etbcadOptions += '<option value="' + value + '">' + value + '</option>';
-            });
-
-            uniqueData.sit_credito.forEach(value => {
-                sit_creditoOptions += '<option value="' + value + '">' + value + '</option>';
-            });
-
-            uniqueData.tipoconsulta.forEach(value => {
-                tipoconsultaOptions += '<option value="' + value + '">' + value + '</option>';
-            });
-
-            $("#dtinclu").html(dtincluOptions);
-            $("#cpfcnpj").html(cpfcnpjOptions);
-            $("#clicod").html(clicodOptions);
-            $("#nome_pessoa").html(nome_pessoaOptions);
-            $("#etbcad").html(etbcadOptions);
-            $("#sit_credito").html(sit_creditoOptions);
-            $("#tipoconsulta").html(tipoconsultaOptions);
-        }
 
 
         //**************exporta excel 
@@ -289,13 +164,7 @@ $filiais = buscaFiliais();
                 url: '../database/filacredito.php?operacao=buscar',
                 data: {
                     codigoFilial: $("#FiltroFilial").val(),
-                    dtinclu: $("#FiltroDtinclu").val(),
-                    cpfcnpj: $("#FiltroCpfcnpj").val(),
-                    clicod: $("#FiltroClicod").val(),
-                    nome_pessoa: $("#FiltroNome_pessoa").val(),
-                    etbcad: $("#FiltroEtbcad").val(),
-                    sit_credito: $("#FiltroSit_credito").val(),
-                    tipoconsulta: $("#FiltroTipoconsulta").val()
+                    nome_pessoa: $("#FiltroNome_pessoa").val()
                 },
                 success: function (json) {
                     var excelContent =
@@ -352,13 +221,7 @@ $filiais = buscaFiliais();
                 url: '../database/filacredito.php?operacao=buscar',
                 data: {
                     codigoFilial: $("#FiltroFilial").val(),
-                    dtinclu: $("#FiltroDtinclu").val(),
-                    cpfcnpj: $("#FiltroCpfcnpj").val(),
-                    clicod: $("#FiltroClicod").val(),
-                    nome_pessoa: $("#FiltroNome_pessoa").val(),
-                    etbcad: $("#FiltroEtbcad").val(),
-                    sit_credito: $("#FiltroSit_credito").val(),
-                    tipoconsulta: $("#FiltroTipoconsulta").val()
+                    nome_pessoa: $("#FiltroNome_pessoa").val()
                 },
                 success: function (json) {
                     var csvContent = "data:text/csv;charset=utf-8,\uFEFF";
@@ -405,13 +268,7 @@ $filiais = buscaFiliais();
                 url: '../database/filacredito.php?operacao=buscar',
                 data: {
                     codigoFilial: $("#FiltroFilial").val(),
-                    dtinclu: $("#FiltroDtinclu").val(),
-                    cpfcnpj: $("#FiltroCpfcnpj").val(),
-                    clicod: $("#FiltroClicod").val(),
-                    nome_pessoa: $("#FiltroNome_pessoa").val(),
-                    etbcad: $("#FiltroEtbcad").val(),
-                    sit_credito: $("#FiltroSit_credito").val(),
-                    tipoconsulta: $("#FiltroTipoconsulta").val()
+                    nome_pessoa: $("#FiltroNome_pessoa").val()
                 },
                 success: function (json) {
                     var tableContent =
@@ -459,10 +316,6 @@ $filiais = buscaFiliais();
             });
         }
 
-
-
-
-
         $("#export").click(function () {
             var selectedOption = $("#exportoptions").val();
             if (selectedOption === "excel") {
@@ -473,8 +326,6 @@ $filiais = buscaFiliais();
                 exportToCSV();
             }
         });
-
-
 
     </script>
 </body>

@@ -10,29 +10,29 @@ def var hentrada as handle.
 def var hsaida   as handle.
 
 def temp-table ttentrada serialize-name "dadosEntrada"
-    field IP       as char
+    /*field IP       as char*/
     field codigoFilial       as int
-    field dtinclu     as date format "99/99/9999"
+   /*field dtinclu     as date format "99/99/9999"
     field cpfcnpj  as int
-    field clicod   as int
+    field clicod   as int*/
     field nome_pessoa   as char
-    field etbcad     as int
+   /*field etbcad     as int
     field sit_credito     as char
-    field tipoconsulta     as char.
+    field tipoconsulta     as char*/ .
 
 def temp-table ttneuproposta  no-undo serialize-name "neuproposta"
     field etbcod   as int
     field dtinclu     as date format "99/99/9999"
-    field hrinclu     as time
-    field cpfcnpj  as int
+    field hrinclu     as int
+    field cpfcnpj  as dec decimals 0
     field clicod   as int
     field nome_pessoa   as char
     field etbcad     as int
     field sit_credito     as char
-    field vctolimite     as format "99/99/9999"
+    field vctolimite     as date format "99/99/9999"
     field vlrlimite     as int
     field tipoconsulta     as char
-    field neu_cdoperacao     as int
+    field neu_cdoperacao     as char
     field neu_resultado     as char.
 
 def temp-table ttsaida  no-undo serialize-name "conteudoSaida"
@@ -41,7 +41,7 @@ def temp-table ttsaida  no-undo serialize-name "conteudoSaida"
 
 
 hEntrada = temp-table ttentrada:HANDLE.
-hentrada:READ-JSON("longchar",lcjsonentrada, "EMPTY").
+hentrada:READ-JSON("longchar",vlcentrada, "EMPTY").
 
 
 find first ttentrada no-error.
@@ -63,22 +63,28 @@ def var vetbcod as int.
 def var xetbcod as int.
 def var vetbnom as char.
 def var vparam  as char.
-def var vip as char.
+/*def var vip as char.*/
 def var vtotal as int.
 def var par-data as date.
 
 
-vip = ttentrada.IP.
-vetbcod  = 0.
-vetbcod  = ttentrada.codigoFilial.
+/*vip = ttentrada.IP.
+vetbcod  = 0.*/
+if ttentrada.nome_pessoa = ?
+then ttentrada.nome_pessoa = "".
 
-par-data = today - 7.
+vetbcod  = ttentrada.codigoFilial no-error.
+if vetbcod = ? then vetbcod = 0.
 
-find first estab where estab.etbcod = vetbcod no-lock no-error.
-vetbcod = if avail estab then estab.etbcod else 0.
+par-data = today - 7000.
+if vetbcod > 0
+then do:
+    find first estab where estab.etbcod = vetbcod no-lock no-error.
+    vetbcod = if avail estab then estab.etbcod else 0.
+end.
 
 xetbcod = vetbcod.
-
+/* 
 if num-entries(vip,".") = 4 and vetbcod = 0
 then do:
     vetbcod = int(entry(3,vip,".")).
@@ -86,7 +92,7 @@ then do:
     if not avail estab
     then vetbcod = xetbcod.        
 end.
-
+*/
 
 
 vtotal = 0.
@@ -98,6 +104,10 @@ for each estab where (if vetbcod <> 0 then estab.etbcod = vetbcod else true)
         find neuclien of neuproposta no-lock no-error.
         if not avail neuclien    
         then next. 
+        if ttentrada.nome_pessoa <> "" 
+        then if neuclien.nome_pessoa begins ttentrada.nome_pessoa
+             then.
+             else next.
 
         vtotal = vtotal + 1.
 
@@ -119,7 +129,7 @@ for each estab where (if vetbcod <> 0 then estab.etbcod = vetbcod else true)
     end.
 end.
 
-hsaida  = dataset conteudoSaida:handle.
+hsaida  = temp-table ttneuproposta:handle.
 
 /*lokJson = hsaida:WRITE-JSON("LONGCHAR", vlcSaida, TRUE).
 put unformatted string(vlcSaida).

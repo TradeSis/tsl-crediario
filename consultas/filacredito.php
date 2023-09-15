@@ -6,14 +6,25 @@ include_once '../database/filacredito.php';
 $IP = $_SERVER['REMOTE_ADDR'];
 
 $vfilial = explode(".", $IP);
+$codigoFilial = null;
+
 if ($vfilial[0] == 172 || $vfilial[0] == 192) {
     if ($vfilial[1] == 17 || $vfilial[1] == 23 || $vfilial[1] == 168) {
         $codigoFilial = $vfilial[2];
         $filiais = buscaFiliais($codigoFilial);
         $filiais = $filiais[0];
+        
     }
 } else {
-    $filiais = buscaFiliais();
+
+    if ($IP == "10.2.0.79" && URLROOT == "/tslebes") { // Simulacao da 188 no servidor winjump
+        $codigoFilial = 188;
+        $filiais = buscaFiliais($codigoFilial);
+        $filiais = $filiais[0];
+    } else {
+        $filiais = buscaFiliais();
+    }
+    
 }
 ?>
 
@@ -21,12 +32,12 @@ if ($vfilial[0] == 172 || $vfilial[0] == 192) {
     <div class="container-fluid text-center mt-4">
         <div class="row">
             <div class="col-sm-2">
-                <p class="tituloTabela">Fila Credito</p>
+                <p class="tituloTabela">Fila Credito (<?php echo $IP ?>)</p>
             </div>
             <div class="col-sm-2" style="margin-top:-10px;">
                 <div class="input-group">
                     <form action="" method="post">
-                        <?php if (isset($filiais['id'])) { ?>
+                        <?php if (isset($codigoFilial)) { ?>
                             <input type="text" class="form-control" value="<?php echo $filiais['value'] ?>" readonly>
                             <input type="number" class="form-control" value="<?php echo $filiais['id'] ?>" name="codigoFilial"
                                 id="FiltroFilial" hidden>
@@ -200,7 +211,7 @@ if ($vfilial[0] == 172 || $vfilial[0] == 192) {
                     var excelUrl = URL.createObjectURL(excelBlob);
                     var link = document.createElement("a");
                     link.setAttribute("href", excelUrl);
-                    link.setAttribute("download", "demandas.xls");
+                    link.setAttribute("download", "filadecredito.xlsx");
                     document.body.appendChild(link);
 
                     link.click();
@@ -247,7 +258,7 @@ if ($vfilial[0] == 172 || $vfilial[0] == 192) {
                     var encodedUri = encodeURI(csvContent);
                     var link = document.createElement("a");
                     link.setAttribute("href", encodedUri);
-                    link.setAttribute("download", "demandas.csv");
+                    link.setAttribute("download", "filadecredito.csv");
                     document.body.appendChild(link);
 
                     link.click();
@@ -294,9 +305,9 @@ if ($vfilial[0] == 172 || $vfilial[0] == 192) {
 
                     tableContent += "</table>";
 
-                    var printWindow = window.open('', '', 'width=800,height=600');
+                    var printWindow = window.open('', '', 'width=1200,height=800');
                     printWindow.document.open();
-                    printWindow.document.write('<html><head><title>Demandas</title></head><body>');
+                    printWindow.document.write('<html><head><title>Fila de Credito</title></head><body>');
                     printWindow.document.write(tableContent);
                     printWindow.document.write('</body></html>');
                     printWindow.document.close();

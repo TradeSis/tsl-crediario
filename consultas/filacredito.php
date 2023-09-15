@@ -4,7 +4,7 @@ include_once '../head.php';
 include_once '../database/filacredito.php';
 
 $IP = $_SERVER['REMOTE_ADDR'];
-echo $IP;
+
 
 $vfilial = explode(".", $IP);
 if ($vfilial[0] == 172 || $vfilial[0] == 192) {
@@ -14,7 +14,13 @@ if ($vfilial[0] == 172 || $vfilial[0] == 192) {
         
     }
 } else {
-    $filiais = buscaFiliais();
+    if ($IP = "10.2.0.79") { // Simulacao da 188 no servidor winjump
+        $codigoFilial = 188;
+        $filiais = buscaFiliais($codigoFilial);
+    } else {
+        $filiais = buscaFiliais();
+    }
+    
 }
 ?>
 
@@ -22,7 +28,7 @@ if ($vfilial[0] == 172 || $vfilial[0] == 192) {
     <div class="container-fluid text-center mt-4">
         <div class="row">
             <div class="col-sm-2">
-                <p class="tituloTabela">Fila Credito</p>
+                <p class="tituloTabela">Fila Credito (<?php echo $IP ?>)</p>
             </div>
             <div class="col-sm-2" style="margin-top:-10px;">
                 <div class="input-group">

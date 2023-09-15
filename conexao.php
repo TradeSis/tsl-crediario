@@ -10,4 +10,7 @@ include_once(ROOT.'/sistema/database/api.php');
 
 include_once(ROOT.'/sistema/database/functions.php');
 include_once(ROOT.'/sistema/database/email.php');
+
+include_once(ROOT.'/sistema/database/progress.php');
+
 ?>

@@ -211,7 +211,7 @@ if ($vfilial[0] == 172 || $vfilial[0] == 192) {
                     var excelUrl = URL.createObjectURL(excelBlob);
                     var link = document.createElement("a");
                     link.setAttribute("href", excelUrl);
-                    link.setAttribute("download", "demandas.xls");
+                    link.setAttribute("download", "filadecredito.xlsx");
                     document.body.appendChild(link);
 
                     link.click();

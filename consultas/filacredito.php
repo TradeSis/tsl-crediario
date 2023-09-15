@@ -24,6 +24,8 @@ if ($vfilial[0] == 172 || $vfilial[0] == 192) {
     }
     
 }
+echo $codigoFilial. "<HR>";
+echo json_encode($filiais). "<HR>";;
 ?>
 
 <body class="bg-transparent">

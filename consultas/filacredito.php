@@ -33,7 +33,7 @@ if ($vfilial[0] == 172 || $vfilial[0] == 192) {
             <div class="col-sm-2" style="margin-top:-10px;">
                 <div class="input-group">
                     <form action="" method="post">
-                        <?php if (isset($filiais['id'])) { ?>
+                        <?php if (isset($codigoFilial)) { ?>
                             <input type="text" class="form-control" value="<?php echo $filiais['value'] ?>" readonly>
                             <input type="number" class="form-control" value="<?php echo $filiais['id'] ?>" name="codigoFilial"
                                 id="FiltroFilial" hidden>

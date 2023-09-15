@@ -258,7 +258,7 @@ if ($vfilial[0] == 172 || $vfilial[0] == 192) {
                     var encodedUri = encodeURI(csvContent);
                     var link = document.createElement("a");
                     link.setAttribute("href", encodedUri);
-                    link.setAttribute("download", "demandas.csv");
+                    link.setAttribute("download", "filadecredito.csv");
                     document.body.appendChild(link);
 
                     link.click();
@@ -305,9 +305,9 @@ if ($vfilial[0] == 172 || $vfilial[0] == 192) {
 
                     tableContent += "</table>";
 
-                    var printWindow = window.open('', '', 'width=800,height=600');
+                    var printWindow = window.open('', '', 'width=1200,height=800');
                     printWindow.document.open();
-                    printWindow.document.write('<html><head><title>Demandas</title></head><body>');
+                    printWindow.document.write('<html><head><title>Fila de Credito</title></head><body>');
                     printWindow.document.write(tableContent);
                     printWindow.document.write('</body></html>');
                     printWindow.document.close();

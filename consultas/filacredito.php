@@ -5,6 +5,8 @@ include_once '../database/filacredito.php';
 
 $IP = $_SERVER['REMOTE_ADDR'];
 
+echo URLROOT . "<HR>";
+
 
 $vfilial = explode(".", $IP);
 $codigoFilial = null;
@@ -17,6 +19,7 @@ if ($vfilial[0] == 172 || $vfilial[0] == 192) {
         
     }
 } else {
+
     if ($IP = "10.2.0.79") { // Simulacao da 188 no servidor winjump
         $codigoFilial = 188;
         $filiais = buscaFiliais($codigoFilial);

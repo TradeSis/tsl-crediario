@@ -101,7 +101,7 @@ for each estab where (if vetbcod <> 0 then estab.etbcod = vetbcod else true)
     for each neuproposta where neuproposta.etbcod = estab.etbcod
                            and neuproposta.dtinclu >= par-data
               no-lock
-              by neuproposta.dtinclu DESC neuproposta.hrinclu DESC.
+              by neuproposta.dtinclu DESC BY neuproposta.hrinclu DESC.
         find neuclien of neuproposta no-lock no-error.
         if not avail neuclien    
         then next. 

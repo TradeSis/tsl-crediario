@@ -53,14 +53,14 @@ $nivelMenu = $nivelMenuLogin['nivelMenu'];
                             role="tab">Contratos</a>
                     </li>
                 <?php }
-                if ($nivelMenu >= 1) { ?>
+                if ($nivelMenu == 5) { // SOMENTE TRADESIS, POIS ESTA EM DEV ?>
                     <li class="nav-item mr-1">
                         <a class="nav-link1 nav-link <?php if ($tab == "seguros") {
                             echo " active ";
                         } ?>" href="?tab=seguros"
                             role="tab">Seguros</a>
                     </li>
-                <?php }
+                    <?php  }
                 if ($nivelMenu >= 1) { ?>
                     <li class="nav-item mr-1">
                         <a class="nav-link1 nav-link <?php if ($tab == "filacredito") {

@@ -30,14 +30,13 @@ $nivelMenu = $nivelMenuLogin['nivelMenu'];
                 if (isset($_GET['tab'])) {
                     $tab = $_GET['tab'];
                 }
-
+                if ($tab == '') {
+                    $tab = 'historico';
+                } 
                 ?>
 
 
-                <?php if ($nivelMenu >= 1) {
-                    if ($tab == '') {
-                        $tab = 'historico';
-                    } ?>
+                <?php if ($nivelMenu >= 1) {        ?>
                     <li class="nav-item mr-1">
                         <a class="nav-link1 nav-link <?php if ($tab == "historico") {
                             echo " active ";

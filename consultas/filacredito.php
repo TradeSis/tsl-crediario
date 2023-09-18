@@ -128,9 +128,12 @@ if ($vfilial[0] == 172 || $vfilial[0] == 192) {
                         var object = json[$i];
 
                         var dtinclu = new Date(object.dtinclu);
-                        var dtincluForm = dtinclu.toLocaleDateString("pt-BR");
+                      //  var dtincluForm = dtinclu.toLocaleDateString("pt-BR");
+                        dtincluForm = (`${dtinclu.getUTCDate().toString().padStart(2, '0')}/${(dtinclu.getUTCMonth()+1).toString().padStart(2, '0')}/${dtinclu.getUTCFullYear()}`);
+
                         var vctolimite = new Date(object.vctolimite);
-                        var vctolimiteForm = vctolimite.toLocaleDateString("pt-BR");
+                        //var vctolimiteForm = vctolimite.toLocaleDateString("pt-BR");
+                        vctolimiteForm = (`${vctolimite.getUTCDate().toString().padStart(2, '0')}/${(vctolimite.getUTCMonth()+1).toString().padStart(2, '0')}/${vctolimite.getUTCFullYear()}`);
 
                         linha += "<tr>";
                         linha += "<td>" + object.etbcod + "</td>";

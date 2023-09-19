@@ -107,7 +107,11 @@ if ($vfilial[0] == 172 || $vfilial[0] == 192) {
     </div>
 
     <script>
-        buscar($("#FiltroFilial").val(), $("#FiltroNome_pessoa").val());
+        if ($("#FiltroFilial").val() != null){
+            $("#dados").html("Selecione Filial...");
+        } else {
+            buscar($("#FiltroFilial").val(), $("#FiltroNome_pessoa").val());
+        }
 
         function buscar(codigoFilial, nome_pessoa) {
             $.ajax({

@@ -44,8 +44,7 @@ if ($vfilial[0] == 172 || $vfilial[0] == 192) {
                             <?php } else { ?>
                                 <select class="form-control text-center" name="codigoFilial" id="FiltroFilial"
                                     autocomplete="off">
-                                    <option value="<?php echo "nenhuma" ?>"><?php echo "Selecione a Filial" ?></option>
-                                    <option value="<?php echo null ?>"><?php echo "Todas" ?></option>
+                                    <option value="<?php echo null ?>"><?php echo "Selecione a Filial" ?></option>
                                     <?php foreach ($filiais as $filial) { ?>
                                         <option value="<?php echo $filial['id'] ?>"><?php echo $filial['value'] ?>
                                         </option>
@@ -108,7 +107,7 @@ if ($vfilial[0] == 172 || $vfilial[0] == 192) {
     </div>
 
     <script>
-        if ($("#FiltroFilial").val() == "nenhuma"){
+        if ($("#FiltroFilial").val() == ""){
             $("#dados").html("Selecione Filial...");
         } else {
             buscar($("#FiltroFilial").val(), $("#FiltroNome_pessoa").val());

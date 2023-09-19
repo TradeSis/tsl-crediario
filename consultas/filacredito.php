@@ -107,7 +107,7 @@ if ($vfilial[0] == 172 || $vfilial[0] == 192) {
     </div>
 
     <script>
-        if ($("#FiltroFilial").val() != null){
+        if ($("#FiltroFilial").val() == null){
             $("#dados").html("Selecione Filial...");
         } else {
             buscar($("#FiltroFilial").val(), $("#FiltroNome_pessoa").val());

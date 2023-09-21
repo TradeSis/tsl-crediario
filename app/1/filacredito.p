@@ -12,7 +12,7 @@ def var hsaida   as handle.
 def temp-table ttentrada serialize-name "dadosEntrada"
     /*field IP       as char*/
     field codigoFilial       as int
-    field dtinclu     as date format "99/99/9999"
+    field dtinclu     as char
    /* field cpfcnpj  as int
     field clicod   as int*/
     field nome_pessoa   as char
@@ -84,7 +84,7 @@ end.
 
 xetbcod = vetbcod.
 
-if ttentrada.dtinclu = ?
+if ttentrada.dtinclu = ? or ttentrada.dtinclu = ""
 then do:
     par-data = today - 3.
     vtotal = 0.
@@ -123,7 +123,10 @@ then do:
     end.
 end.
 else do:
-    par-data = ttentrada.dtinclu.
+
+    par-data = date(int(entry(2,ttentrada.dtinclu,"-")),
+                    int(entry(3,ttentrada.dtinclu,"-")),
+                    int(entry(1,ttentrada.dtinclu,"-"))).
     vtotal = 0.
     for each estab where (if vetbcod <> 0 then estab.etbcod = vetbcod else true)
                 no-lock.

@@ -13,7 +13,7 @@ if ($vfilial[0] == 172 || $vfilial[0] == 192) {
         $codigoFilial = $vfilial[2];
         $filiais = buscaFiliais($codigoFilial);
         $filiais = $filiais[0];
-        
+
     }
 } else {
 
@@ -24,7 +24,7 @@ if ($vfilial[0] == 172 || $vfilial[0] == 192) {
     } else {
         $filiais = buscaFiliais();
     }
-    
+
 }
 ?>
 
@@ -32,24 +32,29 @@ if ($vfilial[0] == 172 || $vfilial[0] == 192) {
     <div class="container-fluid text-center mt-4">
         <div class="row">
             <div class="col-sm-2">
-                <p class="tituloTabela">Fila Credito (<?php echo $IP ?>)</p>
+                <p class="tituloTabela">Fila Credito (
+                    <?php echo $IP ?>)
+                </p>
             </div>
             <div class="col-sm-2" style="margin-top:-10px;">
                 <div class="input-group">
                     <form action="" method="post">
                         <?php if (isset($codigoFilial)) { ?>
                             <input type="text" class="form-control" value="<?php echo $filiais['value'] ?>" readonly>
-                            <input type="number" class="form-control" value="<?php echo $filiais['id'] ?>" name="codigoFilial"
-                                id="FiltroFilial" hidden>
-                            <?php } else { ?>
-                                <select class="form-control text-center" name="codigoFilial" id="FiltroFilial"
-                                    autocomplete="off">
-                                    <option value="<?php echo null ?>"><?php echo "Selecione a Filial" ?></option>
-                                    <?php foreach ($filiais as $filial) { ?>
-                                        <option value="<?php echo $filial['id'] ?>"><?php echo $filial['value'] ?>
-                                        </option>
-                                    <?php } ?>
-                                </select>
+                            <input type="number" class="form-control" value="<?php echo $filiais['id'] ?>"
+                                name="codigoFilial" id="FiltroFilial" hidden>
+                        <?php } else { ?>
+                            <select class="form-control text-center" name="codigoFilial" id="FiltroFilial"
+                                autocomplete="off">
+                                <option value="<?php echo null ?>">
+                                    <?php echo "Selecione a Filial" ?>
+                                </option>
+                                <?php foreach ($filiais as $filial) { ?>
+                                    <option value="<?php echo $filial['id'] ?>">
+                                        <?php echo $filial['value'] ?>
+                                    </option>
+                                <?php } ?>
+                            </select>
                         <?php } ?>
                     </form>
                 </div>
@@ -107,7 +112,7 @@ if ($vfilial[0] == 172 || $vfilial[0] == 192) {
     </div>
 
     <script>
-        if ($("#FiltroFilial").val() == ""){
+        if ($("#FiltroFilial").val() == "") {
             $("#dados").html("Selecione Filial...");
         } else {
             buscar($("#FiltroFilial").val(), $("#FiltroNome_pessoa").val());
@@ -132,12 +137,12 @@ if ($vfilial[0] == 172 || $vfilial[0] == 192) {
                         var object = json[$i];
 
                         var dtinclu = new Date(object.dtinclu);
-                      //  var dtincluForm = dtinclu.toLocaleDateString("pt-BR");
-                        dtincluForm = (`${dtinclu.getUTCDate().toString().padStart(2, '0')}/${(dtinclu.getUTCMonth()+1).toString().padStart(2, '0')}/${dtinclu.getUTCFullYear()}`);
+                        //  var dtincluForm = dtinclu.toLocaleDateString("pt-BR");
+                        dtincluForm = (`${dtinclu.getUTCDate().toString().padStart(2, '0')}/${(dtinclu.getUTCMonth() + 1).toString().padStart(2, '0')}/${dtinclu.getUTCFullYear()}`);
 
                         var vctolimite = new Date(object.vctolimite);
                         //var vctolimiteForm = vctolimite.toLocaleDateString("pt-BR");
-                        vctolimiteForm = (`${vctolimite.getUTCDate().toString().padStart(2, '0')}/${(vctolimite.getUTCMonth()+1).toString().padStart(2, '0')}/${vctolimite.getUTCFullYear()}`);
+                        vctolimiteForm = (`${vctolimite.getUTCDate().toString().padStart(2, '0')}/${(vctolimite.getUTCMonth() + 1).toString().padStart(2, '0')}/${vctolimite.getUTCFullYear()}`);
 
                         linha += "<tr>";
                         linha += "<td>" + object.etbcod + "</td>";
@@ -174,7 +179,6 @@ if ($vfilial[0] == 172 || $vfilial[0] == 192) {
         });
 
 
-        //**************exporta excel 
         function exportToExcel() {
             $.ajax({
                 type: 'POST',
@@ -189,6 +193,7 @@ if ($vfilial[0] == 172 || $vfilial[0] == 192) {
                         "<html xmlns:x='urn:schemas-microsoft-com:office:excel'>" +
                         "<head>" +
                         "<meta charset='UTF-8'>" +
+                        "<!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>Sheet1</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]-->" +
                         "</head>" +
                         "<body>" +
                         "<table>";
@@ -214,13 +219,14 @@ if ($vfilial[0] == 172 || $vfilial[0] == 192) {
 
                     excelContent += "</table></body></html>";
 
-                    var excelBlob = new Blob([excelContent], { type: 'application/vnd.ms-excel' });
+                    var excelBlob = new Blob([excelContent], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+
                     var excelUrl = URL.createObjectURL(excelBlob);
                     var link = document.createElement("a");
-                    link.setAttribute("href", excelUrl);
-                    link.setAttribute("download", "filadecredito.xlsx");
-                    document.body.appendChild(link);
+                    link.href = excelUrl;
+                    link.download = "filadecredito.xlsx";
 
+                    document.body.appendChild(link);
                     link.click();
 
                     document.body.removeChild(link);
@@ -338,9 +344,11 @@ if ($vfilial[0] == 172 || $vfilial[0] == 192) {
             var selectedOption = $("#exportoptions").val();
             if (selectedOption === "excel") {
                 exportToExcel();
-            } else if (selectedOption === "pdf") {
+            }
+            if (selectedOption === "pdf") {
                 exportToPDF();
-            } else if (selectedOption === "csv") {
+            }
+            if (selectedOption === "csv") {
                 exportToCSV();
             }
         });

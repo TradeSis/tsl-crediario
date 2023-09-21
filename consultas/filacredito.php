@@ -139,7 +139,6 @@ if ($vfilial[0] == 172 || $vfilial[0] == 192) {
         }
 
         function buscar(codigoFilial, nome_pessoa, dtinclu) {
-            alert($("#FiltroDtinclu").val());
             $.ajax({
                 type: 'POST',
                 dataType: 'html',

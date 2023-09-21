@@ -13,7 +13,7 @@ def temp-table ttentrada serialize-name "dadosEntrada"
     /*field IP       as char*/
     field codigoFilial       as int
     field dtinclu     as date format "99/99/9999"
-    field cpfcnpj  as int
+   /* field cpfcnpj  as int
     field clicod   as int*/
     field nome_pessoa   as char
    /*field etbcad     as int

@@ -191,56 +191,41 @@ if ($vfilial[0] == 172 || $vfilial[0] == 192) {
                 },
                 success: function (json) {
                     var excelContent =
-                        '<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet" ' +
-                        'xmlns:o="urn:schemas-microsoft-com:office:office" ' +
-                        'xmlns:x="urn:schemas-microsoft-com:office:excel" ' +
-                        'xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet" ' +
-                        'xmlns:html="http://www.w3.org/TR/REC-html40">' +
-                        '<Worksheet ss:Name="Sheet1">' +
-                        '<Table>';
+                        "<html xmlns:x='urn:schemas-microsoft-com:office:excel'>" +
+                        "<head>" +
+                        "<meta charset='UTF-8'>" +
+                        "</head>" +
+                        "<body>" +
+                        "<table>";
 
-                    excelContent += '<Row>' +
-                        '<Cell><Data ss:Type="String">Loja</Data></Cell>' +
-                        '<Cell><Data ss:Type="String">Data</Data></Cell>' +
-                        '<Cell><Data ss:Type="String">Hora</Data></Cell>' +
-                        '<Cell><Data ss:Type="String">Cpf</Data></Cell>' +
-                        '<Cell><Data ss:Type="String">Codigo</Data></Cell>' +
-                        '<Cell><Data ss:Type="String">Cliente</Data></Cell>' +
-                        '<Cell><Data ss:Type="String">Lj_Cad</Data></Cell>' +
-                        '<Cell><Data ss:Type="String">Sit</Data></Cell>' +
-                        '<Cell><Data ss:Type="String">Vcto_limite</Data></Cell>' +
-                        '<Cell><Data ss:Type="String">limite</Data></Cell>' +
-                        '<Cell><Data ss:Type="String">TC</Data></Cell>' +
-                        '<Cell><Data ss:Type="String">Operacao</Data></Cell>' +
-                        '<Cell><Data ss:Type="String">Resultado</Data></Cell>' +
-                        '</Row>';
+                    excelContent += "<tr><th>Loja</th><th>Data</th><th>Hora</th><th>Cpf</th><th>Codigo</th><th>Cliente</th><th>Lj_Cad</th><th>Sit</th><th>Vcto_limite</th><th>limite</th><th>TC</th><th>Operacao</th><th>Resultado</th></tr>";
 
                     for (var i = 0; i < json.length; i++) {
                         var object = json[i];
-                        excelContent += '<Row>' +
-                            '<Cell><Data ss:Type="String">' + object.etbcod + '</Data></Cell>' +
-                            '<Cell><Data ss:Type="String">' + object.dtinclu + '</Data></Cell>' +
-                            '<Cell><Data ss:Type="Number">' + object.hrinclu + '</Data></Cell>' +
-                            '<Cell><Data ss:Type="String">' + object.cpfcnpj + '</Data></Cell>' +
-                            '<Cell><Data ss:Type="Number">' + object.clicod + '</Data></Cell>' +
-                            '<Cell><Data ss:Type="String">' + object.nome_pessoa + '</Data></Cell>' +
-                            '<Cell><Data ss:Type="Number">' + object.etbcad + '</Data></Cell>' +
-                            '<Cell><Data ss:Type="String">' + object.sit_credito + '</Data></Cell>' +
-                            '<Cell><Data ss:Type="String">' + object.vctolimite + '</Data></Cell>' +
-                            '<Cell><Data ss:Type="Number">' + object.vlrlimite + '</Data></Cell>' +
-                            '<Cell><Data ss:Type="String">' + object.tipoconsulta + '</Data></Cell>' +
-                            '<Cell><Data ss:Type="String">' + object.neu_cdoperacao + '</Data></Cell>' +
-                            '<Cell><Data ss:Type="String">' + object.neu_resultado + '</Data></Cell>' +
-                            '</Row>';
+                        excelContent += "<tr><td>" + object.etbcod + "</td>" +
+                            "<td>" + object.dtinclu + "</td>" +
+                            "<td>" + object.hrinclu + "</td>" +
+                            "<td>" + object.cpfcnpj + "</td>" +
+                            "<td>" + object.clicod + "</td>" +
+                            "<td>" + object.nome_pessoa + "</td>" +
+                            "<td>" + object.etbcad + "</td>" +
+                            "<td>" + object.sit_credito + "</td>" +
+                            "<td>" + object.vctolimite + "</td>" +
+                            "<td>" + object.vlrlimite + "</td>" +
+                            "<td>" + object.tipoconsulta + "</td>" +
+                            "<td>" + object.neu_cdoperacao + "</td>" +
+                            "<td>" + object.neu_resultado + "</td></tr>";
                     }
 
-                    excelContent += '</Table></Worksheet></Workbook>';
+                    excelContent += "</table></body></html>";
 
-                    var excelBlob = new Blob([excelContent], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+                    var excelBlob = new Blob([excelContent], {
+                        type: 'application/vnd.ms-excel'
+                    });
                     var excelUrl = URL.createObjectURL(excelBlob);
                     var link = document.createElement("a");
                     link.setAttribute("href", excelUrl);
-                    link.setAttribute("download", "filadecredito.xlsx");
+                    link.setAttribute("download", "filacredito.xls");
                     document.body.appendChild(link);
 
                     link.click();
@@ -252,7 +237,6 @@ if ($vfilial[0] == 172 || $vfilial[0] == 192) {
                 }
             });
         }
-
         //**************exporta csv
         function exportToCSV() {
             $.ajax({

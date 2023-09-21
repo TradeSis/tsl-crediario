@@ -13,7 +13,7 @@ if ($vfilial[0] == 172 || $vfilial[0] == 192) {
         $codigoFilial = $vfilial[2];
         $filiais = buscaFiliais($codigoFilial);
         $filiais = $filiais[0];
-        
+
     }
 } else {
 
@@ -24,7 +24,7 @@ if ($vfilial[0] == 172 || $vfilial[0] == 192) {
     } else {
         $filiais = buscaFiliais();
     }
-    
+
 }
 ?>
 
@@ -32,24 +32,29 @@ if ($vfilial[0] == 172 || $vfilial[0] == 192) {
     <div class="container-fluid text-center mt-4">
         <div class="row">
             <div class="col-sm-2">
-                <p class="tituloTabela">Fila Credito (<?php echo $IP ?>)</p>
+                <p class="tituloTabela">Fila Credito (
+                    <?php echo $IP ?>)
+                </p>
             </div>
             <div class="col-sm-2" style="margin-top:-10px;">
                 <div class="input-group">
                     <form action="" method="post">
                         <?php if (isset($codigoFilial)) { ?>
                             <input type="text" class="form-control" value="<?php echo $filiais['value'] ?>" readonly>
-                            <input type="number" class="form-control" value="<?php echo $filiais['id'] ?>" name="codigoFilial"
-                                id="FiltroFilial" hidden>
-                            <?php } else { ?>
-                                <select class="form-control text-center" name="codigoFilial" id="FiltroFilial"
-                                    autocomplete="off">
-                                    <option value="<?php echo null ?>"><?php echo "Selecione a Filial" ?></option>
-                                    <?php foreach ($filiais as $filial) { ?>
-                                        <option value="<?php echo $filial['id'] ?>"><?php echo $filial['value'] ?>
-                                        </option>
-                                    <?php } ?>
-                                </select>
+                            <input type="number" class="form-control" value="<?php echo $filiais['id'] ?>"
+                                name="codigoFilial" id="FiltroFilial" hidden>
+                        <?php } else { ?>
+                            <select class="form-control text-center" name="codigoFilial" id="FiltroFilial"
+                                autocomplete="off">
+                                <option value="<?php echo null ?>">
+                                    <?php echo "Selecione a Filial" ?>
+                                </option>
+                                <?php foreach ($filiais as $filial) { ?>
+                                    <option value="<?php echo $filial['id'] ?>">
+                                        <?php echo $filial['value'] ?>
+                                    </option>
+                                <?php } ?>
+                            </select>
                         <?php } ?>
                     </form>
                 </div>
@@ -107,7 +112,7 @@ if ($vfilial[0] == 172 || $vfilial[0] == 192) {
     </div>
 
     <script>
-        if ($("#FiltroFilial").val() == ""){
+        if ($("#FiltroFilial").val() == "") {
             $("#dados").html("Selecione Filial...");
         } else {
             buscar($("#FiltroFilial").val(), $("#FiltroNome_pessoa").val());
@@ -132,12 +137,12 @@ if ($vfilial[0] == 172 || $vfilial[0] == 192) {
                         var object = json[$i];
 
                         var dtinclu = new Date(object.dtinclu);
-                      //  var dtincluForm = dtinclu.toLocaleDateString("pt-BR");
-                        dtincluForm = (`${dtinclu.getUTCDate().toString().padStart(2, '0')}/${(dtinclu.getUTCMonth()+1).toString().padStart(2, '0')}/${dtinclu.getUTCFullYear()}`);
+                        //  var dtincluForm = dtinclu.toLocaleDateString("pt-BR");
+                        dtincluForm = (`${dtinclu.getUTCDate().toString().padStart(2, '0')}/${(dtinclu.getUTCMonth() + 1).toString().padStart(2, '0')}/${dtinclu.getUTCFullYear()}`);
 
                         var vctolimite = new Date(object.vctolimite);
                         //var vctolimiteForm = vctolimite.toLocaleDateString("pt-BR");
-                        vctolimiteForm = (`${vctolimite.getUTCDate().toString().padStart(2, '0')}/${(vctolimite.getUTCMonth()+1).toString().padStart(2, '0')}/${vctolimite.getUTCFullYear()}`);
+                        vctolimiteForm = (`${vctolimite.getUTCDate().toString().padStart(2, '0')}/${(vctolimite.getUTCMonth() + 1).toString().padStart(2, '0')}/${vctolimite.getUTCFullYear()}`);
 
                         linha += "<tr>";
                         linha += "<td>" + object.etbcod + "</td>";
@@ -186,35 +191,52 @@ if ($vfilial[0] == 172 || $vfilial[0] == 192) {
                 },
                 success: function (json) {
                     var excelContent =
-                        "<html xmlns:x='urn:schemas-microsoft-com:office:excel'>" +
-                        "<head>" +
-                        "<meta charset='UTF-8'>" +
-                        "</head>" +
-                        "<body>" +
-                        "<table>";
+                        '<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet" ' +
+                        'xmlns:o="urn:schemas-microsoft-com:office:office" ' +
+                        'xmlns:x="urn:schemas-microsoft-com:office:excel" ' +
+                        'xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet" ' +
+                        'xmlns:html="http://www.w3.org/TR/REC-html40">' +
+                        '<Worksheet ss:Name="Sheet1">' +
+                        '<Table>';
 
-                    excelContent += "<tr><th>Loja</th><th>Data</th><th>Hora</th><th>Cpf</th><th>Codigo</th><th>Cliente</th><th>Lj_Cad</th><th>Sit</th><th>Vcto_limite</th><th>limite</th><th>TC</th><th>Operacao</th><th>Resultado</th></tr>";
+                    excelContent += '<Row>' +
+                        '<Cell><Data ss:Type="String">Loja</Data></Cell>' +
+                        '<Cell><Data ss:Type="String">Data</Data></Cell>' +
+                        '<Cell><Data ss:Type="String">Hora</Data></Cell>' +
+                        '<Cell><Data ss:Type="String">Cpf</Data></Cell>' +
+                        '<Cell><Data ss:Type="String">Codigo</Data></Cell>' +
+                        '<Cell><Data ss:Type="String">Cliente</Data></Cell>' +
+                        '<Cell><Data ss:Type="String">Lj_Cad</Data></Cell>' +
+                        '<Cell><Data ss:Type="String">Sit</Data></Cell>' +
+                        '<Cell><Data ss:Type="String">Vcto_limite</Data></Cell>' +
+                        '<Cell><Data ss:Type="String">limite</Data></Cell>' +
+                        '<Cell><Data ss:Type="String">TC</Data></Cell>' +
+                        '<Cell><Data ss:Type="String">Operacao</Data></Cell>' +
+                        '<Cell><Data ss:Type="String">Resultado</Data></Cell>' +
+                        '</Row>';
 
                     for (var i = 0; i < json.length; i++) {
                         var object = json[i];
-                        excelContent += "<tr><td>" + object.etbcod + "</td>" +
-                            "<td>" + object.dtinclu + "</td>" +
-                            "<td>" + object.hrinclu + "</td>" +
-                            "<td>" + object.cpfcnpj + "</td>" +
-                            "<td>" + object.clicod + "</td>" +
-                            "<td>" + object.nome_pessoa + "</td>" +
-                            "<td>" + object.etbcad + "</td>" +
-                            "<td>" + object.sit_credito + "</td>" +
-                            "<td>" + object.vctolimite + "</td>" +
-                            "<td>" + object.vlrlimite + "</td>" +
-                            "<td>" + object.tipoconsulta + "</td>" +
-                            "<td>" + object.neu_cdoperacao + "</td>" +
-                            "<td>" + object.neu_resultado + "</td></tr>";
+                        excelContent += '<Row>' +
+                            '<Cell><Data ss:Type="String">' + object.etbcod + '</Data></Cell>' +
+                            '<Cell><Data ss:Type="String">' + object.dtinclu + '</Data></Cell>' +
+                            '<Cell><Data ss:Type="Number">' + object.hrinclu + '</Data></Cell>' +
+                            '<Cell><Data ss:Type="String">' + object.cpfcnpj + '</Data></Cell>' +
+                            '<Cell><Data ss:Type="Number">' + object.clicod + '</Data></Cell>' +
+                            '<Cell><Data ss:Type="String">' + object.nome_pessoa + '</Data></Cell>' +
+                            '<Cell><Data ss:Type="Number">' + object.etbcad + '</Data></Cell>' +
+                            '<Cell><Data ss:Type="String">' + object.sit_credito + '</Data></Cell>' +
+                            '<Cell><Data ss:Type="String">' + object.vctolimite + '</Data></Cell>' +
+                            '<Cell><Data ss:Type="Number">' + object.vlrlimite + '</Data></Cell>' +
+                            '<Cell><Data ss:Type="String">' + object.tipoconsulta + '</Data></Cell>' +
+                            '<Cell><Data ss:Type="String">' + object.neu_cdoperacao + '</Data></Cell>' +
+                            '<Cell><Data ss:Type="String">' + object.neu_resultado + '</Data></Cell>' +
+                            '</Row>';
                     }
 
-                    excelContent += "</table></body></html>";
+                    excelContent += '</Table></Worksheet></Workbook>';
 
-                    var excelBlob = new Blob([excelContent], { type: 'application/vnd.ms-excel' });
+                    var excelBlob = new Blob([excelContent], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
                     var excelUrl = URL.createObjectURL(excelBlob);
                     var link = document.createElement("a");
                     link.setAttribute("href", excelUrl);
@@ -338,10 +360,10 @@ if ($vfilial[0] == 172 || $vfilial[0] == 192) {
             var selectedOption = $("#exportoptions").val();
             if (selectedOption === "excel") {
                 exportToExcel();
-            } 
+            }
             if (selectedOption === "pdf") {
                 exportToPDF();
-            } 
+            }
             if (selectedOption === "csv") {
                 exportToCSV();
             }

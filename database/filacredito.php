@@ -44,12 +44,16 @@ if (isset($_GET['operacao'])) {
 
         $codigoFilial = $_POST['codigoFilial'];
         $nome_pessoa = $_POST['nome_pessoa'];
+        $dtinclu = $_POST['dtinclu'];
 
         if ($codigoFilial == "") {
             $codigoFilial = null;
         }
         if ($nome_pessoa == "") {
             $nome_pessoa = null;
+        }
+        if ($dtinclu == "") {
+            $dtinclu = null;
         }
 
         /*$IP = explode(".", $_SERVER['REMOTE_ADDR']);
@@ -60,7 +64,8 @@ if (isset($_GET['operacao'])) {
                 "dadosEntrada" => array(
                     array(
                         'codigoFilial' => $codigoFilial,
-                        'nome_pessoa' => $nome_pessoa
+                        'nome_pessoa' => $nome_pessoa,
+                        'dtinclu' => $dtinclu
                     )
                 )
             );

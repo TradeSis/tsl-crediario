@@ -108,7 +108,7 @@ if ($vfilial[0] == 172 || $vfilial[0] == 192) {
                             <th style="width: 10%;">
                                 <input type="date" class="form-control text-center" id="FiltroDtinclu"
                                     style="font-size: 14px; font-style:italic;margin-left:10px;margin-top:-5px;margin-bottom:-6px;width:130px;"
-                                    name="PeriodoInicio" autocomplete="off">
+                                    name="dtinclu" autocomplete="off">
                             </th>
                             <th></th>
                             <th></th>
@@ -131,6 +131,7 @@ if ($vfilial[0] == 172 || $vfilial[0] == 192) {
     </div>
 
     <script>
+        
         if ($("#FiltroFilial").val() == "") {
             $("#dados").html("Selecione Filial...");
         } else {
@@ -138,6 +139,7 @@ if ($vfilial[0] == 172 || $vfilial[0] == 192) {
         }
 
         function buscar(codigoFilial, nome_pessoa, dtinclu) {
+            alert($("#FiltroDtinclu").val());
             $.ajax({
                 type: 'POST',
                 dataType: 'html',
@@ -184,6 +186,9 @@ if ($vfilial[0] == 172 || $vfilial[0] == 192) {
         }
 
         $("#FiltroFilial").change(function () {
+            buscar($("#FiltroFilial").val(), $("#FiltroNome_pessoa").val(), $("#FiltroDtinclu").val());
+        });
+        $("#FiltroDtinclu").change(function () {
             buscar($("#FiltroFilial").val(), $("#FiltroNome_pessoa").val(), $("#FiltroDtinclu").val());
         });
         $("#buscar").click(function () {

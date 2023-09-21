@@ -76,7 +76,7 @@ then ttentrada.nome_pessoa = "".
 vetbcod  = ttentrada.codigoFilial no-error.
 if vetbcod = ? then vetbcod = 0.
 
-par-data = today.
+par-data = today - 4.
 if vetbcod > 0
 then do:
     find first estab where estab.etbcod = vetbcod no-lock no-error.

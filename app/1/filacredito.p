@@ -12,8 +12,8 @@ def var hsaida   as handle.
 def temp-table ttentrada serialize-name "dadosEntrada"
     /*field IP       as char*/
     field codigoFilial       as int
-   /*field dtinclu     as date format "99/99/9999"
-    field cpfcnpj  as int
+    field dtinclu     as date format "99/99/9999"
+   /* field cpfcnpj  as int
     field clicod   as int*/
     field nome_pessoa   as char
    /*field etbcad     as int
@@ -76,7 +76,10 @@ then ttentrada.nome_pessoa = "".
 vetbcod  = ttentrada.codigoFilial no-error.
 if vetbcod = ? then vetbcod = 0.
 
-par-data = today.
+if ttentrada.dtinclu = ?
+then par-data = today - 3.
+else par-data = ttentrada.dtinclu.
+
 if vetbcod > 0
 then do:
     find first estab where estab.etbcod = vetbcod no-lock no-error.

@@ -103,6 +103,25 @@ if ($vfilial[0] == 172 || $vfilial[0] == 192) {
                             <th class="text-center">Operacao</th>
                             <th class="text-center">Resultado</th>
                         </tr>
+                        <tr>
+                            <th></th>
+                            <th style="width: 10%;">
+                                <input type="date" class="form-control text-center" id="FiltroDtinclu"
+                                    style="font-size: 14px; font-style:italic;margin-left:10px;margin-top:-5px;margin-bottom:-6px;width:130px;"
+                                    name="PeriodoInicio" autocomplete="off">
+                            </th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                        </tr>
                     </thead>
                     <tbody id='dados' class="fonteCorpo">
                     </tbody>
@@ -115,10 +134,10 @@ if ($vfilial[0] == 172 || $vfilial[0] == 192) {
         if ($("#FiltroFilial").val() == "") {
             $("#dados").html("Selecione Filial...");
         } else {
-            buscar($("#FiltroFilial").val(), $("#FiltroNome_pessoa").val());
+            buscar($("#FiltroFilial").val(), $("#FiltroNome_pessoa").val(), $("#FiltroDtinclu").val());
         }
 
-        function buscar(codigoFilial, nome_pessoa) {
+        function buscar(codigoFilial, nome_pessoa, dtinclu) {
             $.ajax({
                 type: 'POST',
                 dataType: 'html',
@@ -128,7 +147,8 @@ if ($vfilial[0] == 172 || $vfilial[0] == 192) {
                 },
                 data: {
                     codigoFilial: codigoFilial,
-                    nome_pessoa: nome_pessoa
+                    nome_pessoa: nome_pessoa,
+                    dtinclu: dtinclu
                 },
                 success: function (response) {
                     var json = JSON.parse(response);
@@ -137,11 +157,9 @@ if ($vfilial[0] == 172 || $vfilial[0] == 192) {
                         var object = json[$i];
 
                         var dtinclu = new Date(object.dtinclu);
-                        //  var dtincluForm = dtinclu.toLocaleDateString("pt-BR");
                         dtincluForm = (`${dtinclu.getUTCDate().toString().padStart(2, '0')}/${(dtinclu.getUTCMonth() + 1).toString().padStart(2, '0')}/${dtinclu.getUTCFullYear()}`);
 
                         var vctolimite = new Date(object.vctolimite);
-                        //var vctolimiteForm = vctolimite.toLocaleDateString("pt-BR");
                         vctolimiteForm = (`${vctolimite.getUTCDate().toString().padStart(2, '0')}/${(vctolimite.getUTCMonth() + 1).toString().padStart(2, '0')}/${vctolimite.getUTCFullYear()}`);
 
                         linha += "<tr>";
@@ -166,15 +184,15 @@ if ($vfilial[0] == 172 || $vfilial[0] == 192) {
         }
 
         $("#FiltroFilial").change(function () {
-            buscar($("#FiltroFilial").val(), $("#FiltroNome_pessoa").val());
+            buscar($("#FiltroFilial").val(), $("#FiltroNome_pessoa").val(), $("#FiltroDtinclu").val());
         });
         $("#buscar").click(function () {
-            buscar($("#FiltroFilial").val(), $("#FiltroNome_pessoa").val());
+            buscar($("#FiltroFilial").val(), $("#FiltroNome_pessoa").val(), $("#FiltroDtinclu").val());
         });
 
         document.addEventListener("keypress", function (e) {
             if (e.key === "Enter") {
-                buscar($("#FiltroFilial").val(), $("#FiltroNome_pessoa").val());
+                buscar($("#FiltroFilial").val(), $("#FiltroNome_pessoa").val(), $("#FiltroDtinclu").val());
             }
         });
 
@@ -187,7 +205,8 @@ if ($vfilial[0] == 172 || $vfilial[0] == 192) {
                 url: '../database/filacredito.php?operacao=buscar',
                 data: {
                     codigoFilial: $("#FiltroFilial").val(),
-                    nome_pessoa: $("#FiltroNome_pessoa").val()
+                    nome_pessoa: $("#FiltroNome_pessoa").val(),
+                    dtinclu: $("#FiltroDtinclu").val()
                 },
                 success: function (json) {
                     var excelContent =
@@ -245,7 +264,8 @@ if ($vfilial[0] == 172 || $vfilial[0] == 192) {
                 url: '../database/filacredito.php?operacao=buscar',
                 data: {
                     codigoFilial: $("#FiltroFilial").val(),
-                    nome_pessoa: $("#FiltroNome_pessoa").val()
+                    nome_pessoa: $("#FiltroNome_pessoa").val(),
+                    dtinclu: $("#FiltroDtinclu").val()
                 },
                 success: function (json) {
                     var csvContent = "data:text/csv;charset=utf-8,\uFEFF";
@@ -292,7 +312,8 @@ if ($vfilial[0] == 172 || $vfilial[0] == 192) {
                 url: '../database/filacredito.php?operacao=buscar',
                 data: {
                     codigoFilial: $("#FiltroFilial").val(),
-                    nome_pessoa: $("#FiltroNome_pessoa").val()
+                    nome_pessoa: $("#FiltroNome_pessoa").val(),
+                    dtinclu: $("#FiltroDtinclu").val()
                 },
                 success: function (json) {
                     var tableContent =

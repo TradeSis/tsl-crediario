@@ -76,10 +76,6 @@ then ttentrada.nome_pessoa = "".
 vetbcod  = ttentrada.codigoFilial no-error.
 if vetbcod = ? then vetbcod = 0.
 
-if ttentrada.dtinclu = ?
-then par-data = today - 3.
-else par-data = ttentrada.dtinclu.
-
 if vetbcod > 0
 then do:
     find first estab where estab.etbcod = vetbcod no-lock no-error.
@@ -87,6 +83,83 @@ then do:
 end.
 
 xetbcod = vetbcod.
+
+if ttentrada.dtinclu = ?
+then do:
+    par-data = today - 3.
+    vtotal = 0.
+    for each estab where (if vetbcod <> 0 then estab.etbcod = vetbcod else true)
+                no-lock.
+        for each neuproposta where neuproposta.etbcod = estab.etbcod
+                            and neuproposta.dtinclu >= par-data
+                no-lock
+                by neuproposta.dtinclu DESC BY neuproposta.hrinclu DESC.
+            find neuclien of neuproposta no-lock no-error.
+            if not avail neuclien    
+            then next. 
+            if ttentrada.nome_pessoa <> "" 
+            then if neuclien.nome_pessoa begins ttentrada.nome_pessoa
+                then.
+                else next.
+
+            vtotal = vtotal + 1.
+
+            create ttneuproposta.
+                ttneuproposta.etbcod    = neuproposta.etbcod.
+                ttneuproposta.dtinclu    = neuproposta.dtinclu.
+                ttneuproposta.hrinclu    = neuproposta.hrinclu.
+                ttneuproposta.cpfcnpj    = neuproposta.cpfcnpj.
+                ttneuproposta.clicod    = neuclien.clicod.
+                ttneuproposta.nome_pessoa    = neuclien.nome_pessoa.
+                ttneuproposta.etbcad    = neuclien.etbcod.
+                ttneuproposta.sit_credito    = neuclien.sit_credito.
+                ttneuproposta.vctolimite    = neuclien.vctolimite.
+                ttneuproposta.vlrlimite    = neuclien.vlrlimite.
+                ttneuproposta.tipoconsulta    = neuproposta.tipoconsulta.
+                ttneuproposta.neu_cdoperacao    = neuproposta.neu_cdoperacao.
+                ttneuproposta.neu_resultado    = neuproposta.neu_resultado.
+
+        end.
+    end.
+end.
+else do:
+    par-data = ttentrada.dtinclu.
+    vtotal = 0.
+    for each estab where (if vetbcod <> 0 then estab.etbcod = vetbcod else true)
+                no-lock.
+        for each neuproposta where neuproposta.etbcod = estab.etbcod
+                            and neuproposta.dtinclu = par-data
+                no-lock
+                by neuproposta.dtinclu DESC BY neuproposta.hrinclu DESC.
+            find neuclien of neuproposta no-lock no-error.
+            if not avail neuclien    
+            then next. 
+            if ttentrada.nome_pessoa <> "" 
+            then if neuclien.nome_pessoa begins ttentrada.nome_pessoa
+                then.
+                else next.
+
+            vtotal = vtotal + 1.
+
+            create ttneuproposta.
+                ttneuproposta.etbcod    = neuproposta.etbcod.
+                ttneuproposta.dtinclu    = neuproposta.dtinclu.
+                ttneuproposta.hrinclu    = neuproposta.hrinclu.
+                ttneuproposta.cpfcnpj    = neuproposta.cpfcnpj.
+                ttneuproposta.clicod    = neuclien.clicod.
+                ttneuproposta.nome_pessoa    = neuclien.nome_pessoa.
+                ttneuproposta.etbcad    = neuclien.etbcod.
+                ttneuproposta.sit_credito    = neuclien.sit_credito.
+                ttneuproposta.vctolimite    = neuclien.vctolimite.
+                ttneuproposta.vlrlimite    = neuclien.vlrlimite.
+                ttneuproposta.tipoconsulta    = neuproposta.tipoconsulta.
+                ttneuproposta.neu_cdoperacao    = neuproposta.neu_cdoperacao.
+                ttneuproposta.neu_resultado    = neuproposta.neu_resultado.
+
+        end.
+    end.
+end.
+
 /* 
 if num-entries(vip,".") = 4 and vetbcod = 0
 then do:

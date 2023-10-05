@@ -17,7 +17,7 @@ if ($vfilial[0] == 172 || $vfilial[0] == 192) {
     }
 } else {
 
-    if ($IP == "10.2.0.79" && URLROOT == "/tslebes" && $_SERVER['SERVER_ADDR'] == "10.145.0.60") { // Simulacao da 188 no servidor winjump
+    if ($IP == "10.146.0.15" && URLROOT == "/tslebes" && $_SERVER['SERVER_ADDR'] == "10.145.0.60") { // Simulacao da 188 no servidor winjump
         $codigoFilial = 188;
         $filiais = buscaFiliais($codigoFilial);
         $filiais = $filiais[0];

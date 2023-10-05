@@ -23,7 +23,7 @@ def temp-table ttentrada serialize-name "dadosEntrada"
 def temp-table ttneuproposta  no-undo serialize-name "neuproposta"
     field etbcod   as int
     field dtinclu     as date format "99/99/9999"
-    field hrinclu     as int
+    field hrinclu     as char
     field cpfcnpj  as dec decimals 0
     field clicod   as int
     field nome_pessoa   as char
@@ -107,7 +107,7 @@ then do:
             create ttneuproposta.
                 ttneuproposta.etbcod    = neuproposta.etbcod.
                 ttneuproposta.dtinclu    = neuproposta.dtinclu.
-                ttneuproposta.hrinclu    = neuproposta.hrinclu.
+                ttneuproposta.hrinclu    = string(neuproposta.hrinclu,"HH:MM:SS").
                 ttneuproposta.cpfcnpj    = neuproposta.cpfcnpj.
                 ttneuproposta.clicod    = neuclien.clicod.
                 ttneuproposta.nome_pessoa    = neuclien.nome_pessoa.
@@ -147,7 +147,7 @@ else do:
             create ttneuproposta.
                 ttneuproposta.etbcod    = neuproposta.etbcod.
                 ttneuproposta.dtinclu    = neuproposta.dtinclu.
-                ttneuproposta.hrinclu    = neuproposta.hrinclu.
+                ttneuproposta.hrinclu    = string(neuproposta.hrinclu,"HH:MM:SS").
                 ttneuproposta.cpfcnpj    = neuproposta.cpfcnpj.
                 ttneuproposta.clicod    = neuclien.clicod.
                 ttneuproposta.nome_pessoa    = neuclien.nome_pessoa.

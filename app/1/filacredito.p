@@ -103,12 +103,12 @@ then do:
                 else next.
 
             vtotal = vtotal + 1.
-            vHrinclu = string(neuproposta.hrinclu,"HH:MM:SS").
+            neuproposta.hrinclu = string(neuproposta.hrinclu,"HH:MM:SS").
 
             create ttneuproposta.
                 ttneuproposta.etbcod    = neuproposta.etbcod.
                 ttneuproposta.dtinclu    = neuproposta.dtinclu.
-                ttneuproposta.hrinclu    = vHrinclu.
+                ttneuproposta.hrinclu    = neuproposta.hrinclu.
                 ttneuproposta.cpfcnpj    = neuproposta.cpfcnpj.
                 ttneuproposta.clicod    = neuclien.clicod.
                 ttneuproposta.nome_pessoa    = neuclien.nome_pessoa.
@@ -144,12 +144,12 @@ else do:
                 else next.
 
             vtotal = vtotal + 1.
-            vHrinclu = string(neuproposta.hrinclu,"HH:MM:SS").
+            neuproposta.hrinclu = string(neuproposta.hrinclu,"HH:MM:SS").
 
             create ttneuproposta.
                 ttneuproposta.etbcod    = neuproposta.etbcod.
                 ttneuproposta.dtinclu    = neuproposta.dtinclu.
-                ttneuproposta.hrinclu    = vHrinclu.
+                ttneuproposta.hrinclu    = neuproposta.hrinclu.
                 ttneuproposta.cpfcnpj    = neuproposta.cpfcnpj.
                 ttneuproposta.clicod    = neuclien.clicod.
                 ttneuproposta.nome_pessoa    = neuclien.nome_pessoa.

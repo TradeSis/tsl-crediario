@@ -6,14 +6,25 @@ include_once '../database/filacredito.php';
 $IP = $_SERVER['REMOTE_ADDR'];
 
 $vfilial = explode(".", $IP);
+$codigoFilial = null;
+
 if ($vfilial[0] == 172 || $vfilial[0] == 192) {
     if ($vfilial[1] == 17 || $vfilial[1] == 23 || $vfilial[1] == 168) {
         $codigoFilial = $vfilial[2];
         $filiais = buscaFiliais($codigoFilial);
         $filiais = $filiais[0];
+
     }
 } else {
-    $filiais = buscaFiliais();
+
+    if ($IP == "10.146.0.15" && URLROOT == "/tslebes" && $_SERVER['SERVER_ADDR'] == "10.145.0.60") { // Simulacao da 188 no servidor winjump
+        $codigoFilial = 188;
+        $filiais = buscaFiliais($codigoFilial);
+        $filiais = $filiais[0];
+    } else {
+        $filiais = buscaFiliais();
+    }
+
 }
 ?>
 
@@ -21,24 +32,29 @@ if ($vfilial[0] == 172 || $vfilial[0] == 192) {
     <div class="container-fluid text-center mt-4">
         <div class="row">
             <div class="col-sm-2">
-                <p class="tituloTabela">Fila Credito</p>
+                <p class="tituloTabela">Fila Credito (
+                    <?php echo $IP ?>)
+                </p>
             </div>
             <div class="col-sm-2" style="margin-top:-10px;">
                 <div class="input-group">
                     <form action="" method="post">
-                        <?php if (isset($filiais['id'])) { ?>
+                        <?php if (isset($codigoFilial)) { ?>
                             <input type="text" class="form-control" value="<?php echo $filiais['value'] ?>" readonly>
-                            <input type="number" class="form-control" value="<?php echo $filiais['id'] ?>" name="codigoFilial"
-                                id="FiltroFilial" hidden>
-                            <?php } else { ?>
-                                <select class="form-control text-center" name="codigoFilial" id="FiltroFilial"
-                                    autocomplete="off">
-                                    <option value="<?php echo null ?>"><?php echo "Selecione a Filial" ?></option>
-                                    <?php foreach ($filiais as $filial) { ?>
-                                        <option value="<?php echo $filial['id'] ?>"><?php echo $filial['value'] ?>
-                                        </option>
-                                    <?php } ?>
-                                </select>
+                            <input type="number" class="form-control" value="<?php echo $filiais['id'] ?>"
+                                name="codigoFilial" id="FiltroFilial" hidden>
+                        <?php } else { ?>
+                            <select class="form-control text-center" name="codigoFilial" id="FiltroFilial"
+                                autocomplete="off">
+                                <option value="<?php echo null ?>">
+                                    <?php echo "Selecione a Filial" ?>
+                                </option>
+                                <?php foreach ($filiais as $filial) { ?>
+                                    <option value="<?php echo $filial['id'] ?>">
+                                        <?php echo $filial['value'] ?>
+                                    </option>
+                                <?php } ?>
+                            </select>
                         <?php } ?>
                     </form>
                 </div>
@@ -87,6 +103,25 @@ if ($vfilial[0] == 172 || $vfilial[0] == 192) {
                             <th class="text-center">Operacao</th>
                             <th class="text-center">Resultado</th>
                         </tr>
+                        <tr>
+                            <th></th>
+                            <th style="width: 10%;">
+                                <input type="date" class="form-control text-center" id="FiltroDtinclu"
+                                    style="font-size: 14px; font-style:italic;margin-left:10px;margin-top:-5px;margin-bottom:-6px;width:130px;"
+                                    name="dtinclu" autocomplete="off">
+                            </th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                        </tr>
                     </thead>
                     <tbody id='dados' class="fonteCorpo">
                     </tbody>
@@ -96,9 +131,14 @@ if ($vfilial[0] == 172 || $vfilial[0] == 192) {
     </div>
 
     <script>
-        buscar($("#FiltroFilial").val(), $("#FiltroNome_pessoa").val());
+        
+        if ($("#FiltroFilial").val() == "") {
+            $("#dados").html("Selecione Filial...");
+        } else {
+            buscar($("#FiltroFilial").val(), $("#FiltroNome_pessoa").val(), $("#FiltroDtinclu").val());
+        }
 
-        function buscar(codigoFilial, nome_pessoa) {
+        function buscar(codigoFilial, nome_pessoa, dtinclu) {
             $.ajax({
                 type: 'POST',
                 dataType: 'html',
@@ -108,7 +148,8 @@ if ($vfilial[0] == 172 || $vfilial[0] == 192) {
                 },
                 data: {
                     codigoFilial: codigoFilial,
-                    nome_pessoa: nome_pessoa
+                    nome_pessoa: nome_pessoa,
+                    dtinclu: dtinclu
                 },
                 success: function (response) {
                     var json = JSON.parse(response);
@@ -117,9 +158,10 @@ if ($vfilial[0] == 172 || $vfilial[0] == 192) {
                         var object = json[$i];
 
                         var dtinclu = new Date(object.dtinclu);
-                        var dtincluForm = dtinclu.toLocaleDateString("pt-BR");
+                        dtincluForm = (`${dtinclu.getUTCDate().toString().padStart(2, '0')}/${(dtinclu.getUTCMonth() + 1).toString().padStart(2, '0')}/${dtinclu.getUTCFullYear()}`);
+
                         var vctolimite = new Date(object.vctolimite);
-                        var vctolimiteForm = vctolimite.toLocaleDateString("pt-BR");
+                        vctolimiteForm = (`${vctolimite.getUTCDate().toString().padStart(2, '0')}/${(vctolimite.getUTCMonth() + 1).toString().padStart(2, '0')}/${vctolimite.getUTCFullYear()}`);
 
                         linha += "<tr>";
                         linha += "<td>" + object.etbcod + "</td>";
@@ -143,15 +185,18 @@ if ($vfilial[0] == 172 || $vfilial[0] == 192) {
         }
 
         $("#FiltroFilial").change(function () {
-            buscar($("#FiltroFilial").val(), $("#FiltroNome_pessoa").val());
+            buscar($("#FiltroFilial").val(), $("#FiltroNome_pessoa").val(), $("#FiltroDtinclu").val());
+        });
+        $("#FiltroDtinclu").change(function () {
+            buscar($("#FiltroFilial").val(), $("#FiltroNome_pessoa").val(), $("#FiltroDtinclu").val());
         });
         $("#buscar").click(function () {
-            buscar($("#FiltroFilial").val(), $("#FiltroNome_pessoa").val());
+            buscar($("#FiltroFilial").val(), $("#FiltroNome_pessoa").val(), $("#FiltroDtinclu").val());
         });
 
         document.addEventListener("keypress", function (e) {
             if (e.key === "Enter") {
-                buscar($("#FiltroFilial").val(), $("#FiltroNome_pessoa").val());
+                buscar($("#FiltroFilial").val(), $("#FiltroNome_pessoa").val(), $("#FiltroDtinclu").val());
             }
         });
 
@@ -164,7 +209,8 @@ if ($vfilial[0] == 172 || $vfilial[0] == 192) {
                 url: '../database/filacredito.php?operacao=buscar',
                 data: {
                     codigoFilial: $("#FiltroFilial").val(),
-                    nome_pessoa: $("#FiltroNome_pessoa").val()
+                    nome_pessoa: $("#FiltroNome_pessoa").val(),
+                    dtinclu: $("#FiltroDtinclu").val()
                 },
                 success: function (json) {
                     var excelContent =
@@ -196,11 +242,13 @@ if ($vfilial[0] == 172 || $vfilial[0] == 192) {
 
                     excelContent += "</table></body></html>";
 
-                    var excelBlob = new Blob([excelContent], { type: 'application/vnd.ms-excel' });
+                    var excelBlob = new Blob([excelContent], {
+                        type: 'application/vnd.ms-excel'
+                    });
                     var excelUrl = URL.createObjectURL(excelBlob);
                     var link = document.createElement("a");
                     link.setAttribute("href", excelUrl);
-                    link.setAttribute("download", "demandas.xls");
+                    link.setAttribute("download", "filacredito.xls");
                     document.body.appendChild(link);
 
                     link.click();
@@ -212,7 +260,6 @@ if ($vfilial[0] == 172 || $vfilial[0] == 192) {
                 }
             });
         }
-
         //**************exporta csv
         function exportToCSV() {
             $.ajax({
@@ -221,7 +268,8 @@ if ($vfilial[0] == 172 || $vfilial[0] == 192) {
                 url: '../database/filacredito.php?operacao=buscar',
                 data: {
                     codigoFilial: $("#FiltroFilial").val(),
-                    nome_pessoa: $("#FiltroNome_pessoa").val()
+                    nome_pessoa: $("#FiltroNome_pessoa").val(),
+                    dtinclu: $("#FiltroDtinclu").val()
                 },
                 success: function (json) {
                     var csvContent = "data:text/csv;charset=utf-8,\uFEFF";
@@ -247,7 +295,7 @@ if ($vfilial[0] == 172 || $vfilial[0] == 192) {
                     var encodedUri = encodeURI(csvContent);
                     var link = document.createElement("a");
                     link.setAttribute("href", encodedUri);
-                    link.setAttribute("download", "demandas.csv");
+                    link.setAttribute("download", "filadecredito.csv");
                     document.body.appendChild(link);
 
                     link.click();
@@ -268,7 +316,8 @@ if ($vfilial[0] == 172 || $vfilial[0] == 192) {
                 url: '../database/filacredito.php?operacao=buscar',
                 data: {
                     codigoFilial: $("#FiltroFilial").val(),
-                    nome_pessoa: $("#FiltroNome_pessoa").val()
+                    nome_pessoa: $("#FiltroNome_pessoa").val(),
+                    dtinclu: $("#FiltroDtinclu").val()
                 },
                 success: function (json) {
                     var tableContent =
@@ -294,9 +343,9 @@ if ($vfilial[0] == 172 || $vfilial[0] == 192) {
 
                     tableContent += "</table>";
 
-                    var printWindow = window.open('', '', 'width=800,height=600');
+                    var printWindow = window.open('', '', 'width=1200,height=800');
                     printWindow.document.open();
-                    printWindow.document.write('<html><head><title>Demandas</title></head><body>');
+                    printWindow.document.write('<html><head><title>Fila de Credito</title></head><body>');
                     printWindow.document.write(tableContent);
                     printWindow.document.write('</body></html>');
                     printWindow.document.close();
@@ -320,9 +369,11 @@ if ($vfilial[0] == 172 || $vfilial[0] == 192) {
             var selectedOption = $("#exportoptions").val();
             if (selectedOption === "excel") {
                 exportToExcel();
-            } else if (selectedOption === "pdf") {
+            }
+            if (selectedOption === "pdf") {
                 exportToPDF();
-            } else if (selectedOption === "csv") {
+            }
+            if (selectedOption === "csv") {
                 exportToCSV();
             }
         });

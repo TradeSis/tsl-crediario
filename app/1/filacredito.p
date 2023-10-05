@@ -108,7 +108,7 @@ then do:
             create ttneuproposta.
                 ttneuproposta.etbcod    = neuproposta.etbcod.
                 ttneuproposta.dtinclu    = neuproposta.dtinclu.
-                ttneuproposta.hrinclu    = neuproposta.hrinclu.
+                ttneuproposta.hrinclu    = string(neuproposta.hrinclu,"HH:MM:SS").
                 ttneuproposta.cpfcnpj    = neuproposta.cpfcnpj.
                 ttneuproposta.clicod    = neuclien.clicod.
                 ttneuproposta.nome_pessoa    = neuclien.nome_pessoa.
@@ -149,7 +149,7 @@ else do:
             create ttneuproposta.
                 ttneuproposta.etbcod    = neuproposta.etbcod.
                 ttneuproposta.dtinclu    = neuproposta.dtinclu.
-                ttneuproposta.hrinclu    = neuproposta.hrinclu.
+                ttneuproposta.hrinclu    = string(neuproposta.hrinclu,"HH:MM:SS").
                 ttneuproposta.cpfcnpj    = neuproposta.cpfcnpj.
                 ttneuproposta.clicod    = neuclien.clicod.
                 ttneuproposta.nome_pessoa    = neuclien.nome_pessoa.

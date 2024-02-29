@@ -170,10 +170,10 @@ end.
 
 hsaida  = dataset conteudoSaida:handle.
 
-/*lokJson = hsaida:WRITE-JSON("LONGCHAR", vlcSaida, TRUE).
+lokJson = hsaida:WRITE-JSON("LONGCHAR", vlcSaida, TRUE).
 put unformatted string(vlcSaida).
-*/
 
+/*
 def var varquivo as char.
 def var ppid as char.
 INPUT THROUGH "echo $PPID".
@@ -189,3 +189,4 @@ lokJson = hsaida:WRITE-JSON("FILE", varquivo, TRUE).
 
 os-command value("cat " + varquivo).
 os-command value("rm -f " + varquivo)
+*/

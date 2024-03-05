@@ -162,10 +162,8 @@ lokJson = hsaida:WRITE-JSON("FILE", varquivo, TRUE).
 
 if opsys = "UNIX"
 then do:
-    os-command value("cat " + varquivo).
-    os-command value("rm -f " + varquivo).
+    run crediario/app/1/cat.p (varquivo).
 end.    
 else do:
-    os-command value("type " + replace(varquivo,"/","\")).
-    os-command value("del /Q/F  " + replace(varquivo,"/","\")).
+    run crediario/app/1/type.p (varquivo).
 end.    

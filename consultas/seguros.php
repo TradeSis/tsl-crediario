@@ -1,4 +1,5 @@
 <?php
+// lucas 120320204 id884 bootstrap local - alterado head
 // gabriel 15022023 13:55 adicionado codigocliente e filial null, visualizar dados cliente, removido modal
 // gabriel 09022023 15:35
 
@@ -26,7 +27,11 @@ $seguros = buscaSeguros($codigoCliente, $codigoFilial, $recID);
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
+<head>
 
+    <?php include_once ROOT . "/vendor/head_css.php"; ?>
+
+</head>
 
 
 
@@ -87,6 +92,11 @@ $seguros = buscaSeguros($codigoCliente, $codigoFilial, $recID);
         </div>
     </div>
 
+<!-- LOCAL PARA COLOCAR OS JS -->
+
+<?php include_once ROOT . "/vendor/footer_js.php"; ?>
+
+<!-- LOCAL PARA COLOCAR OS JS -FIM -->
 
 </body>
 

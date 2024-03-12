@@ -1,4 +1,5 @@
 <?php
+// lucas 120320204 id884 bootstrap local - alterado head
 // gabriel 23022023 09:50
 
 include_once '../head.php';
@@ -17,6 +18,14 @@ $contrato = $contrato[0];
 $parcelas = $contrato["parcelas"];
 $produtos = $contrato["produtos"];
 ?>
+
+<!doctype html>
+<html lang="pt-BR">
+<head>
+
+    <?php include_once ROOT . "/vendor/head_css.php"; ?>
+
+</head>
 
 <body class="bg-transparent">
     <div class="container-fluid mt-3">
@@ -167,7 +176,11 @@ $produtos = $contrato["produtos"];
         </div>
     </div>
 
+<!-- LOCAL PARA COLOCAR OS JS -->
 
+<?php include_once ROOT . "/vendor/footer_js.php"; ?>
+
+<!-- LOCAL PARA COLOCAR OS JS -FIM -->
 
 </body>
 

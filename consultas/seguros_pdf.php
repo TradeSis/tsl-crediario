@@ -1,4 +1,5 @@
 <?php
+// lucas 120320204 id884 bootstrap local - alterado head
 // gabriel 16022023 15:34 - alterado para somente receber o pdf
 // gabriel 16022023 14:17
 
@@ -10,6 +11,14 @@ $PDF = $_GET['PDF'];
 
 
 ?>
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+
+    <?php include_once ROOT . "/vendor/head_css.php"; ?>
+
+</head>
 
 <body class="bg-transparent">
     <div class="container-fluid">
@@ -28,6 +37,12 @@ $PDF = $_GET['PDF'];
                 <iframe class="container-fluid full-width" id="myIframe" src="<?php echo $PDF ?>" frameborder="0" scrolling="yes" height="550"></iframe>
             </div>
         </div>
+
+<!-- LOCAL PARA COLOCAR OS JS -->
+
+<?php include_once ROOT . "/vendor/footer_js.php"; ?>
+
+<!-- LOCAL PARA COLOCAR OS JS -FIM -->
 
 </body>
 

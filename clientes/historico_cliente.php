@@ -1,4 +1,5 @@
 <?php
+// lucas 120320204 id884 bootstrap local - alterado head
 // gabriel 27022023 13:51 - ajustado direcionamento para consulta de contrato
 // gabriel 23022023 09:50
 
@@ -24,6 +25,13 @@ $contratos = $historico["contratos"];
 
 
 ?>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+
+    <?php include_once ROOT . "/vendor/head_css.php"; ?>
+
+</head>
 
 <body class="bg-transparent">
     <div class="container-fluid mt-3">
@@ -128,6 +136,11 @@ $contratos = $historico["contratos"];
     </div>
 
 
+<!-- LOCAL PARA COLOCAR OS JS -->
+
+<?php include_once ROOT . "/vendor/footer_js.php"; ?>
+
+<!-- LOCAL PARA COLOCAR OS JS -FIM -->
 
 </body>
 

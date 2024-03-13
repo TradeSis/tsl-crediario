@@ -139,23 +139,31 @@ end.
 
 hsaida  = dataset conteudoSaida:handle.
 
-/*lokJson = hsaida:WRITE-JSON("LONGCHAR", vlcSaida, TRUE).
+/*
+lokJson = hsaida:WRITE-JSON("LONGCHAR", vlcSaida, TRUE).
 put unformatted string(vlcSaida).
 */
 
-def var varquivo as char.
+def var varquivo as char init "".
 def var ppid as char.
-INPUT THROUGH "echo $PPID".
-DO ON ENDKEY UNDO, LEAVE:
-IMPORT unformatted ppid.
-END.
-INPUT CLOSE.
-
+if opsys = "UNIX"
+then do:
+    INPUT THROUGH "echo $PPID".
+    DO ON ENDKEY UNDO, LEAVE:
+    IMPORT unformatted ppid.
+    END.
+    INPUT CLOSE.
+end.
 
 varquivo  = vtmp + "apits_crediariocliente" + string(today,"999999") + replace(string(time,"HH:MM:SS"),":","") +
           trim(ppid) + ".json".
 
 lokJson = hsaida:WRITE-JSON("FILE", varquivo, TRUE).
 
-os-command value("cat " + varquivo).
-os-command value("rm -f " + varquivo).
+if opsys = "UNIX"
+then do:
+    run crediario/app/1/cat.p (varquivo).
+end.    
+else do:
+    run crediario/app/1/type.p (varquivo).
+end.    

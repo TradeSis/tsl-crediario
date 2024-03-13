@@ -103,7 +103,7 @@ then do:
                 else next.
 
             vtotal = vtotal + 1.
-            neuproposta.hrinclu = string(neuproposta.hrinclu,"HH:MM:SS").
+           
 
             create ttneuproposta.
                 ttneuproposta.etbcod    = neuproposta.etbcod.
@@ -144,7 +144,7 @@ else do:
                 else next.
 
             vtotal = vtotal + 1.
-            neuproposta.hrinclu = string(neuproposta.hrinclu,"HH:MM:SS").
+           
 
             create ttneuproposta.
                 ttneuproposta.etbcod    = neuproposta.etbcod.
@@ -196,3 +196,4 @@ lokJson = hsaida:WRITE-JSON("FILE", varquivo, TRUE).
 
 os-command value("cat " + varquivo).
 os-command value("rm -f " + varquivo)
+

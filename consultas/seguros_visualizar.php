@@ -1,4 +1,5 @@
 <?php
+// lucas 120320204 id884 bootstrap local - alterado head
 // gabriel 16022023 15:34 adicionado botão de certificado  
 // gabriel 15022023 14:00
 
@@ -19,6 +20,14 @@ $seguros = buscaSeguros($codigoCliente, $codigoFilial, $recID);
 $seguros = $seguros[0];
 $produtos = $seguros["produtos"];
 ?>
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+
+    <?php include_once ROOT . "/vendor/head_css.php"; ?>
+
+</head>
 
 <body class="bg-transparent">
     <div class="container-fluid mt-3">
@@ -98,6 +107,11 @@ $produtos = $seguros["produtos"];
     </div>
 
 
+<!-- LOCAL PARA COLOCAR OS JS -->
+
+<?php include_once ROOT . "/vendor/footer_js.php"; ?>
+
+<!-- LOCAL PARA COLOCAR OS JS -FIM -->
 
 </body>
 

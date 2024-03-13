@@ -1,4 +1,5 @@
 <?php
+// lucas 120320204 id884 bootstrap local - alterado head
 // gabriel 15022023 14:54 adicionado ?parametros na ação
 // gabriel 10022023 16:23
 
@@ -8,6 +9,11 @@ include_once '../head.php';
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
+<head>
+
+    <?php include_once ROOT . "/vendor/head_css.php"; ?>
+
+</head>
 
 
 <body class="bg-transparent">
@@ -43,6 +49,13 @@ include_once '../head.php';
             </div>
         </div>
     </div>
+
+<!-- LOCAL PARA COLOCAR OS JS -->
+
+<?php include_once ROOT . "/vendor/footer_js.php"; ?>
+
+<!-- LOCAL PARA COLOCAR OS JS -FIM -->
+
 </body>
 
 </html>

@@ -1,4 +1,5 @@
 <?php
+// lucas 120320204 id884 bootstrap local - alterado head
 
 include_once '../head.php';
 include_once '../database/filacredito.php';
@@ -27,6 +28,14 @@ if ($vfilial[0] == 172 || $vfilial[0] == 192) {
 
 }
 ?>
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+
+    <?php include_once ROOT . "/vendor/head_css.php"; ?>
+
+</head>
 
 <body class="bg-transparent">
     <div class="container-fluid text-center mt-4">
@@ -129,6 +138,10 @@ if ($vfilial[0] == 172 || $vfilial[0] == 192) {
             </div>
         </div>
     </div>
+
+<!-- LOCAL PARA COLOCAR OS JS -->
+
+<?php include_once ROOT . "/vendor/footer_js.php"; ?>
 
     <script>
         
@@ -379,6 +392,9 @@ if ($vfilial[0] == 172 || $vfilial[0] == 192) {
         });
 
     </script>
+
+<!-- LOCAL PARA COLOCAR OS JS -FIM -->
+
 </body>
 
 </html>

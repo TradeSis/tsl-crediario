@@ -103,6 +103,7 @@ then do:
                 else next.
 
             vtotal = vtotal + 1.
+            neuproposta.hrinclu = string(neuproposta.hrinclu,"HH:MM:SS").
 
             create ttneuproposta.
                 ttneuproposta.etbcod    = neuproposta.etbcod.
@@ -143,6 +144,7 @@ else do:
                 else next.
 
             vtotal = vtotal + 1.
+            neuproposta.hrinclu = string(neuproposta.hrinclu,"HH:MM:SS").
 
             create ttneuproposta.
                 ttneuproposta.etbcod    = neuproposta.etbcod.

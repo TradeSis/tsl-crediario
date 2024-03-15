@@ -22,8 +22,8 @@ if (isset($LOG_NIVEL)) {
 }
 //LOG
 
-if (isset($jsonEntrada['contnum'])) {
-    //$jsonEntrada["contnum"] 
+if (isset($jsonEntrada['numeroContrato'])) {
+    //$jsonEntrada["numeroContrato"] 
     $imgDestino = $jsonEntrada['imgDestino'];
     $imgBase64 = $jsonEntrada['imgBase64'];
 
@@ -31,7 +31,7 @@ if (isset($jsonEntrada['contnum'])) {
     $data = base64_decode($imgBase64);
 
     $date  = date('YmdHis');
-    $file = $LOG_CAMINHO.'/imagem'.$jsonEntrada["contnum"]."_".$date;
+    $file = $LOG_CAMINHO.'imagem'.$jsonEntrada["numeroContrato"]."_".$date;
     $imagem = $file.".png";
     $success=file_put_contents($imagem, $data);
 
@@ -49,14 +49,24 @@ if (isset($jsonEntrada['contnum'])) {
     le conteudo arquivo.jpg 
     carrega em base64
     */
+     
+    $entrada =   array("dadosEntrada" => array(
+                array("numeroContrato" => $jsonEntrada["numeroContrato"], 
+                      "imagem" => $imagem
+                    )));
+    
+    $conteudoEntrada = json_encode($Entrada);
+
+    $progr = new chamaprogress();
+    $retorno = $progr->executarprogress("crediario/app/1/assinacontrato",$conteudoEntrada);
+    fwrite($arquivo,$identificacao."-RETORNO->".$retorno."\n");
+
+    $jsonSaida = json_decode($retorno,true);
+    
+    fwrite($arquivo,$identificacao."-SAIDA->".json_encode($jsonSaida)."\n");
 
 
-    $jsonSaida = array(
-        "status" => 200,
-        "imgOrigem" => "image/png",
-        "imgDestino" => "image/jpg",
-        "imgBase64" => "conteudojpg"
-    );
+   
 } else {
     $jsonSaida = array(
         "status" => 400,

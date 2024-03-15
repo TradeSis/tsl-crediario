@@ -30,7 +30,7 @@ then do:
     
     run crd/contratoimphash.p (input vcontnum, input vimagem,
                                output vpdf).
-    message "vpdf" vpdf.
+    
     if vpdf <> ?
     then do:
         create ttsaida.

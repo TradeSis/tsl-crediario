@@ -27,14 +27,15 @@ vimagem  = search(ttentrada.imagem) no-error.
 
 if vcontnum <> ? and vimagem <> ?
 then do:
-    message "vai" vcontnum vimagem.
+    
     run crd/contratoimphash.p (input vcontnum, input vimagem,
                                output vpdf).
+    message "vpdf" vpdf.
     if vpdf <> ?
     then do:
         create ttsaida.
         ttsaida.tstatus = 200.
-        ttsaida.descricaoStatus = "".
+        ttsaida.descricaoStatus = "gerado arquivo " vpdf.
 
         hsaida  = temp-table ttsaida:handle.
 

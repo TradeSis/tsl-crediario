@@ -36,12 +36,9 @@ then do:
     ttentrada.contnum = ?.
 end.
 
-IF ttentrada.contnum <> ? OR (ttentrada.contnum = ? AND ttentrada.dtproc = ?)
+IF ttentrada.contnum = ? AND ttentrada.dtproc = ?
 THEN DO:
-    for each contrassin where contrassin.dtproc = ? AND
-        (if vcontnum = 0
-        then true /* TODOS */
-        ELSE contrassin.contnum = vcontnum)
+    for each contrassin where contrassin.dtproc = ? 
         no-lock.
 
         create ttcontrassin.
@@ -50,10 +47,12 @@ THEN DO:
     end.
 END.
 
-IF ttentrada.dtproc <> ?
+IF ttentrada.contnum <> ?
 THEN DO:
     for each contrassin where 
-        contrassin.dtproc =  ttentrada.dtproc 
+        (if vcontnum = 0
+        then true /* TODOS */
+        ELSE contrassin.contnum = vcontnum)
         NO-LOCK.
         
         if avail contrassin
@@ -62,6 +61,21 @@ THEN DO:
             BUFFER-COPY contrassin TO ttcontrassin.
         end.
     end.
+END.   
+ELSE DO:
+    IF ttentrada.dtproc <> ?
+    THEN DO:
+        for each contrassin where 
+            contrassin.dtproc =  ttentrada.dtproc 
+            NO-LOCK.
+            
+            if avail contrassin
+            then do:
+                create ttcontrassin.
+                BUFFER-COPY contrassin TO ttcontrassin.
+            end.
+        end.
+    END.
 END.
     
 

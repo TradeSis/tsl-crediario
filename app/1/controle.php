@@ -29,7 +29,7 @@ if ($metodo=="GET"){
         include 'estab.php';
       break;
 
-      case "contrassin":
+      case "assinatura":
         include 'contrassin.php';
       break;
 

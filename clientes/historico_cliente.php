@@ -124,7 +124,7 @@ $contratos = $historico["contratos"];
                                 <td class="text-center">
                                     <a class="btn btn-primary btn-sm"
                                         href="contratos.php?numeroContrato=<?php echo $contrato['numeroContrato'] ?>"
-                                        role="button">Consultar</a>
+                                        role="button"><i class="bi bi-eye-fill"></i></a>
                                 </td>
                             </tr>
                         <?php } ?>

@@ -46,7 +46,7 @@ if (isset($jsonEntrada['numeroContrato'])) {
                       "imagem" => $imagem
                     )));
     
-    $conteudoEntrada = json_encode($Entrada);
+    $conteudoEntrada = json_encode($entrada);
     fwrite($arquivo,$identificacao."-conteudoEntrada->".$conteudoEntrada."\n");
     $progr = new chamaprogress();
     $retorno = $progr->executarprogress("crediario/app/1/assinacontrato",$conteudoEntrada);

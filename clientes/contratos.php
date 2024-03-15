@@ -47,12 +47,7 @@ $urlFoto = "https://img.freepik.com/premium-vector/avatar-icon002_750950-52.jpg"
             </div>
 
             <div class="col-2 text-end">
-                <?php if (isset ($_GET['numeroContrato'])) { ?>
-                    <a href="historico_cliente.php?codigoCliente=<?php echo $contrato['codigoCliente'] ?>" role="button"
-                        class="btn btn-primary btn-sm">Voltar</a>
-                <?php } else { ?>
-                    <a href="#" onclick="history.back()" role="button" class="btn btn-primary btn-sm">Voltar</a>
-                <?php } ?>
+                    <a href="contratos_parametros.php" role="button" class="btn btn-primary btn-sm">Voltar</a>
             </div>
         </div>
         <div class="container-fluid mt-3">

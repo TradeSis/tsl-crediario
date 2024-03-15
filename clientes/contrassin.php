@@ -120,6 +120,7 @@ if (isset($_SESSION['filtro_contrassin'])) {
                         linha = linha + "<td>" + object.ctmcod + "</td>";
                         linha = linha + "<td>" + object.nsu + "</td>";
                         linha = linha + "<td>" + object.clicod + "</td>";
+                        linha += "<td><a class='btn btn-primary btn-sm' href='contratos.php?numeroContrato=" + object.contnum + "' role='button'><i class='bi bi-eye-fill'></i></a></td>";
 
                         linha = linha + "</tr>";
                     }

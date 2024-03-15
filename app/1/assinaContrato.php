@@ -5,10 +5,10 @@
 $LOG_CAMINHO = defineCaminhoLog();
 if (isset($LOG_CAMINHO)) {
     $LOG_NIVEL = defineNivelLog();
-    $identificacao = date("dmYHis") . "-PID" . getmypid() . "-" . "converteBase64";
+    $identificacao = date("dmYHis") . "-PID" . getmypid() . "-" . "assinaContrato";
     if (isset($LOG_NIVEL)) {
         if ($LOG_NIVEL >= 1) {
-            $arquivo = fopen(defineCaminhoLog() . "sistema_" . date("dmY") . ".log", "a");
+            $arquivo = fopen(defineCaminhoLog() . "crediario" . date("dmY") . ".log", "a");
         }
     }
 }
@@ -40,15 +40,6 @@ if (isset($jsonEntrada['numeroContrato'])) {
         system("convert ".$file.".png"." ".$imagem);
     }
 
-    echo $imagem;
-
-    /*
-    imgBase64
-    salva em arquivo.png 
-    executa convert arquivo.png arquivo.jpg 
-    le conteudo arquivo.jpg 
-    carrega em base64
-    */
      
     $entrada =   array("dadosEntrada" => array(
                 array("numeroContrato" => $jsonEntrada["numeroContrato"], 
@@ -56,7 +47,7 @@ if (isset($jsonEntrada['numeroContrato'])) {
                     )));
     
     $conteudoEntrada = json_encode($Entrada);
-
+    fwrite($arquivo,$identificacao."-conteudoEntrada->".$conteudoEntrada."\n");
     $progr = new chamaprogress();
     $retorno = $progr->executarprogress("crediario/app/1/assinacontrato",$conteudoEntrada);
     fwrite($arquivo,$identificacao."-RETORNO->".$retorno."\n");

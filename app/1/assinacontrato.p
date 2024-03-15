@@ -27,6 +27,7 @@ vimagem  = search(ttentrada.imagem) no-error.
 
 if vcontnum <> ? and vimagem <> ?
 then do:
+    message "vai" vcontnum vimagem.
     run crd/contratoimphash.p (input vcontnum, input vimagem,
                                output vpdf).
     if vpdf <> ?

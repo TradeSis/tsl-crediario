@@ -5,10 +5,10 @@
 include_once '../head.php';
 include_once '../database/crediariocontrato.php';
 
-if (isset($_GET['parametros'])) {
+if (isset ($_GET['parametros'])) {
     $numeroContrato = $_POST['numeroContrato'];
 }
-if (isset($_GET['numeroContrato'])) {
+if (isset ($_GET['numeroContrato'])) {
     $numeroContrato = $_GET['numeroContrato'];
 }
 
@@ -17,6 +17,10 @@ $contrato = buscaContratos($numeroContrato);
 $contrato = $contrato[0];
 $parcelas = $contrato["parcelas"];
 $produtos = $contrato["produtos"];
+
+$assinatura = buscaAssinatura($numeroContrato);
+
+$urlFoto = "https://img.freepik.com/premium-vector/avatar-icon002_750950-52.jpg";
 ?>
 
 <!doctype html>
@@ -43,7 +47,7 @@ $produtos = $contrato["produtos"];
             </div>
 
             <div class="col-2 text-end">
-                <?php if (isset($_GET['numeroContrato'])) { ?>
+                <?php if (isset ($_GET['numeroContrato'])) { ?>
                     <a href="historico_cliente.php?codigoCliente=<?php echo $contrato['codigoCliente'] ?>" role="button"
                         class="btn btn-primary btn-sm">Voltar</a>
                 <?php } else { ?>
@@ -55,8 +59,9 @@ $produtos = $contrato["produtos"];
             <div id="ts-tabs">
                 <div class="tab whiteborder" id="tab-nfe">Dados Contrato</div>
                 <div class="tab" id="tab-parcela">Parcelas</div>
-                <div class="tab" id="tab-produ">Produtos</div>
-                <div class="tab" id="tab-contrassin">Assinatura</div>
+             <!--  *****Produtos comentados atÈ possuir dados reais
+                   <div class="tab" id="tab-produ">Produtos</div> -->
+                <div class="tab" id="tab-assinatura">Assinatura</div>
 
                 <div class="line"></div>
 
@@ -72,8 +77,8 @@ $produtos = $contrato["produtos"];
                                 value="<?php echo $contrato['codigoCliente'] ?> - <?php echo $contrato['nomeCliente'] ?>"
                                 readonly>
                             <label>Loja</label>
-                            <input type="text" class="form-control" value="FILIAL <?php //echo $contrato['loja']      ?>"
-                                readonly>
+                            <input type="text" class="form-control"
+                                value="FILIAL <?php //echo $contrato['loja']            ?>" readonly>
                         </div>
                         <div class="col">
                             <label>Data Inicial</label>
@@ -90,22 +95,22 @@ $produtos = $contrato["produtos"];
                     <div class="row">
                         <h6>Valores</h6>
                         <div class="col-md">
-                            <label class="form-label ts-label">Total</label>
+                            <label>Total</label>
                             <input type="text" class="form-control" value="<?php echo $contrato['valorTotal'] ?>"
                                 readonly>
                         </div>
                         <div class="col-md">
-                            <label class="form-label ts-label">Aberto</label>
+                            <label>Aberto</label>
                             <input type="text" class="form-control" value="<?php echo $contrato['valorAberto'] ?>"
                                 readonly>
                         </div>
                         <div class="col-md">
-                            <label class="form-label ts-label">Vencido</label>
+                            <label>Vencido</label>
                             <input type="text" class="form-control" value="<?php echo $contrato['valorVencido'] ?>"
                                 readonly>
                         </div>
                         <div class="col-md">
-                            <label class="form-label ts-label">Entrada</label>
+                            <label>Entrada</label>
                             <input type="text" class="form-control" value="<?php echo $contrato['valorEntrada'] ?>"
                                 readonly>
                         </div>
@@ -159,6 +164,7 @@ $produtos = $contrato["produtos"];
                     </div>
                 </div>
 
+               <!--  *****Produtos comentados atÈ possuir dados reais
                 <div class="tabContent">
                     <h5>Produtos</h5>
                     <div class="table table-responsive">
@@ -194,31 +200,71 @@ $produtos = $contrato["produtos"];
 
                         </table>
                     </div>
-                </div>
+                </div> -->
 
                 <div class="tabContent">
-                    <h5>Contrassin</h5>
-                    <div class="table mt-2 ts-divTabela ts-tableFiltros text-center">
-                        <table class="table table-sm table-hover">
-                            <thead class="ts-headertabelafixo">
-                                <tr class="ts-headerTabelaLinhaCima">
-                                    <th>Contrato</th>
-                                    <th>ID</th>
-                                    <th>dtinclu</th>
-                                    <th class="col-2">dtproc</th>
-                                    <th>hrproc</th>
-                                    <th>etbcod</th>
-                                    <th>cxacod</th>
-                                    <th>ctmcod</th>
-                                    <th>nsu</th>
-                                    <th>clicod</th>
-                                </tr>
-                            </thead>
-
-                            <tbody id='dadosContrassin' class="fonteCorpo">
-
-                            </tbody>
-                        </table>
+                    <div class="row">
+                        <div class="col">
+                            <div class="col-md">
+                                <label>etbcod</label>
+                                <input type="text" class="form-control" value="<?php echo $assinatura['etbcod'] ?>"
+                                    readonly>
+                            </div>
+                            <label>contnum</label>
+                            <input type="text" class="form-control" value="<?php echo $assinatura['contnum'] ?>"
+                                readonly>
+                            <label>idBiometria</label>
+                            <input type="text" class="form-control" value="<?php echo $assinatura['idBiometria'] ?>"
+                                readonly>
+                        </div>
+                        <div class="col text-center">
+                            <img src="<?php echo $urlFoto ?>" class="img-fluid" alt="Image Preview"
+                                style="max-width: 150px; max-height: 150px;">
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-md">
+                            <label>Data de Inclus√£o</label>
+                            <input type="text" class="form-control"
+                                value="<?php echo date('d/m/Y', strtotime($assinatura['dtinclu'])) ?>" readonly>
+                        </div>
+                        <div class="col-md">
+                            <label>Data de Processamento</label>
+                            <input type="text" class="form-control"
+                                value="<?php echo $assinatura['dtproc'] !== null ? date('d/m/Y', strtotime($assinatura['dtproc'])) : null ?>"
+                                readonly>
+                        </div>
+                        <div class="col-md">
+                            <label>hrproc</label>
+                            <input type="text" class="form-control" value="<?php echo $assinatura['hrproc'] ?>"
+                                readonly>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-md">
+                            <label>etbcod</label>
+                            <input type="text" class="form-control" value="<?php echo $assinatura['etbcod'] ?>"
+                                readonly>
+                        </div>
+                        <div class="col-md">
+                            <label>cxacod</label>
+                            <input type="text" class="form-control" value="<?php echo $assinatura['cxacod'] ?>"
+                                readonly>
+                        </div>
+                        <div class="col-md">
+                            <label>ctmcod</label>
+                            <input type="text" class="form-control" value="<?php echo $assinatura['ctmcod'] ?>"
+                                readonly>
+                        </div>
+                        <div class="col-md">
+                            <label>nsu</label>
+                            <input type="text" class="form-control" value="<?php echo $assinatura['nsu'] ?>" readonly>
+                        </div>
+                        <div class="col-md">
+                            <label>clicod</label>
+                            <input type="text" class="form-control" value="<?php echo $assinatura['clicod'] ?>"
+                                readonly>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -244,11 +290,11 @@ $produtos = $contrato["produtos"];
             if (id === 'parcela') {
                 showTabsContent(1);
             }
-            if (id === 'produ') {
+            /* if (id === 'produ') {
                 showTabsContent(2);
-            }
-            if (id === 'contrassin') {
-                showTabsContent(3);
+            } */
+            if (id === 'assinatura') {
+                showTabsContent(2);
             }
         }
 
@@ -281,60 +327,6 @@ $produtos = $contrato["produtos"];
             }
         }
 
-        buscar(<?php echo $contrato['numeroContrato'] ?>);
-
-        function buscar(contnum) {
-            //alert (buscaPessoa);
-            $.ajax({
-                type: 'POST',
-                dataType: 'html',
-                url: '../database/crediariocontrato.php?operacao=filtrar',
-                beforeSend: function () {
-                    $("#dados").html("Carregando...");
-                },
-                data: {
-                    contnum: contnum
-                },
-                success: function (msg) {
-                    //alert("segundo alert: " + msg);
-                    var json = JSON.parse(msg);
-
-                    var linha = "";
-                    for (var $i = 0; $i < json.length; $i++) {
-                        var object = json[$i];
-
-                        linha = linha + "<tr>";
-                        linha = linha + "<td>" + object.contnum + "</td>";
-                        linha = linha + "<td>" + object.idBiometria + "</td>";
-                        linha = linha + "<td>" + (object.dtinclu ? formatarData(object.dtinclu) : "--") + "</td>";
-                        linha = linha + "<td>" + (object.dtproc ? formatarData(object.dtproc) : "--") + "</td>";
-                        linha = linha + "<td>" + object.hrproc + "</td>";
-                        linha = linha + "<td>" + object.etbcod + "</td>";
-                        linha = linha + "<td>" + object.cxacod + "</td>";
-                        linha = linha + "<td>" + object.ctmcod + "</td>";
-                        linha = linha + "<td>" + object.nsu + "</td>";
-                        linha = linha + "<td>" + object.clicod + "</td>";
-
-                        linha = linha + "</tr>";
-                    }
-                    $("#dadosContrassin").html(linha);
-                }
-            });
-        }
-        function formatarData(data) {
-            var parts = data.split('-');
-            var year = parseInt(parts[0], 10);
-            var month = parseInt(parts[1], 10) - 1; 
-            var day = parseInt(parts[2], 10);
-
-            var d = new Date(Date.UTC(year, month, day));
-
-            var dia = d.getUTCDate().toString().padStart(2, '0');
-            var mes = (d.getUTCMonth() + 1).toString().padStart(2, '0');
-            var ano = d.getUTCFullYear();
-
-            return dia + '/' + mes + '/' + ano;
-        }
     </script>
 
     <!-- LOCAL PARA COLOCAR OS JS -FIM -->

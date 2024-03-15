@@ -68,8 +68,8 @@ $nivelMenu = $nivelMenuLogin['nivelMenu'];
                         <?php }
                         if ($nivelMenu >= 2) { ?>
                             <li class="nav-item mr-1">
-                                <a class="nav-link <?php if ($tab == "contrassin") {echo " active ";} ?>" 
-                                href="?tab=contrassin" role="tab">Biometria</a>
+                                <a class="nav-link <?php if ($tab == "assinatura") {echo " active ";} ?>" 
+                                href="?tab=assinatura" role="tab">Assinatura</a>
                             </li>
                         <?php }
                            ?>
@@ -97,8 +97,8 @@ $nivelMenu = $nivelMenuLogin['nivelMenu'];
                         <option value="<?php echo URLROOT ?>/crediario/?tab=filacredito" 
                         <?php if ($getTab == "filacredito") {echo " selected ";} ?>>Fila Crédito</option>
 
-                        <option value="<?php echo URLROOT ?>/crediario/?tab=contrassin" 
-                        <?php if ($getTab == "contrassin") {echo " selected ";} ?>>Biometria</option>
+                        <option value="<?php echo URLROOT ?>/crediario/?tab=assinatura" 
+                        <?php if ($getTab == "assinatura") {echo " selected ";} ?>>Assinatura</option>
 
                     </select>
                 </div>
@@ -125,7 +125,7 @@ $nivelMenu = $nivelMenuLogin['nivelMenu'];
                 $src = "consultas/filacredito.php";
             }
 
-            if ($tab == "contrassin") {
+            if ($tab == "assinatura") {
                 $src = "clientes/contrassin.php";
             }
 

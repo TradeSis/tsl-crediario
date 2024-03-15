@@ -1,6 +1,12 @@
 <?php
 include_once '../head.php';
 
+
+$dtproc = null;
+if (isset($_SESSION['filtro_contrassin'])) {
+  $filtroEntrada = $_SESSION['filtro_contrassin'];
+  $dtproc = $filtroEntrada['dtproc'];
+}
 ?>
 <!doctype html>
 <html lang="pt-BR">
@@ -22,17 +28,22 @@ include_once '../head.php';
         </div>
         <div class="row d-flex align-items-center justify-content-center mt-1 pt-1 ">
 
-            <div class="col-6 col-lg-6">
-                <h2 class="ts-tituloPrincipal">Biometria</h2>
+            <div class="col-5 col-lg-5">
+                <h2 class="ts-tituloPrincipal">Assinatura</h2>
             </div>
 
-            <div class="col-6 col-lg-6">
+            <div class="col-3 col-lg-3">
+                <div class="input-group">
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#periodoModal"><i class="bi bi-calendar3"></i></button>
+                    <a onClick="naoproc()" role=" button" class="ms-4 btn btn-sm btn-info">Não Processados</a>
+                </div>
+            </div>
+
+            <div class="col-4 col-lg-4">
                 <div class="input-group">
                     <input type="text" class="form-control ts-input" id="contnum" placeholder="Buscar Contrato">
                     <button class="btn btn-primary rounded" type="button" id="buscar"><i
                             class="bi bi-search"></i></button>
-                    <button type="button" class="ms-4 btn btn-success" data-bs-toggle="modal"
-                        data-bs-target="#inserirPessoaModal"><i class="bi bi-plus-square"></i>&nbsp Novo</button>
                 </div>
             </div>
 
@@ -41,9 +52,9 @@ include_once '../head.php';
         <div class="table mt-2 ts-divTabela ts-tableFiltros text-center">
             <table class="table table-sm table-hover">
                 <thead class="ts-headertabelafixo">
-                    <tr class="ts-headerTabelaLinhaCima">
+                    <tr>
                         <th>Contrato</th>
-                        <th>ID</th>
+                        <th class="col-3">ID</th>
                         <th>dtinclu</th>
                         <th class="col-1">dtproc</th>
                         <th>hrproc</th>
@@ -52,20 +63,8 @@ include_once '../head.php';
                         <th>ctmcod</th>
                         <th>nsu</th>
                         <th>clicod</th>
+                        <th>Ação</th>
                     </tr>
-                    <tr class="ts-headerTabelaLinhaBaixo">
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th>
-                            <input type="date" class="data select form-control ts-input ts-selectFiltrosHeaderTabela" id="dtproc" name="dtproc" autocomplete="off">
-                        </th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
                 </thead>
 
                 <tbody id='dados' class="fonteCorpo">
@@ -74,7 +73,9 @@ include_once '../head.php';
             </table>
         </div>
     </div>
-    </div>
+
+     <!--------- FILTRO PERIODO --------->
+    <?php include_once 'modal_periodo.php' ?>
 
     <!-- LOCAL PARA COLOCAR OS JS -->
 
@@ -82,6 +83,10 @@ include_once '../head.php';
 
     <script>
         buscar($("#contnum").val(), $("#dtproc").val());
+
+        function naoproc() {
+            buscar(null, null);
+        }
 
         function buscar(contnum, dtproc) {
             //alert (buscaPessoa);
@@ -126,20 +131,25 @@ include_once '../head.php';
         $("#buscar").click(function () {
             buscar($("#contnum").val(), $("#dtproc").val());
         })
-        $("#dtproc").change(function () {
-            buscar($("#contnum").val(), $("#dtproc").val());
-        })
+        $(document).ready(function() {
+            $("#filtrarButton").click(function() {
+
+                buscar($("#contnum").val(), $("#dtproc").val());
+                $('#periodoModal').modal('hide');
+                
+            });
+        });
 
         document.addEventListener("keypress", function (e) {
             if (e.key === "Enter") {
-                buscar($("#buscaPessoa").val());
+                buscar($("#contnum").val(), $("#dtproc").val());
             }
         });
 
         function formatarData(data) {
             var parts = data.split('-');
             var year = parseInt(parts[0], 10);
-            var month = parseInt(parts[1], 10) - 1; 
+            var month = parseInt(parts[1], 10) - 1;
             var day = parseInt(parts[2], 10);
 
             var d = new Date(Date.UTC(year, month, day));

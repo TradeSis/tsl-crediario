@@ -23,6 +23,11 @@ if (isset($LOG_NIVEL)) {
 //LOG
 
 if (isset($jsonEntrada['numeroContrato'])) {
+
+    
+    CHAMA API http://172.19.130.11:5555/gateway/lebes-repo-img-biometria/1.0/registration-face/188/2024-02-27/32/02906932094/bb914db6-f64e-4e49-9ed0-490d957fac85
+
+    
     //$jsonEntrada["numeroContrato"] 
     $imgDestino = $jsonEntrada['imgDestino'];
     $imgBase64 = $jsonEntrada['imgBase64'];
@@ -46,6 +51,7 @@ if (isset($jsonEntrada['numeroContrato'])) {
                       "imagem" => $imagem
                     )));
     
+
     $conteudoEntrada = json_encode($entrada);
     fwrite($arquivo,$identificacao."-conteudoEntrada->".$conteudoEntrada."\n");
     $progr = new chamaprogress();

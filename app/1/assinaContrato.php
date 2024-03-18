@@ -24,11 +24,29 @@ if (isset($LOG_NIVEL)) {
 
 if (isset($jsonEntrada['numeroContrato'])) {
 
-    
-    CHAMA API http://172.19.130.11:5555/gateway/lebes-repo-img-biometria/1.0/registration-face/188/2024-02-27/32/02906932094/bb914db6-f64e-4e49-9ed0-490d957fac85
+    $apiEntrada =
+                array(
+                    "dadosEntrada" => array(
+                        array('contnum' => $jsonEntrada["numeroContrato"])
+                    )
+                );
+    $retorno = chamaAPI(null, '/crediario/assinatura', json_encode($apiEntrada), 'GET');
+    $jsonAssinatura = json_decode($retorno,true); 
+    $jsonAssinatura = $jsonAssinatura["contrassin"][0];
 
-    
+    fwrite($arquivo,$identificacao."-jsonAssinatura->".$jsonAssinatura."\n");
+    fwrite($arquivo,$identificacao."-filial->".$jsonAssinatura["etbcod"]."\n");
+    fwrite($arquivo,$identificacao."-caixa->".$jsonAssinatura["cxacod"]."\n");
+    fwrite($arquivo,$identificacao."-data->".$jsonAssinatura["dtinclu"]."\n");
+    fwrite($arquivo,$identificacao."-idBiometria->".$jsonAssinatura["idBiometria"]."\n");
+/*
+    chamaAPI(   "172.19.130.11:5555",
+                "/gateway/lebes-repo-img-biometria/1.0/registration-face/188/2024-02-27/32/02906932094/bb914db6-f64e-4e49-9ed0-490d957fac85",
+                "apientrada",
+                "GET")
+                
     //$jsonEntrada["numeroContrato"] 
+*/    
     $imgDestino = $jsonEntrada['imgDestino'];
     $imgBase64 = $jsonEntrada['imgBase64'];
 

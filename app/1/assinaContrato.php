@@ -18,7 +18,7 @@ if (isset($LOG_NIVEL)) {
         fwrite($arquivo, $identificacao . "\n");
     }
     if ($LOG_NIVEL >= 2) {
-        fwrite($arquivo, $identificacao . "-ENTRADA->" . json_encode($jsonEntrada) . "\n");
+       // fwrite($arquivo, $identificacao . "-ENTRADA->" . json_encode($jsonEntrada) . "\n");
     }
 }
 //LOG

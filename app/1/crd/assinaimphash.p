@@ -132,7 +132,7 @@ find first plani where
                 no-lock no-error.
 
 def var vassina as log.
-vassina = yes.
+vassina = no.
 {crediario/app/1/crd/assinaimphash.i}
 
 

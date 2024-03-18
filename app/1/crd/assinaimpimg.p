@@ -230,7 +230,6 @@ procedure atualiza.
         find current contrassin exclusive no-error.
         if avail contrassin
         then do:
-            urlpdf    = ppdf1.
             urlPdfAss = ppdf.
         end.
     end.

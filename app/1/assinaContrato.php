@@ -31,7 +31,7 @@ if (isset($jsonEntrada['numeroContrato'])) {
                         array('contnum' => $jsonEntrada["numeroContrato"])
                     )
                 );
- fwrite($arquivo,$identificacao."-jsonAssinatura->".$apiEntrada."\n");
+ fwrite($arquivo,$identificacao."-jsonAssinatura->".json_encode($apiEntrada)."\n");
  /*                
     $retorno = chamaAPI(null, '/crediario/assinatura', json_encode($apiEntrada), 'GET');
     $jsonAssinatura = json_decode($retorno,true); 

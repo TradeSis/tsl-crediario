@@ -227,7 +227,7 @@ $foto = base64_decode($imgBase64);
                                 readonly>
                         </div>
                         <div class="col text-center">
-                            <img src="<?php echo 'data:image/gif;base64,' . $foto ?>" class="img-fluid" alt="Image Preview"
+                            <img src="<?php echo 'data:image/png;base64,' . $foto ?>" class="img-fluid" alt="Image Preview"
                                 style="max-width: 150px; max-height: 150px;">
                         </div>
                     </div>

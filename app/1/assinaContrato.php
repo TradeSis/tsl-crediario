@@ -32,8 +32,10 @@ if (isset($jsonEntrada['numeroContrato'])) {
                     )
                 );
  fwrite($arquivo,$identificacao."-jsonAssinatura->".json_encode($apiEntrada)."\n");
- /*                
+                 
     $retorno = chamaAPI(null, '/crediario/assinatura', json_encode($apiEntrada), 'GET');
+    fwrite($arquivo,$identificacao."-retorno->".json_encode($retorno)."\n");
+/*    
     $jsonAssinatura = json_decode($retorno,true); 
     $jsonAssinatura = $jsonAssinatura["contrassin"][0];
 

@@ -13,7 +13,7 @@ def temp-table ttentrada no-undo serialize-name "dadosEntrada"   /* JSON ENTRADA
 
 def temp-table ttcontrassin  no-undo serialize-name "contrassin"  /* JSON SAIDA */
     like contrassin
-    field cpfCNPJ   as char
+    field cpfCNPJ   as char.
 
 def temp-table ttsaida  no-undo serialize-name "conteudoSaida"  /* JSON SAIDA CASO ERRO */
     field tstatus        as int serialize-name "status"

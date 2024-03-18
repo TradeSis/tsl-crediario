@@ -55,7 +55,7 @@ if (isset($jsonEntrada['numeroContrato'])) {
   
 
     $imgDestino = $jsonEntrada['imgDestino'];
-    $imgBase64 = $jsonEntrada['imgBase64'];
+    $imgBase64 = $barramento["registrationFace"]["imgBase64"];
 
 
     $data = base64_decode($imgBase64);

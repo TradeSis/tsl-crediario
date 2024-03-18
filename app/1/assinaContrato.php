@@ -70,7 +70,8 @@ if (isset($jsonEntrada['numeroContrato'])) {
         system("convert ".$file.".png"." ".$imagem);
     }
 
-     
+    fwrite($arquivo,$identificacao."-imagem->".$imagem."\n");                
+
     $entrada =   array("dadosEntrada" => array(
                 array("numeroContrato" => $jsonEntrada["numeroContrato"], 
                       "imagem" => $imagem

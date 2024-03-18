@@ -32,7 +32,7 @@ then do:
                                output vpdf).
     
     if vpdf <> ?
-    then do on error :
+    then do on error undo:
         
         create ttsaida.
         ttsaida.tstatus = 200.

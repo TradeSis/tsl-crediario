@@ -20,7 +20,21 @@ $produtos = $contrato["produtos"];
 
 $assinatura = buscaAssinatura($numeroContrato);
 echo json_encode($assinatura);
-$urlFoto = "";
+$barramento = chamaAPI( "172.19.130.11:5555",
+                "/gateway/lebes-repo-img-biometria/1.0/registration-face/".
+                        $assinatura["etbcod"]."/".
+                        $assinatura["dtinclu"]."/".
+                        $assinatura["cxacod"]."/".
+                        $assinatura["cpfCNPJ"]."/".
+                        $assinatura["idBiometria"],
+                null,
+                "GET");
+$imgBase64 = $barramento["registrationFace"]["imgBase64"];
+
+$foto = base64_decode($imgBase64);                
+
+//echo '<img src="data:image/gif;base64,' . $foto . '" />';
+
 ?>
 
 <!doctype html>
@@ -213,7 +227,7 @@ $urlFoto = "";
                                 readonly>
                         </div>
                         <div class="col text-center">
-                            <img src="<?php echo $urlFoto ?>" class="img-fluid" alt="Image Preview"
+                            <img src="<?php echo 'data:image/gif;base64,' . $foto ?>" class="img-fluid" alt="Image Preview"
                                 style="max-width: 150px; max-height: 150px;">
                         </div>
                     </div>

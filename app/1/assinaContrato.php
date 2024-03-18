@@ -85,8 +85,7 @@ if (isset($jsonEntrada['numeroContrato'])) {
 
     $jsonSaida = json_decode($retorno,true);
     
-    fwrite($arquivo,$identificacao."-SAIDA->".json_encode($jsonSaida)."\n");
-    
+      
     system("rm -f ".$imagem);
 
    

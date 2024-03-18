@@ -19,7 +19,7 @@ $parcelas = $contrato["parcelas"];
 $produtos = $contrato["produtos"];
 
 $assinatura = buscaAssinatura($numeroContrato);
-echo json_encode($assinatura);
+
 $barramento = chamaAPI( "172.19.130.11:5555",
                 "/gateway/lebes-repo-img-biometria/1.0/registration-face/".
                         $assinatura["etbcod"]."/".

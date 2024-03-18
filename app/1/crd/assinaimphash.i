@@ -117,6 +117,7 @@ put fill("-",65) format "x(65)" skip
                     
 /***put unformatted chr(27) "a" chr(48).  /* justifica esquerda */
 ***/
+/* 
 put "TESTEMUNHAS:" skip(2)
     fill("-",65) format "x(65)" skip
     "Nome: " skip
@@ -124,7 +125,7 @@ put "TESTEMUNHAS:" skip(2)
     fill("-",65) format "x(65)" skip
     "Nome: " skip
     " CPF: " skip.
-
+*/
 
 put  unformatted skip(3)
      fill("-",65) format "x(65)" skip

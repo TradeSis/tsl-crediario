@@ -2,13 +2,14 @@
 //gabriel 15032024 criacao
 
 //LOG
+
 $LOG_CAMINHO = defineCaminhoLog();
 if (isset($LOG_CAMINHO)) {
     $LOG_NIVEL = defineNivelLog();
     $identificacao = date("dmYHis") . "-PID" . getmypid() . "-" . "assinaContrato";
     if (isset($LOG_NIVEL)) {
         if ($LOG_NIVEL >= 1) {
-            $arquivo = fopen(defineCaminhoLog() . "crediario" . date("dmY") . ".log", "a");
+            $arquivo = fopen(defineCaminhoLog() . "apilebes_assinaContrato" . date("dmY") . ".log", "a");
         }
     }
 }

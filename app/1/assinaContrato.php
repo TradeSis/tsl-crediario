@@ -50,7 +50,7 @@ if (isset($jsonEntrada['numeroContrato'])) {
                 null,
                 "GET");
     
-    fwrite($arquivo,$identificacao."-mime->".json_encode($registrationFace["mime"])."\n");                
+    fwrite($arquivo,$identificacao."-mime->".json_encode($barramento["registrationFace"]["mime"])."\n");                
     //$jsonEntrada["numeroContrato"] 
   
 

@@ -24,13 +24,15 @@ if (isset($LOG_NIVEL)) {
 //LOG
 
 if (isset($jsonEntrada['numeroContrato'])) {
-/*
+
     $apiEntrada =
                 array(
                     "dadosEntrada" => array(
                         array('contnum' => $jsonEntrada["numeroContrato"])
                     )
                 );
+ fwrite($arquivo,$identificacao."-jsonAssinatura->".$jsonAssinatura."\n");
+ /*                
     $retorno = chamaAPI(null, '/crediario/assinatura', json_encode($apiEntrada), 'GET');
     $jsonAssinatura = json_decode($retorno,true); 
     $jsonAssinatura = $jsonAssinatura["contrassin"][0];
@@ -48,7 +50,7 @@ if (isset($jsonEntrada['numeroContrato'])) {
                 
     //$jsonEntrada["numeroContrato"] 
   
-*/  
+*/
     $imgDestino = $jsonEntrada['imgDestino'];
     $imgBase64 = $jsonEntrada['imgBase64'];
 

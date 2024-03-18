@@ -19,7 +19,7 @@ $parcelas = $contrato["parcelas"];
 $produtos = $contrato["produtos"];
 
 $assinatura = buscaAssinatura($numeroContrato);
-
+echo json_encode($assinatura);
 $urlFoto = "";
 ?>
 

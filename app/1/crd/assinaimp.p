@@ -2,6 +2,7 @@ def input parameter pcontnum as int.
 def input param     pimagem  as char.
 def output param    ppdf     as char.
 
+propath = "crediario/app/1/," + propath.
 
 run crediario/app/1/crd/assinaimphash.p (input pcontnum, output ppdf).
 run crediario/app/1/crd/assinaimpassi.p (input pcontnum, input pimagem, output ppdf).

@@ -29,9 +29,9 @@ $barramento = chamaAPI( "172.19.130.11:5555",
                         $assinatura["idBiometria"],
                 null,
                 "GET");
-$imgBase64 = $barramento["registrationFace"]["imgBase64"];
+$foto = $barramento["registrationFace"]["imgBase64"];
 
-$foto = base64_decode($imgBase64);                
+//$foto = base64_decode($imgBase64);                
 
 //echo '<img src="data:image/gif;base64,' . $foto . '" />';
 

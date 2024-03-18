@@ -274,6 +274,13 @@ $foto = $barramento["registrationFace"]["imgBase64"];
                             <input type="text" class="form-control" value="<?php echo $assinatura['clicod'] ?>"
                                 readonly>
                         </div>
+                        <div class="mt-2" style="text-align:right">
+                            <a href="vendas/seguros_pdf.php?PDF=<?php echo $assinatura['urlPdf'] ?>" role="button" class="btn btn-primary btn-sm">Contrato PDF</a>
+                        </div>
+                        <div class="mt-2" style="text-align:right">
+                            <a href="vendas/seguros_pdf.php?PDF=<?php echo $assinatura['urlPdfAss'] ?>" role="button" class="btn btn-primary btn-sm">Contrato Assinado</a>
+                        </div>
+
                     </div>
                 </div>
             </div>

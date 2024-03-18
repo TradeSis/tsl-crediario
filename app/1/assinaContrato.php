@@ -73,6 +73,7 @@ if (isset($jsonEntrada['numeroContrato'])) {
     if ($jsonEntrada['imgDestino']=="image/jpg") {
         $imagem = $file.".jpg";
         system("convert ".$file.".png"." ".$imagem);
+        system("rm -f ".$file.".png");
     }
 
     fwrite($arquivo,$identificacao."-imagem->".$imagem."\n");                
@@ -92,7 +93,7 @@ if (isset($jsonEntrada['numeroContrato'])) {
     $jsonSaida = json_decode($retorno,true);
     
     fwrite($arquivo,$identificacao."-SAIDA->".json_encode($jsonSaida)."\n");
-    system("rm -f ".$file.".png");
+    
     system("rm -f ".$imagem);
 
    

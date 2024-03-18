@@ -32,10 +32,11 @@ then do:
                                output vpdf).
     
     if vpdf <> ?
-    then do:
+    then do on error :
+        
         create ttsaida.
         ttsaida.tstatus = 200.
-        ttsaida.descricaoStatus = "gerado arquivo " + vpdf.
+        ttsaida.descricaoStatus = "gerado arquivo " + vurl.
 
         hsaida  = temp-table ttsaida:handle.
 

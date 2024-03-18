@@ -20,7 +20,7 @@ $produtos = $contrato["produtos"];
 
 $assinatura = buscaAssinatura($numeroContrato);
 
-$urlFoto = "https://img.freepik.com/premium-vector/avatar-icon002_750950-52.jpg";
+$urlFoto = "";
 ?>
 
 <!doctype html>

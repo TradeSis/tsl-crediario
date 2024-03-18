@@ -36,7 +36,7 @@ def var v-hash2   as char.
 
 def var v-pladat like plani.pladat.
 
-input from value(search("crd/contrato.txt")) no-echo.
+input from value(search("crediario/app/1/crd/contrato.txt")) no-echo.
 repeat transaction.
     create tt-texto.
     import unformatted tt-texto.
@@ -136,11 +136,11 @@ find first plani where
 
 def var vassina as log.
 vassina = yes.
-{crd/assinaimphash.i}
+{crediario/app/1/crd/assinaimphash.i}
 
 
  
- run crd/assinapdfimg.p (
+ run crediario/app/1/crd/assinapdfimg.p (
                   input "idbiometria",
                   input pimagem,
                   input varquivo,

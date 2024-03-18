@@ -28,7 +28,7 @@ vimagem  = search(ttentrada.imagem) no-error.
 if vcontnum <> ? and vimagem <> ?
 then do:
     
-    run crd/assinaimp.p (input vcontnum, input vimagem,
+    run crediario/app/1/crd/assinaimp.p (input vcontnum, input vimagem,
                                output vpdf).
     
     if vpdf <> ?

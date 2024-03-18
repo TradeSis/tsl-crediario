@@ -275,10 +275,10 @@ $foto = $barramento["registrationFace"]["imgBase64"];
                                 readonly>
                         </div>
                         <div class="mt-2" style="text-align:right">
-                            <a href="vendas/seguros_pdf.php?PDF=<?php echo $assinatura['urlPdf'] ?>" role="button" class="btn btn-primary btn-sm">Contrato PDF</a>
+                            <a href="<?php echo $assinatura['urlPdf'] ?>" role="button" class="btn btn-primary btn-sm">Contrato PDF</a>
                         </div>
                         <div class="mt-2" style="text-align:right">
-                            <a href="vendas/seguros_pdf.php?PDF=<?php echo $assinatura['urlPdfAss'] ?>" role="button" class="btn btn-primary btn-sm">Contrato Assinado</a>
+                            <a href="<?php echo $assinatura['urlPdfAss'] ?>" role="button" class="btn btn-primary btn-sm">Contrato Assinado</a>
                         </div>
 
                     </div>

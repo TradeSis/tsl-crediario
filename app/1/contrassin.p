@@ -12,7 +12,8 @@ def temp-table ttentrada no-undo serialize-name "dadosEntrada"   /* JSON ENTRADA
     field dtproc like contrassin.dtproc INITIAL ?.
 
 def temp-table ttcontrassin  no-undo serialize-name "contrassin"  /* JSON SAIDA */
-    like contrassin.
+    like contrassin
+    field cpfCNPJ   as char
 
 def temp-table ttsaida  no-undo serialize-name "conteudoSaida"  /* JSON SAIDA CASO ERRO */
     field tstatus        as int serialize-name "status"
@@ -95,6 +96,10 @@ then do:
     message string(vlcSaida).
     return.
 end.
+
+find clien where clien.clicod = ttcontrassin.clicod no-lock no-error.
+if avail clien
+then ttcontrassin.cpfCNPJ = clien.ciccgc.
 
 hsaida  = TEMP-TABLE ttcontrassin:handle.
 

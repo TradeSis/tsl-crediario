@@ -56,12 +56,7 @@ if (isset($jsonEntrada['numeroContrato'])) {
                 "GET");
     
     fwrite($arquivo,$identificacao."-mime->".json_encode($barramento["registrationFace"]["mime"])."\n");                
-    //$jsonEntrada["numeroContrato"] 
-  
-
-    $imgDestino = $jsonEntrada['imgDestino'];
     $imgBase64 = $barramento["registrationFace"]["imgBase64"];
-
 
     $data = base64_decode($imgBase64);
 
@@ -70,11 +65,9 @@ if (isset($jsonEntrada['numeroContrato'])) {
     $imagem = $file.".png";
     $success=file_put_contents($imagem, $data);
 
-    if ($jsonEntrada['imgDestino']=="image/jpg") {
         $imagem = $file.".jpg";
         system("convert ".$file.".png"." ".$imagem);
         system("rm -f ".$file.".png");
-    }
 
     fwrite($arquivo,$identificacao."-imagem->".$imagem."\n");                
 

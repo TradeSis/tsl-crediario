@@ -36,7 +36,7 @@ then do:
         
         create ttsaida.
         ttsaida.tstatus = 200.
-        ttsaida.descricaoStatus = "gerado arquivo " + vurl.
+        ttsaida.descricaoStatus = "gerado arquivo " + vpdf.
 
         hsaida  = temp-table ttsaida:handle.
 

@@ -60,7 +60,7 @@ end.
 else do:
         create ttsaida.
         ttsaida.tstatus = 400.
-        ttsaida.descricaoStatus = "Erro nos dados de entrada".
+        ttsaida.descricaoStatus = "Erro nos dados de entrada!".
 
         hsaida  = temp-table ttsaida:handle.
 

@@ -14,8 +14,8 @@ do on error undo:
             exclusive no-wait no-error.
         if avail contrassin
         then do:
-                contrassin.dtproc = today.
-                contrassin.hrproc = time.
+                contrassin.dtproc = contrassin.dtinclu.
+                contrassin.hrproc = contrassin.hrincl.
         end.            
     end.
 

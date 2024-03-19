@@ -25,7 +25,7 @@ find first ttentrada no-error.
 vcontnum = int(ttentrada.numeroContrato) no-error.
 vimagem  = search(ttentrada.imagem) no-error.
 
-if vcontnum <> ? and vimagem <> ?
+if vcontnum <> ? and ttentrada.imagem <> ?
 then do:
     
     run crediario/app/1/crd/assinaimp.p (input vcontnum, input vimagem,

@@ -123,10 +123,8 @@ if (isset($_SESSION['filtro_contrassin'])) {
                         linha = linha + "<td>" + object.ctmcod + "</td>";
                         linha = linha + "<td>" + object.nsu + "</td>";
                         linha = linha + "<td>" + object.clicod + "</td>";
-                        linha = linha + "<td>";
-                        if (object.dtproc) {
-                            linha = linha + "<a class='btn btn-primary btn-sm' href='contratos.php?numeroContrato=" + object.contnum + "' role='button'><i class='bi bi-eye-fill'></i></a>";
-                        } else {
+                        linha = linha + "<td>" + "<a class='btn btn-primary btn-sm' href='contratos.php?numeroContrato=" + object.contnum + "' role='button'><i class='bi bi-eye-fill'></i></a>";
+                        if (!object.dtproc) {
                             linha = linha + "<button type='button' class='btn btn-warning btn-sm processar-btn' data-contnum='" + object.contnum + "' title='Processar Assinatura'><i class='bi bi-check-circle-fill'></i></button>";
                         }
                         linha = linha + "</tr>";

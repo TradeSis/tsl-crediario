@@ -3,11 +3,12 @@ def input param     pimagem  as char.
 def output param    ppdf     as char.
 
 run crediario/app/1/crd/assinaimphash.p (input pcontnum, output ppdf).
-run crediario/app/1/crd/assinaimpimg.p (input pcontnum, input pimagem, output ppdf).
+if pimagem <> ?
+then run crediario/app/1/crd/assinaimpimg.p (input pcontnum, input pimagem, output ppdf).
 
 
 do on error undo:
-    if ppdf <> ?
+    if ppdf <> ? and pimagem <> ?
     then do:
         find contrassin where contrassin.contnum = pcontnum
             exclusive no-wait no-error.

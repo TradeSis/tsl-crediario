@@ -57,18 +57,21 @@ if (isset($jsonEntrada["dadosEntrada"][0]["numeroContrato"])) {
     
     fwrite($arquivo,$identificacao."-mime->".json_encode($barramento["registrationFace"]["mime"])."\n");                
     $imgBase64 = $barramento["registrationFace"]["imgBase64"];
+    $imagem = "";
+    if (isset($imgBase64)) {
+        $data = base64_decode($imgBase64);
 
-    $data = base64_decode($imgBase64);
-
-    $date  = date('YmdHis');
-    $file = $LOG_CAMINHO.'imagem'.$numeroContrato."_".$date;
-    $imagem = $file.".png";
-    $success=file_put_contents($imagem, $data);
-
-        $imagem = $file.".jpg";
-        system("convert ".$file.".png"." ".$imagem);
-        system("rm -f ".$file.".png");
-
+        $date  = date('YmdHis');
+        $file = $LOG_CAMINHO.'imagem'.$numeroContrato."_".$date;
+        $imagem = $file.".png";
+        $success=file_put_contents($imagem, $data);
+    
+            $imagem = $file.".jpg";
+            system("convert ".$file.".png"." ".$imagem);
+            system("rm -f ".$file.".png");
+    
+    }
+    
     fwrite($arquivo,$identificacao."-imagem->".$imagem."\n");                
 
     $entrada =   array("dadosEntrada" => array(

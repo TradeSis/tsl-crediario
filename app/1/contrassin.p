@@ -72,9 +72,10 @@ end.
 
 find clien where clien.clicod = ttcontrassin.clicod no-lock no-error.
 if avail clien
-then 
-ttcontrassin.cpfCNPJ = clien.ciccgc.
-ttcontrassin.nomeCliente = clien.clinom.
+then do:
+    ttcontrassin.cpfCNPJ = clien.ciccgc.
+    ttcontrassin.nomeCliente = clien.clinom.
+end.
 
 hsaida  = TEMP-TABLE ttcontrassin:handle.
 

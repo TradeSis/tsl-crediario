@@ -54,17 +54,13 @@ if (isset($_SESSION['filtro_contrassin'])) {
             <table class="table table-sm table-hover">
                 <thead class="ts-headertabelafixo">
                     <tr>
+                        <th>Filial</th>
                         <th>Contrato</th>
+                        <th>Cliente</th>
+                        <th>Nome</th>
                         <th>Cpf/Cnpj</th>
-                        <th class="col-3">ID</th>
-                        <th>dtinclu</th>
-                        <th>dtproc</th>
-                        <th>hrproc</th>
-                        <th>etbcod</th>
-                        <th>cxacod</th>
-                        <th>ctmcod</th>
-                        <th>nsu</th>
-                        <th>clicod</th>
+                        <th class="col-3">ID Biometria</th>
+                        <th>Data</th>
                         <th colspan="2">Ação</th>
                     </tr>
                 </thead>
@@ -112,17 +108,13 @@ if (isset($_SESSION['filtro_contrassin'])) {
                         var object = json[$i];
 
                         linha = linha + "<tr>";
+                        linha = linha + "<td>" + object.etbcod + "</td>";
                         linha = linha + "<td>" + object.contnum + "</td>";
+                        linha = linha + "<td>" + object.clicod + "</td>";
+                        linha = linha + "<td>" + object.nomeCliente + "</td>";
                         linha = linha + "<td>" + object.cpfCNPJ + "</td>";
                         linha = linha + "<td>" + object.idBiometria + "</td>";
                         linha = linha + "<td>" + (object.dtinclu ? formatarData(object.dtinclu) : "--") + "</td>";
-                        linha = linha + "<td>" + (object.dtproc ? formatarData(object.dtproc) : "--") + "</td>";
-                        linha = linha + "<td>" + object.hrproc + "</td>";
-                        linha = linha + "<td>" + object.etbcod + "</td>";
-                        linha = linha + "<td>" + object.cxacod + "</td>";
-                        linha = linha + "<td>" + object.ctmcod + "</td>";
-                        linha = linha + "<td>" + object.nsu + "</td>";
-                        linha = linha + "<td>" + object.clicod + "</td>";
                         linha = linha + "<td>" + "<a class='btn btn-primary btn-sm' href='contratos.php?numeroContrato=" + object.contnum + "' role='button'><i class='bi bi-eye-fill'></i></a>";
                         if (!object.dtproc) {
                             linha = linha + "<button type='button' class='btn btn-warning btn-sm processar-btn' data-contnum='" + object.contnum + "' title='Processar Assinatura'><i class='bi bi-check-circle-fill'></i></button>";

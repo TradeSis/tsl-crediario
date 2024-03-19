@@ -71,17 +71,17 @@ if (isset ($_GET['operacao'])) {
 		return $assinatura;
 	}
 
-	if ($operacao == "processarXML") {
+	if ($operacao == "processarAssinatura") {
 		$contnum = isset($_POST["contnum"]) ? $_POST["contnum"] : null;
 
         if ($contnum == "") {
 			$contnum = null;
 		}
 
-		$apiEntrada = array(
-			'numeroContrato' => $contnum
-		);
-	
+		$apiEntrada = 
+		array("dadosEntrada" => array(
+			array('numeroContrato' => $contnum)
+		));
 		$assinaturaProc = chamaAPI(null, '/crediario/assinaContrato', json_encode($apiEntrada), 'POST');
 	
 		echo json_encode($assinaturaProc);

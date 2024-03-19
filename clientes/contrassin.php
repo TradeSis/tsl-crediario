@@ -136,34 +136,34 @@ if (isset($_SESSION['filtro_contrassin'])) {
                 $('#periodoModal').modal('hide');
 
             });
-
-            $('.processar-btn').click(function () {
-                $('body').css('cursor', 'progress');
-                var contnum = $(this).attr("data-contnum");
-
-                $.ajax({
-                    method: "POST",
-                    dataType: 'json',
-                    url: "../database/contratos.php?operacao=processarAssinatura",
-                    data: { contnum: contnum },
-                    success: function (msg) {
-                        $('body').css('cursor', 'default');
-                        if (msg.retorno === "ok") {
-                            window.location.reload();
-                        }
-                        if (msg.status === 400) {
-                            alert(msg.retorno);
-                            window.location.reload();
-                        }
-                    }
-                });
-            });
-        });
-
+        });    
         document.addEventListener("keypress", function (e) {
             if (e.key === "Enter") {
                 buscar($("#contnum").val(), $("#dtproc").val());
             }
+        });
+        
+        $(document).on('click', '.processar-btn', function () {
+            $('body').css('cursor', 'progress');
+            var contnum = $(this).attr("data-contnum");
+
+            $.ajax({
+                method: "POST",
+                dataType: 'json',
+                url: "../database/crediariocontrato.php?operacao=processarAssinatura",
+                data: { contnum: contnum },
+                success: function (msg) {
+                    console.log(msg);
+                    $('body').css('cursor', 'default');
+                    if (msg.status === 200) {
+                        window.location.reload();
+                    }
+                    if (msg.status === 400) {
+                        alert(msg.retorno);
+                        window.location.reload();
+                    }
+                }
+            });
         });
 
         function formatarData(data) {

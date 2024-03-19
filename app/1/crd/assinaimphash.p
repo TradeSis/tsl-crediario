@@ -5,7 +5,7 @@ def var vdir as char.
 def var vurl as char.
 def var ppdf1 as char.
 vdir = "/var/www/html/relatorios/assinaturaeletronica/".
-vurl = "10.145.0.60/relatorios/assinaturaeletronica/".
+vurl = "http://10.145.0.60/relatorios/assinaturaeletronica/".
 
 
 define            variable vmescomp as char format "x(09)" extent 12 initial

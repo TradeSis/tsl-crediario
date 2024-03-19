@@ -153,7 +153,7 @@ if (isset($_SESSION['filtro_contrassin'])) {
                 url: "../database/crediariocontrato.php?operacao=processarAssinatura",
                 data: { contnum: contnum },
                 success: function (msg) {
-                    console.log(msg);
+                    //console.log(msg);
                     $('body').css('cursor', 'default');
                     if (msg.status === 200) {
                         window.location.reload();

@@ -151,7 +151,7 @@ vassina = yes.
                   input 1,
                   output ppdf).
                   
-ppdf = vurl + ppdf.
+
 unix silent value("rm -f " + varquivo).
 
 run atualiza.
@@ -230,7 +230,7 @@ procedure atualiza.
         find current contrassin exclusive no-error.
         if avail contrassin
         then do:
-            urlPdfAss = ppdf.
+            urlPdfAss = vurl + ppdf..
         end.
     end.
 

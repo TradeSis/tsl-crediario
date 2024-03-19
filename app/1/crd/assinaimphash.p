@@ -146,7 +146,7 @@ vassina = no.
                   input 1,
                   output ppdf).
 
-ppdf = vurl + ppdf.
+
 unix silent value("rm -f " + varquivo).
 
 run atualiza.
@@ -225,7 +225,7 @@ procedure atualiza.
         find current contrassin exclusive no-error.
         if avail contrassin
         then do:
-            urlPdf = ppdf.
+            urlPdf = vurl + ppdf.
         end.
     end.
 

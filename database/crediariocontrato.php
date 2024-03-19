@@ -83,7 +83,11 @@ if (isset ($_GET['operacao'])) {
 			array('numeroContrato' => $contnum)
 		));
 		$assinaturaProc = chamaAPI(null, '/crediario/assinaContrato', json_encode($apiEntrada), 'POST');
-	
+		if (isset ($assinaturaProc["conteudoSaida"])) {
+			if (isset ($assinaturaProc["conteudoSaida"])) {
+				$assinaturaProc = $assinaturaProc["conteudoSaida"][0]; // TRATAMENTO DO RETORNO
+			}
+		}
 		echo json_encode($assinaturaProc);
 		return $assinaturaProc;
 	}

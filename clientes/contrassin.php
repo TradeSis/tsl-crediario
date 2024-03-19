@@ -34,7 +34,8 @@ if (isset($_SESSION['filtro_contrassin'])) {
 
             <div class="col-3 col-lg-3">
                 <div class="input-group">
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#periodoModal"><i class="bi bi-calendar3"></i></button>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                        data-bs-target="#periodoModal"><i class="bi bi-calendar3"></i></button>
                     <a onClick="naoproc()" role=" button" class="ms-4 btn btn-sm btn-info">Não Processados</a>
                 </div>
             </div>
@@ -54,16 +55,17 @@ if (isset($_SESSION['filtro_contrassin'])) {
                 <thead class="ts-headertabelafixo">
                     <tr>
                         <th>Contrato</th>
+                        <th>Cpf/Cnpj</th>
                         <th class="col-3">ID</th>
                         <th>dtinclu</th>
-                        <th class="col-1">dtproc</th>
+                        <th>dtproc</th>
                         <th>hrproc</th>
                         <th>etbcod</th>
                         <th>cxacod</th>
                         <th>ctmcod</th>
                         <th>nsu</th>
                         <th>clicod</th>
-                        <th>Ação</th>
+                        <th colspan="2">Ação</th>
                     </tr>
                 </thead>
 
@@ -111,6 +113,7 @@ if (isset($_SESSION['filtro_contrassin'])) {
 
                         linha = linha + "<tr>";
                         linha = linha + "<td>" + object.contnum + "</td>";
+                        linha = linha + "<td>" + object.cpfCNPJ + "</td>";
                         linha = linha + "<td>" + object.idBiometria + "</td>";
                         linha = linha + "<td>" + (object.dtinclu ? formatarData(object.dtinclu) : "--") + "</td>";
                         linha = linha + "<td>" + (object.dtproc ? formatarData(object.dtproc) : "--") + "</td>";
@@ -120,8 +123,12 @@ if (isset($_SESSION['filtro_contrassin'])) {
                         linha = linha + "<td>" + object.ctmcod + "</td>";
                         linha = linha + "<td>" + object.nsu + "</td>";
                         linha = linha + "<td>" + object.clicod + "</td>";
-                        linha += "<td><a class='btn btn-primary btn-sm' href='contratos.php?numeroContrato=" + object.contnum + "' role='button'><i class='bi bi-eye-fill'></i></a></td>";
-
+                        linha = linha + "<td>";
+                        if (object.dtproc) {
+                            linha = linha + "<a class='btn btn-primary btn-sm' href='contratos.php?numeroContrato=" + object.contnum + "' role='button'><i class='bi bi-eye-fill'></i></a>";
+                        } else {
+                            linha = linha + "<button type='button' class='btn btn-warning btn-sm processar-btn' data-contnum='" + object.contnum + "' title='Processar Assinatura'><i class='bi bi-check-circle-fill'></i></button>";
+                        }
                         linha = linha + "</tr>";
                     }
                     $("#dados").html(linha);
@@ -137,7 +144,29 @@ if (isset($_SESSION['filtro_contrassin'])) {
 
                 buscar($("#contnum").val(), $("#dtproc").val());
                 $('#periodoModal').modal('hide');
-                
+
+            });
+
+            $('.processar-btn').click(function () {
+                $('body').css('cursor', 'progress');
+                var contnum = $(this).attr("data-contnum");
+
+                $.ajax({
+                    method: "POST",
+                    dataType: 'json',
+                    url: "../database/contratos.php?operacao=processarAssinatura",
+                    data: { contnum: contnum },
+                    success: function (msg) {
+                        $('body').css('cursor', 'default');
+                        if (msg.retorno === "ok") {
+                            window.location.reload();
+                        }
+                        if (msg.status === 400) {
+                            alert(msg.retorno);
+                            window.location.reload();
+                        }
+                    }
+                });
             });
         });
 

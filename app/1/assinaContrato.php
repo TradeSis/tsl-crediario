@@ -18,17 +18,17 @@ if (isset($LOG_NIVEL)) {
         fwrite($arquivo, $identificacao . "\n");
     }
     if ($LOG_NIVEL >= 2) {
-       // fwrite($arquivo, $identificacao . "-ENTRADA->" . json_encode($jsonEntrada) . "\n");
+        fwrite($arquivo, $identificacao . "-ENTRADA->" . json_encode($jsonEntrada) . "\n");
     }
 }
 //LOG
 
-if (isset($jsonEntrada['numeroContrato'])) {
+if (isset($jsonEntrada["dadosEntrada"]["numeroContrato"])) {
 
     $apiEntrada =
                 array(
                     "dadosEntrada" => array(
-                        array('contnum' => $jsonEntrada["numeroContrato"])
+                        array('contnum' => $jsonEntrada["dadosEntrada"]["numeroContrato"])
                     )
                 );
  fwrite($arquivo,$identificacao."-apiEntrada->".json_encode($apiEntrada)."\n");
@@ -72,7 +72,7 @@ if (isset($jsonEntrada['numeroContrato'])) {
     fwrite($arquivo,$identificacao."-imagem->".$imagem."\n");                
 
     $entrada =   array("dadosEntrada" => array(
-                array("numeroContrato" => $jsonEntrada["numeroContrato"], 
+                array("numeroContrato" => $jsonEntrada["dadosEntrada"]["numeroContrato"], 
                       "imagem" => $imagem
                     )));
     

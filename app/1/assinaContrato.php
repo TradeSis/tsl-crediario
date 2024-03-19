@@ -23,7 +23,7 @@ if (isset($LOG_NIVEL)) {
 }
 //LOG
 
-if (isset($jsonEntrada["dadosEntrada"]["numeroContrato"])) {
+if (isset($jsonEntrada["dadosEntrada"][0]["numeroContrato"])) {
 
     $apiEntrada =
                 array(

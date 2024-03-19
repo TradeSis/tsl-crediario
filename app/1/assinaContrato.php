@@ -24,11 +24,11 @@ if (isset($LOG_NIVEL)) {
 //LOG
 
 if (isset($jsonEntrada["dadosEntrada"][0]["numeroContrato"])) {
-
+    $numeroContrato = $jsonEntrada["dadosEntrada"][0]["numeroContrato"];
     $apiEntrada =
                 array(
                     "dadosEntrada" => array(
-                        array('contnum' => $jsonEntrada["dadosEntrada"]["numeroContrato"])
+                        array('contnum' => $numeroContrato)
                     )
                 );
  fwrite($arquivo,$identificacao."-apiEntrada->".json_encode($apiEntrada)."\n");
@@ -61,7 +61,7 @@ if (isset($jsonEntrada["dadosEntrada"][0]["numeroContrato"])) {
     $data = base64_decode($imgBase64);
 
     $date  = date('YmdHis');
-    $file = $LOG_CAMINHO.'imagem'.$jsonEntrada["numeroContrato"]."_".$date;
+    $file = $LOG_CAMINHO.'imagem'.$numeroContrato."_".$date;
     $imagem = $file.".png";
     $success=file_put_contents($imagem, $data);
 
@@ -72,7 +72,7 @@ if (isset($jsonEntrada["dadosEntrada"][0]["numeroContrato"])) {
     fwrite($arquivo,$identificacao."-imagem->".$imagem."\n");                
 
     $entrada =   array("dadosEntrada" => array(
-                array("numeroContrato" => $jsonEntrada["dadosEntrada"]["numeroContrato"], 
+                array("numeroContrato" => $numeroContrato, 
                       "imagem" => $imagem
                     )));
     

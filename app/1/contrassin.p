@@ -9,7 +9,7 @@ def var hsaida   as handle.             /* HANDLE SAIDA */
 
 def temp-table ttentrada no-undo serialize-name "dadosEntrada"   /* JSON ENTRADA */
     field contnum  like contrassin.contnum
-    field dtproc like contrassin.dtproc INITIAL ?.
+    field dtproc like contrassin.dtproc.
 
 def temp-table ttcontrassin  no-undo serialize-name "contrassin"  /* JSON SAIDA */
     like contrassin
@@ -26,20 +26,10 @@ hEntrada = temp-table ttentrada:HANDLE.
 lokJSON = hentrada:READ-JSON("longchar",vlcentrada, "EMPTY") no-error.
 find first ttentrada no-error.
 
-vcontnum = 0.
-if avail ttentrada
-then do:
-    vcontnum = ttentrada.contnum.
-    if vcontnum = ? then vcontnum = 0.
-end.
-if ttentrada.contnum = 0
-then do:
-    ttentrada.contnum = ?.
-end.
-
-IF ttentrada.contnum = ? AND ttentrada.dtproc = ?
+IF ttentrada.contnum = ? 
 THEN DO:
-    for each contrassin where contrassin.dtproc = ? 
+    for each contrassin where 
+        contrassin.dtproc = ttentrada.dtproc 
         no-lock.
 
         create ttcontrassin.
@@ -50,33 +40,15 @@ END.
 
 IF ttentrada.contnum <> ?
 THEN DO:
-    for each contrassin where 
-        (if vcontnum = 0
-        then true /* TODOS */
-        ELSE contrassin.contnum = vcontnum)
-        NO-LOCK.
+    find contrassin where 
+        contrassin.contnum = ttentrada.contnum 
+        NO-LOCK no-error.
         
         if avail contrassin
         then do:
             create ttcontrassin.
             BUFFER-COPY contrassin TO ttcontrassin.
         end.
-    end.
-END.   
-ELSE DO:
-    IF ttentrada.dtproc <> ?
-    THEN DO:
-        for each contrassin where 
-            contrassin.dtproc =  ttentrada.dtproc 
-            NO-LOCK.
-            
-            if avail contrassin
-            then do:
-                create ttcontrassin.
-                BUFFER-COPY contrassin TO ttcontrassin.
-            end.
-        end.
-    END.
 END.
     
 

@@ -20,21 +20,26 @@ $produtos = $contrato["produtos"];
 
 $assinatura = buscaAssinatura($numeroContrato);
 
-$barramento = chamaAPI( "172.19.130.11:5555",
-                "/gateway/lebes-repo-img-biometria/1.0/registration-face/".
-                        $assinatura["etbcod"]."/".
-                        $assinatura["dtinclu"]."/".
-                        $assinatura["cxacod"]."/".
-                        $assinatura["cpfCNPJ"]."/".
-                        $assinatura["idBiometria"],
-                null,
-                "GET");
-$foto = $barramento["registrationFace"]["imgBase64"];
+if (URL !== "localhost") {
+    $barramento = chamaAPI( "172.19.130.11:5555",
+                    "/gateway/lebes-repo-img-biometria/1.0/registration-face/".
+                            $assinatura["etbcod"]."/".
+                            $assinatura["dtinclu"]."/".
+                            $assinatura["cxacod"]."/".
+                            $assinatura["cpfCNPJ"]."/".
+                            $assinatura["idBiometria"],
+                    null,
+                    "GET");
+} else {
+    // Define $barramento with a default value or whatever logic you need
+    $barramento = null; // Example default value
+}
+
+$foto = $barramento ? $barramento["registrationFace"]["imgBase64"] : null;
 
 //$foto = base64_decode($imgBase64);                
 
 //echo '<img src="data:image/gif;base64,' . $foto . '" />';
-
 ?>
 
 <!doctype html>
@@ -61,7 +66,12 @@ $foto = $barramento["registrationFace"]["imgBase64"];
             </div>
 
             <div class="col-2 text-end">
-                    <a href="contratos_parametros.php" role="button" class="btn btn-primary btn-sm">Voltar</a>
+                <?php if (isset($_GET['origem']) && $_GET['origem'] === 'cliente') { ?>
+                    <a href="historico_cliente.php?codigoCliente=<?php echo $contrato['codigoCliente'] ?>" role="button"
+                        class="btn btn-primary btn-sm">Voltar</a>
+                <?php } else { ?>
+                    <a href="#" onclick="history.back()" role="button" class="btn btn-primary btn-sm">Voltar</a>
+                <?php } ?>
             </div>
         </div>
         <div class="container-fluid mt-3">
@@ -219,9 +229,9 @@ $foto = $barramento["registrationFace"]["imgBase64"];
                                 <input type="text" class="form-control" value="<?php echo $assinatura['etbcod'] ?>"
                                     readonly>
                             </div>
-                            <label>contnum</label>
-                            <input type="text" class="form-control" value="<?php echo $assinatura['contnum'] ?>"
-                                readonly>
+                            <label>Data de Inclusão</label>
+                            <input type="text" class="form-control"
+                                value="<?php echo date('d/m/Y', strtotime($assinatura['dtinclu'])) ?>" readonly>
                             <label>idBiometria</label>
                             <input type="text" class="form-control" value="<?php echo $assinatura['idBiometria'] ?>"
                                 readonly>
@@ -233,9 +243,13 @@ $foto = $barramento["registrationFace"]["imgBase64"];
                     </div>
                     <div class="row mt-2">
                         <div class="col-md">
-                            <label>Data de Inclusão</label>
-                            <input type="text" class="form-control"
-                                value="<?php echo date('d/m/Y', strtotime($assinatura['dtinclu'])) ?>" readonly>
+                            <label>clicod</label>
+                            <input type="text" class="form-control" value="<?php echo $assinatura['clicod'] ?>"
+                                readonly>
+                        </div>
+                        <div class="col-md">
+                            <label>Cpf/Cnpj</label>
+                            <input type="text" class="form-control" value="<?php echo $assinatura['cpfCNPJ'] ?>" readonly>
                         </div>
                         <div class="col-md">
                             <label>Data de Processamento</label>
@@ -269,23 +283,38 @@ $foto = $barramento["registrationFace"]["imgBase64"];
                             <label>nsu</label>
                             <input type="text" class="form-control" value="<?php echo $assinatura['nsu'] ?>" readonly>
                         </div>
-                        <div class="col-md">
-                            <label>clicod</label>
-                            <input type="text" class="form-control" value="<?php echo $assinatura['clicod'] ?>"
-                                readonly>
+                    </div>
+                        <div class="mt-2" style="text-align:right">
+                            <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modalPDF" data-pdf="<?php echo $assinatura['urlPdf'] ?>">Contrato PDF</button>
                         </div>
                         <div class="mt-2" style="text-align:right">
-                            <a href="http://<?php echo $assinatura['urlPdf'] ?>" role="button" class="btn btn-primary btn-sm">Contrato PDF</a>
+                            <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modalPDF" data-pdf="<?php echo $assinatura['urlPdfAss'] ?>">Contrato Assinado</button>
                         </div>
-                        <div class="mt-2" style="text-align:right">
-                            <a href="http://<?php echo $assinatura['urlPdfAss'] ?>" role="button" class="btn btn-primary btn-sm">Contrato Assinado</a>
-                        </div>
-
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+
+
+<!--------- MODAL PDF --------->
+<div class="modal" id="modalPDF" tabindex="-1" role="dialog" aria-labelledby="modalPDFLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl"> 
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Contrato</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="ExternalFiles full-width">
+                    <iframe class="container-fluid full-width" id="myIframe" src="" frameborder="0" scrolling="yes" height="550"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 
     <!-- LOCAL PARA COLOCAR OS JS -->
@@ -342,6 +371,14 @@ $foto = $barramento["registrationFace"]["imgBase64"];
                 tabContent[b].classList.add('show');
             }
         }
+
+        var modalPDF = document.getElementById('modalPDF');
+        modalPDF.addEventListener('show.bs.modal', function (event) {
+            var button = event.relatedTarget; // Button that triggered the modal
+            var pdfUrl = button.getAttribute('data-pdf'); // Extract info from data-* attributes
+            var iframe = modalPDF.querySelector('iframe');
+            iframe.src = pdfUrl; // Set iframe src to the PDF URL
+        });
 
     </script>
 

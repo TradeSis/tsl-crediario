@@ -29,6 +29,10 @@ if ($metodo=="GET"){
         include 'estab.php';
       break;
 
+      case "assinatura":
+        include 'contrassin.php';
+      break;
+
       default:
         $jsonSaida = json_decode(json_encode(
         array("status" => "400",
@@ -40,6 +44,7 @@ if ($metodo=="GET"){
 
  if ($metodo=="PUT"){
     switch ($funcao) {
+      
       default:
         $jsonSaida = json_decode(json_encode(
         array("status" => "400",
@@ -51,6 +56,10 @@ if ($metodo=="GET"){
   
   if ($metodo=="POST"){
     switch ($funcao) {
+      case "assinaContrato":
+        include 'assinaContrato.php';
+        break;
+    
       default:
         $jsonSaida = json_decode(json_encode(
         array("status" => "400",

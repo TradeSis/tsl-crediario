@@ -61,6 +61,7 @@ if (isset($_SESSION['filtro_contrassin'])) {
                         <th>Cpf/Cnpj</th>
                         <th class="col-3">ID Biometria</th>
                         <th>Data</th>
+                        <th>dtproc</th>
                         <th colspan="2">Ação</th>
                     </tr>
                 </thead>
@@ -115,6 +116,7 @@ if (isset($_SESSION['filtro_contrassin'])) {
                         linha = linha + "<td>" + object.cpfCNPJ + "</td>";
                         linha = linha + "<td>" + object.idBiometria + "</td>";
                         linha = linha + "<td>" + (object.dtinclu ? formatarData(object.dtinclu) : "--") + "</td>";
+                        linha = linha + "<td>" + (object.dtproc ? formatarData(object.dtproc) : "--") + "</td>";
                         linha = linha + "<td>" + "<a class='btn btn-primary btn-sm' href='contratos.php?numeroContrato=" + object.contnum + "' role='button'><i class='bi bi-eye-fill'></i></a>";
                         if (!object.dtproc) {
                             linha = linha + "<button type='button' class='btn btn-warning btn-sm processar-btn' data-contnum='" + object.contnum + "' title='Processar Assinatura'><i class='bi bi-check-circle-fill'></i></button>";
